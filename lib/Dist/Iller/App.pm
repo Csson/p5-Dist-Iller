@@ -19,6 +19,7 @@ sub prepare_command {
     }
     elsif ($cmd->isa('Dist::Zilla::App::Command::new')) {
         $opt->{'provider'} = 'Iller';
+        $opt->{'profile'} = 'iller';
     }
 
     return $cmd, $opt, @args;

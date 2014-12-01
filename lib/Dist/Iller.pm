@@ -1,10 +1,10 @@
 package Dist::Iller;
 
 use strict;
-use 5.008_005;
-our $VERSION = '0.01';
+use 5.10.1;
 
 1;
+
 __END__
 
 =encoding utf-8

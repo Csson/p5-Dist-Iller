@@ -1,13 +1,14 @@
 package Dist::Zilla::Plugin::Iller::MintFiles;
+
 use Moose;
 extends 'Dist::Zilla::Plugin::InlineFiles';
 with 'Dist::Zilla::Role::TextTemplate';
- 
+
 override 'merged_section_data' => sub {
     my $self = shift;
- 
+
     my $data = super;
- 
+
     for my $name (keys %$data) {
         $data->{ $name } = \$self->fill_in_string( ${ $data->{ $name } },
                                                    {
@@ -16,15 +17,15 @@ override 'merged_section_data' => sub {
                                                    },
         );
     }
- 
+
     return $data;
 };
- 
+
 1;
 __DATA__
 ___[ Changes ]___
 Revision history for {{ $dist->name }}
- 
+
 {{ '{{$NEXT}}' }}
    - Initial release
 
@@ -41,17 +42,17 @@ ___[ t/basic.t ]___
 use strict;
 use Test::More;
 use {{ (my $mod = $dist->name) =~ s/-/::/g; $mod }};
- 
+
 # replace with the actual test
 ok 1;
- 
+
 done_testing;
 
 ___[ dist.ini ]___
 name = {{ (my $mod = $dist->name) =~ s/-/::/g; $mod }}
-author = 
+author =
 license = Perl_5
-copyright_holder = 
+copyright_holder =
 
 [Git::GatherDir]
 exclude_filename = Build.PL
@@ -150,7 +151,7 @@ allow_dirty = Build.PL
 
 [Git::Tag]
 tag_format = %v
-tag_message = 
+tag_message =
 
 [Git::Push]
 remotes_must_exist = 0

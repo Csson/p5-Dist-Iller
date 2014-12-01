@@ -26,7 +26,9 @@ my %module_build_args = (
   "requires" => {
     "perl" => "5.008005"
   },
-  "script_files" => [],
+  "script_files" => [
+    "script/iller.pm"
+  ],
   "share_dir" => {
     "module" => {
       "Dist::Zilla::MintingProfile::Iller" => "profiles"

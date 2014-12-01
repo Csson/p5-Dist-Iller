@@ -27,7 +27,7 @@ my %module_build_args = (
     "perl" => "5.008005"
   },
   "script_files" => [
-    "script/iller.pm"
+    "script/iller"
   ],
   "share_dir" => {
     "module" => {

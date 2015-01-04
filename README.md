@@ -2,6 +2,10 @@
 
 Dist::Iller - Another way to use Dist::Zilla
 
+<div>
+    <p><a style="float: left;" href="https://travis-ci.org/Csson/p5-Dist-Iller"><img src="https://travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master">&nbsp;</a>
+</div>
+
 # SYNOPSIS
 
     iller new Dist::Name

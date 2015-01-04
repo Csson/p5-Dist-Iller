@@ -6,7 +6,6 @@ Revision history for Dist-Iller
  [Bug Fixes]
 
  [Documentation]
- - Typo.
 
  [Enhancements]
 
@@ -15,6 +14,10 @@ Revision history for Dist-Iller
  [New Features]
 
  [Revision]
+
+0.1001 2015-01-05T00:25:01Z CET
+ [Documentation]
+ - Typo.
 
 0.1000 2015-01-05T00:20:55Z CET
  - Initial release

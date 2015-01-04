@@ -12,7 +12,7 @@ Dist::Iller - Another way to use Dist::Zilla
 
 # DESCRIPTION
 
-Dist::Iller is a [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) profile, minter and [plugin bundle](https://metacpan.org/pod/Dist::Zilĺa::PluginBundle::Iller).
+Dist::Iller is a [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) profile, minter and [plugin bundle](https://metacpan.org/pod/Dist::Zilla::PluginBundle::Iller).
 
 This was inspired by [Dist::Milla](https://metacpan.org/pod/Dist::Milla), which is recommended if you are looking for a straight-forward way to start using [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla).
 

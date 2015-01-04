@@ -1,5 +1,7 @@
 package Dist::Zilla::Plugin::Iller::MintFiles;
 
+# VERSION
+
 use Moose;
 extends 'Dist::Zilla::Plugin::InlineFiles';
 with 'Dist::Zilla::Role::TextTemplate';

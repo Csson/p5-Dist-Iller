@@ -13,7 +13,7 @@ my %module_build_args = (
   "configure_requires" => {
     "Module::Build" => "0.3601"
   },
-  "dist_abstract" => "Blah blah blah",
+  "dist_abstract" => "Another way to use Dist::Zilla",
   "dist_author" => [
     "Erik Carlsson <info\@code301.com>"
   ],
@@ -24,7 +24,48 @@ my %module_build_args = (
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
-    "perl" => "5.008005"
+    "Dist::Zilla" => "5.000",
+    "Dist::Zilla::Plugin::CheckChangesHasContent" => 0,
+    "Dist::Zilla::Plugin::ConfirmRelease" => 0,
+    "Dist::Zilla::Plugin::ContributorsFromGit" => 0,
+    "Dist::Zilla::Plugin::CopyFilesFromBuild" => 0,
+    "Dist::Zilla::Plugin::ExtraTests" => 0,
+    "Dist::Zilla::Plugin::Git::Check" => 0,
+    "Dist::Zilla::Plugin::Git::Commit" => 0,
+    "Dist::Zilla::Plugin::Git::GatherDir" => 0,
+    "Dist::Zilla::Plugin::Git::Push" => 0,
+    "Dist::Zilla::Plugin::Git::Tag" => 0,
+    "Dist::Zilla::Plugin::GithubMeta" => 0,
+    "Dist::Zilla::Plugin::License" => 0,
+    "Dist::Zilla::Plugin::Manifest" => 0,
+    "Dist::Zilla::Plugin::ManifestSkip" => 0,
+    "Dist::Zilla::Plugin::MetaJSON" => 0,
+    "Dist::Zilla::Plugin::MetaNoIndex" => 0,
+    "Dist::Zilla::Plugin::MetaYAML" => 0,
+    "Dist::Zilla::Plugin::ModuleBuildTiny" => 0,
+    "Dist::Zilla::Plugin::NextRelease" => 0,
+    "Dist::Zilla::Plugin::NextVersion::Semantic" => 0,
+    "Dist::Zilla::Plugin::OurPkgVersion" => 0,
+    "Dist::Zilla::Plugin::PodSyntaxTests" => 0,
+    "Dist::Zilla::Plugin::Prereqs::FromCPANfile" => 0,
+    "Dist::Zilla::Plugin::PreviousVersion::Changelog" => 0,
+    "Dist::Zilla::Plugin::ReadmeAnyFromPod" => 0,
+    "Dist::Zilla::Plugin::ReversionOnRelease" => 0,
+    "Dist::Zilla::Plugin::ShareDir" => 0,
+    "Dist::Zilla::Plugin::Test::EOL" => 0,
+    "Dist::Zilla::Plugin::TestRelease" => 0,
+    "Dist::Zilla::Plugin::UploadToCPAN" => 0,
+    "Dist::Zilla::Plugin::UploadToStratopan" => 0,
+    "Dist::Zilla::Role::PluginBundle::Config::Slicer" => 0,
+    "Dist::Zilla::Role::PluginBundle::Easy" => 0,
+    "Dist::Zilla::Role::PluginBundle::PluginRemover" => 0,
+    "File::chdir" => 0,
+    "Git::Wrapper" => 0,
+    "IPC::Run" => 0,
+    "Moose" => "2.0000",
+    "MooseX::AttributeShortcuts" => 0,
+    "Types::Standard" => 0,
+    "perl" => "5.010001"
   },
   "script_files" => [
     "script/iller"
@@ -35,14 +76,16 @@ my %module_build_args = (
     }
   },
   "test_requires" => {
-    "Test::More" => "0.96"
+    "Test::More" => "0.96",
+    "Test::NoTabs" => 0
   }
 );
 
 
 my %fallback_build_requires = (
   "Module::Build" => "0.3601",
-  "Test::More" => "0.96"
+  "Test::More" => "0.96",
+  "Test::NoTabs" => 0
 );
 
 

@@ -1,5 +1,7 @@
 package Dist::Iller::App;
 
+# VERSION
+
 use 5.10.1;
 use strict;
 use parent 'Dist::Zilla::App';

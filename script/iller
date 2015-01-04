@@ -2,6 +2,8 @@
 use strict;
 use Dist::Iller::App;
 
+# VERSION
+
 Dist::Iller::App->run;
 
 __END__

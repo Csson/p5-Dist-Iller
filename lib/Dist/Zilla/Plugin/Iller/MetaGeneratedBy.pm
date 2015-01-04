@@ -1,5 +1,7 @@
 package Dist::Zilla::Plugin::Iller::MetaGeneratedBy;
 
+# VERSION
+
 use Moose;
 with 'Dist::Zilla::Role::MetaProvider';
 

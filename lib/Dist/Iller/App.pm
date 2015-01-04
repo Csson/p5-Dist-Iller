@@ -28,9 +28,11 @@ sub prepare_command {
         $CWD = $dir;
         my $git = Git::Wrapper->new('.');
         $git->add('.');
-        $git->commit(qw/ --message "Init." /, { all => 1 });
+        $git->commit(qw/ --message Init /, { all => 1 });
         IPC::Run::run [qw/dzil build --no-tgz/];
         IPC::Run::run [qw/dzil clean/];
+        $git->add('.');
+        $git->commit(qw/ --message Init /, { all => 1 });
         exit;
     }
 

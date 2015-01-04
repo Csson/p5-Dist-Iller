@@ -48,11 +48,28 @@ ok 1;
 
 done_testing;
 
+__[ cpanfile ]___
+requires 'perl', '5.010001';
+
+# requires 'Some::Module', 'VERSION';
+
+on test => sub {
+    requires 'Test::More', '0.96';
+    requires 'Test::NoTabs';
+};
+
 ___[ dist.ini ]___
 name = {{ $dist->name }}
-author = ** Replace <replace@example.com> **
+author = {{ $dist->authors->[0] }}
 license = Perl_5
-copyright_holder = ** Replace **
+copyright_holder = {{ $dist->authors->[0] }}
 
 [@Iller]
+is_private = 0
+
+NextVersion::Semantic.major = 
+NextVersion::Semantic.minor = API Changes, New Features, Enhancements
+NextVersion::Semantic.revision = Revision, Bug Fixes, Documentation, Meta
+NextVersion::Semantic.format = %d.%02d%02d
+NextVersion::Semantic.numify_version = 0
 

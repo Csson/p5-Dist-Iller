@@ -69,9 +69,8 @@ copyright_holder = {{ $dist->authors->[0] }}
 [@Iller]
 is_private = 0
 
-NextVersion::Semantic.major = 
+NextVersion::Semantic.major =
 NextVersion::Semantic.minor = API Changes, New Features, Enhancements
 NextVersion::Semantic.revision = Revision, Bug Fixes, Documentation, Meta
 NextVersion::Semantic.format = %d.%02d%02d
 NextVersion::Semantic.numify_version = 0
-

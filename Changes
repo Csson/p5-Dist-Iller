@@ -8,16 +8,21 @@ Revision history for Dist-Iller
  [Documentation]
 
  [Enhancements]
+
+ [Meta]
+
+ [New Features]
+
+ [Revision]
+
+0.1100 2015-01-06T19:53:14Z CET
+ [Enhancements]
  - Added a PodWeaver bundle
  - Added Test::Kwalitee::Extra to Dzil plugin bundle
  - Adapted the module template to work with Pod::Weaver
 
  [Meta]
- - Added Kwalitee test to dist.ini (and fixed the failures)
-
- [New Features]
-
- [Revision]
+ - Fixed Kwalitee test failures.
 
 0.1001 2015-01-05T00:25:01Z CET
  [Documentation]

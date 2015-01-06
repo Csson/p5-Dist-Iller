@@ -18,7 +18,7 @@ my %module_build_args = (
     "Erik Carlsson <info\@code301.com>"
   ],
   "dist_name" => "Dist-Iller",
-  "dist_version" => "0.1002",
+  "dist_version" => "0.1100",
   "license" => "perl",
   "module_name" => "Dist::Iller",
   "recommends" => {},

@@ -4,6 +4,7 @@ package Dist::Iller::App;
 
 use 5.10.1;
 use strict;
+use warnings;
 use parent 'Dist::Zilla::App';
 use IPC::Run;
 use File::chdir;
@@ -23,6 +24,7 @@ sub prepare_command {
         $ENV{'DZIL_CONFIRMRELEASE_DEFAULT'} // 1;
     }
     elsif ($cmd->isa('Dist::Zilla::App::Command::new')) {
+        $ENV{'ILLER_MINTING'} = 1;
         IPC::Run::run [qw/dzil new --provider Iller --profile iller/, $args[0] ];
         my $dir = $args[0];
         $dir =~ s{::}{-}g;

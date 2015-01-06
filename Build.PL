@@ -13,12 +13,12 @@ my %module_build_args = (
   "configure_requires" => {
     "Module::Build" => "0.3601"
   },
-  "dist_abstract" => "Another way to use Dist::Zilla",
+  "dist_abstract" => "(deprecated)",
   "dist_author" => [
     "Erik Carlsson <info\@code301.com>"
   ],
   "dist_name" => "Dist-Iller",
-  "dist_version" => "0.1100",
+  "dist_version" => "0.1101",
   "license" => "perl",
   "module_name" => "Dist::Iller",
   "recommends" => {},

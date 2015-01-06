@@ -68,6 +68,3 @@ sub mvp_bundle_config {
 }
 
 1;
-
-# ABSTRACT: Pod::Weaver meets Dist::Iller
-

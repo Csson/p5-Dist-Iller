@@ -1,10 +1,10 @@
 # NAME
 
-Dist::Iller - Another way to use Dist::Zilla
+Dist::Iller - (deprecated)
 
 # VERSION
 
-version 0.1002
+version 0.1101
 
 # SYNOPSIS
 
@@ -12,11 +12,7 @@ version 0.1002
 
 # DESCRIPTION
 
-Dist::Iller is a [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) profile, minter, [Dist::Zilla plugin bundle](https://metacpan.org/pod/Dist::Zilla::PluginBundle::Iller), and [Pod::Weaver plugin bundle](https://metacpan.org/pod/Pod::Weaver::PluginBundle::Iller).
-
-This was inspired by [Dist::Milla](https://metacpan.org/pod/Dist::Milla), which is recommended if you are looking for a straight-forward way to start using [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla).
-
-The reason for not just releasing the plugin bundles is the `iller` command. Together with the profile it initializes a git repository, runs `dzil build` on it, and then adds the newly created files to the repo. I find that useful.
+Deprecated, and will be removed from CPAN shortly.
 
 # SEE ALSO
 
@@ -25,6 +21,10 @@ The reason for not just releasing the plugin bundles is the `iller` command. Tog
 [Dist::Milla](https://metacpan.org/pod/Dist::Milla)
 
 [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver)
+
+[Dist::Zilla::PluginBundle::Author::CSSON](https://metacpan.org/pod/Dist::Zilla::PluginBundle::Author::CSSON)
+
+[Pod::Weaver::PluginBundle::Author::CSSON](https://metacpan.org/pod/Pod::Weaver::PluginBundle::Author::CSSON)
 
 # AUTHOR
 

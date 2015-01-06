@@ -25,7 +25,7 @@ sub prepare_command {
     }
     elsif ($cmd->isa('Dist::Zilla::App::Command::new')) {
         $ENV{'ILLER_MINTING'} = 1;
-        IPC::Run::run [qw/dzil new --provider Iller --profile iller/, $args[0] ];
+        IPC::Run::run [qw/dzil new --provider Author::CSSON --profile csson/, $args[0] ];
         my $dir = $args[0];
         $dir =~ s{::}{-}g;
 

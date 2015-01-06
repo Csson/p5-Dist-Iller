@@ -1,5 +1,5 @@
 {
-   "abstract" : "Another way to use Dist::Zilla",
+   "abstract" : "(deprecated)",
    "author" : [
       "Erik Carlsson <info@code301.com>"
    ],
@@ -115,6 +115,6 @@
          "web" : "https://github.com/Csson/p5-Dist-Iller"
       }
    },
-   "version" : "0.1002"
+   "version" : "0.1101"
 }
 

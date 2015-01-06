@@ -8,6 +8,7 @@ requires 'MooseX::AttributeShortcuts';
 requires 'Types::Standard';
 
 requires 'Dist::Zilla', '5.000';
+requires 'Dist::Zilla::Plugin::PodWeaver', '4.000';
 
 requires 'Dist::Zilla::Role::PluginBundle::Easy';
 requires 'Dist::Zilla::Role::PluginBundle::PluginRemover';
@@ -43,6 +44,13 @@ requires 'Dist::Zilla::Plugin::UploadToStratopan';
 requires 'Dist::Zilla::Plugin::Git::Commit';
 requires 'Dist::Zilla::Plugin::Git::Tag';
 requires 'Dist::Zilla::Plugin::Git::Push';
+requires 'Dist::Zilla::Plugin::PodnameFromFilename';
+
+requires 'Config::INI';
+requires 'List::AllUtils';
+requires 'Path::Tiny';
+requires 'Pod::Weaver::Config::Assembler';
+requires 'namespace::autoclean';
 
 on 'test' => sub {
     requires 'Test::NoTabs';

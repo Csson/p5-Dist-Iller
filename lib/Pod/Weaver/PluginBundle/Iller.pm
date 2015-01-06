@@ -67,5 +67,7 @@ sub mvp_bundle_config {
     return @plugins;
 }
 
+1;
+
 # ABSTRACT: Pod::Weaver meets Dist::Iller
 

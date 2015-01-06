@@ -12,19 +12,40 @@ with 'Dist::Zilla::Role::PluginBundle::Config::Slicer';
 
 use namespace::autoclean;
 use List::AllUtils 'none';
+use Config::INI;
 
 has installer => (
-    is => 'ro',
+    is => 'rw',
     isa => Str,
     lazy => 1,
     default => sub { shift->payload->{'installer'} || 'ModuleBuildTiny' },
 );
 has is_private => (
-    is => 'ro',
+    is => 'rw',
     isa => Bool,
     required => 1,
     default => 0,
 );
+has is_task => (
+    is => 'rw',
+    isa => Bool,
+    default => 0,
+);
+has weaver_config => (
+    is => 'rw',
+    isa => Str,
+    default => '@Iller',
+);
+has homepage => (
+    is => 'rw',
+    isa => Str,
+    builder => 1,
+);
+
+sub _build_homepage {
+    my $distname = Config::INI::Reader->read_file('dist.ini')->{'_'}{'name'};
+    return sprintf 'https://metacpan.org/release/' . $distname;
+}
 
 sub build_file {
     my $self = shift;
@@ -54,6 +75,7 @@ sub configure {
                                    $self->build_file,
                                ] },
         ],
+        ['PodnameFromFilename'],
         ['ReversionOnRelease', { prompt => 1 } ],
         ['OurPkgVersion'],
         ['NextRelease', { format => '%v  %{yyyy-MM-dd HH:mm:ss VVV}d' } ],
@@ -66,6 +88,12 @@ sub configure {
                                     numify_version => 0,
                                   }
         ],
+        (
+            $self->is_task ?
+            ['TaskWeaver']
+            :
+            ['PodWeaver', { config_plugin => $self->weaver_config } ]
+        ),
         ['Git::Check', { allow_dirty => [
                            'dist.ini',
                            'Changes',
@@ -78,7 +106,7 @@ sub configure {
             $self->is_private ?
             ()
             :
-            ['GithubMeta', { issues => 1 } ]
+            ['GithubMeta', { issues => 1, homepage => $self->homepage } ]
         ),
         ['ReadmeAnyFromPod', { filename => 'README.md',
                                type => 'markdown',
@@ -96,6 +124,7 @@ sub configure {
         ['Test::EOL'],
         ['Test::EOF'],
         ['PodSyntaxTests'],
+        ['Test::Kwalitee::Extra'],
 
         ['MetaYAML'],
         ['License'],
@@ -107,12 +136,13 @@ sub configure {
         ['ManifestSkip'],
         ['CheckChangesHasContent'],
         ['TestRelease'],
+        ['ConfirmRelease'],
         [ $ENV{'FAKE_RELEASE'} ? 'FakeRelease' : $self->is_private ? 'UploadToStratopan' : 'UploadToCPAN' ],
         ['Git::Tag', { tag_format => '%v',
                        tag_message => ''
                      }
         ],
-        ['Git::Push', { remotes_must_exist => 0 } ],
+        ['Git::Push', { remotes_must_exist => 1 } ],
     );
 }
 
@@ -199,6 +229,7 @@ This is a L<Dist::Zilla> plugin bundle. It is about the same as a dist.ini with 
     [Test::EOL]
     [Test::EOF]
     [PodSyntaxTests]
+    [Test::Kwalitee::Extra]
 
     [MetaYAML]
 
@@ -259,24 +290,24 @@ To use L<UploadToStratopan|Dist::Zilla::Plugin::UploadToStratopan>, you need to 
     UploadToStratopan.repo = ...
     UploadToStratopan.stack = ...
 
+=head2 is_task
+
+Boolean. Default is B<0>.
+
+If true, L<Dist::Zilla::Plugin::TaskWeaver> is included instead of L<Dist::Zilla::Plugin::PodWeaver>.
+
+=head2 weaver_config
+
+String. Default is L<@Iller|Pod::Weaver::PluginBundle::Iller>.
+
+=head2 homepage
+
+String. Default is the release's page on metacpan.org. Not used if C<is_private> is true.
+
 =head1 SEE ALSO
 
 L<Dist::Zilla>
 
 L<Dist::Milla>
-
-=head1 AUTHOR
-
-Erik Carlsson E<lt>info@code301.comE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014- Erik Carlsson
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
-
 
 =cut

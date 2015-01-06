@@ -15,6 +15,9 @@ Revision history for Dist-Iller
 
  [Revision]
 
+0.1101 2015-01-07T00:00:23Z CET
+ - Deprecated.
+
 0.1100 2015-01-06T19:53:14Z CET
  [Enhancements]
  - Added a PodWeaver bundle

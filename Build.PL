@@ -18,12 +18,13 @@ my %module_build_args = (
     "Erik Carlsson <info\@code301.com>"
   ],
   "dist_name" => "Dist-Iller",
-  "dist_version" => "0.1001",
+  "dist_version" => "0.1002",
   "license" => "perl",
   "module_name" => "Dist::Iller",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
+    "Config::INI" => 0,
     "Dist::Zilla" => "5.000",
     "Dist::Zilla::Plugin::CheckChangesHasContent" => 0,
     "Dist::Zilla::Plugin::ConfirmRelease" => 0,
@@ -47,6 +48,8 @@ my %module_build_args = (
     "Dist::Zilla::Plugin::NextVersion::Semantic" => 0,
     "Dist::Zilla::Plugin::OurPkgVersion" => 0,
     "Dist::Zilla::Plugin::PodSyntaxTests" => 0,
+    "Dist::Zilla::Plugin::PodWeaver" => "4.000",
+    "Dist::Zilla::Plugin::PodnameFromFilename" => 0,
     "Dist::Zilla::Plugin::Prereqs::FromCPANfile" => 0,
     "Dist::Zilla::Plugin::PreviousVersion::Changelog" => 0,
     "Dist::Zilla::Plugin::ReadmeAnyFromPod" => 0,
@@ -62,9 +65,13 @@ my %module_build_args = (
     "File::chdir" => 0,
     "Git::Wrapper" => 0,
     "IPC::Run" => 0,
+    "List::AllUtils" => 0,
     "Moose" => "2.0000",
     "MooseX::AttributeShortcuts" => 0,
+    "Path::Tiny" => 0,
+    "Pod::Weaver::Config::Assembler" => 0,
     "Types::Standard" => 0,
+    "namespace::autoclean" => 0,
     "perl" => "5.010001"
   },
   "script_files" => [

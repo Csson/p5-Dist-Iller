@@ -8,8 +8,12 @@ Revision history for Dist-Iller
  [Documentation]
 
  [Enhancements]
+ - Added a PodWeaver bundle
+ - Added Test::Kwalitee::Extra to Dzil plugin bundle
+ - Adapted the module template to work with Pod::Weaver
 
  [Meta]
+ - Added Kwalitee test to dist.ini (and fixed the failures)
 
  [New Features]
 

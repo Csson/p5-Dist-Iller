@@ -202,6 +202,10 @@ This is a L<Dist::Zilla> plugin bundle. It is about the same as a dist.ini with 
     ; if is_private == 0, see below
     [GithubMeta]
     issues = 1
+    homepage = http://metacpan.org/release/dist-name
+
+    [PodWeaver]
+    config_bundle = @Iller
 
     [ReadmeAnyFromPod]
     filename = README.md
@@ -302,7 +306,7 @@ String. Default is L<@Iller|Pod::Weaver::PluginBundle::Iller>.
 
 =head2 homepage
 
-String. Default is the release's page on metacpan.org. Not used if C<is_private> is true.
+String. Default is the release's page on metacpan.org. Not set if C<is_private> is true.
 
 =head1 SEE ALSO
 

@@ -3,6 +3,7 @@ use strict;
 use Dist::Iller::App;
 
 # VERSION
+# PODNAME: iller
 
 Dist::Iller::App->run;
 

@@ -4,7 +4,7 @@ Dist::Iller - (deprecated)
 
 # VERSION
 
-version 0.1101
+version 0.1102
 
 # SYNOPSIS
 

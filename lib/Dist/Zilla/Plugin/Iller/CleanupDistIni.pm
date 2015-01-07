@@ -1,54 +1,35 @@
-package Dist::Iller::App;
-
-# VERSION
-
 use 5.20.0;
 use strict;
 use warnings;
-use experimental 'postderef';
-use parent 'Dist::Zilla::App';
-use IPC::Run;
-use File::chdir;
-use Git::Wrapper;
+
+package Dist::Zilla::Plugin::Iller::CleanupDistIni;
+
+# VERSION
+
+use Moose;
+use Path::Tiny;
+use Dist::Zilla::Util::BundleInfo;
+use Config::INI::Reader;
+use List::AllUtils 'any';
+with ('Dist::Zilla::Role::BeforeBuild', 'Dist::Zilla::Role::AfterBuild');
 
 
-sub _default_command_base { 'Dist::Zilla::App::Command' }
-
-sub prepare_command {
+sub before_build {
     my $self = shift;
 
-    my($cmd, $opt, @args) = $self->SUPER::prepare_command(@_);
-
-    if($cmd->isa('Dist::Zilla::App::Command::install')) {
-        $opt->{'install_command'} ||= 'cpanm .';
+    if(path('iller.ini')->exists) {
+        $self->make_dist_ini;
     }
-    elsif($cmd->isa('Dist::Zilla::App::Command::release')) {
-        $ENV{'DZIL_CONFIRMRELEASE_DEFAULT'} // 1;
-    }
-    elsif ($cmd->isa('Dist::Zilla::App::Command::new')) {
-        $ENV{'ILLER_MINTING'} = 1;
-        IPC::Run::run [qw/dzil new --provider Author::CSSON --profile csson/, $args[0] ];
-        my $dir = $args[0];
-        $dir =~ s{::}{-}g;
-
-        $CWD = $dir;
-        my $git = Git::Wrapper->new('.');
-        $git->add('.');
-        $git->commit(qw/ --message Init /, { all => 1 });
-        IPC::Run::run [qw/dzil build --no-tgz/];
-        IPC::Run::run [qw/dzil clean/];
-        $git->add('.');
-        $git->commit(qw/ --message Init /, { all => 1 });
-        exit;
-    }
-
-    return $cmd, $opt, @args;
 }
-sub execute_command {
+
+sub after_build {
     my $self = shift;
-    $self->SUPER::execute_command(@_);
 
+    if(path('iller.ini')->exists) {
+        $self->make_dist_ini('PodWeaver');
+    }
 }
+
 
 sub make_dist_ini {
     my @plugins_to_remove = @_;
@@ -89,5 +70,7 @@ sub make_dist_ini {
     path('dist.ini')->touch->spew_utf8($out);
             warn '   Has generated dist.ini';
 }
+
+
 
 1;

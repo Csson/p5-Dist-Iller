@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-package Dist::Zilla::App::Command::testar
+package Dist::Zilla::App::Command::testar;
 # ABSTRACT: test your dist
 $Dist::Zilla::App::Command::testar::VERSION = '5.030';
 use Dist::Zilla::App -command;

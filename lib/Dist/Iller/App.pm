@@ -10,6 +10,7 @@ use parent 'Dist::Zilla::App';
 use IPC::Run;
 use File::chdir;
 use Git::Wrapper;
+use Dist::Iller::DistIniHandler;
 
 
 sub _default_command_base { 'Dist::Zilla::App::Command' }
@@ -20,6 +21,7 @@ sub prepare_command {
     my($cmd, $opt, @args) = $self->SUPER::prepare_command(@_);
     $ENV{'ILLER_BUILDING'} = 1;
     warn $ENV{'ILLER_BUILDING'} . ' <<<<<<<';
+    Dist::Iller::DistIniHandler::make_dist_ini();
 
     if($cmd->isa('Dist::Zilla::App::Command::install')) {
         $opt->{'install_command'} ||= 'cpanm .';

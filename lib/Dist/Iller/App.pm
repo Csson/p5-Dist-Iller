@@ -18,6 +18,7 @@ sub prepare_command {
     my $self = shift;
 
     my($cmd, $opt, @args) = $self->SUPER::prepare_command(@_);
+    $ENV{'ILLER_BUILDING'} = 1;
 
     if($cmd->isa('Dist::Zilla::App::Command::install')) {
         $opt->{'install_command'} ||= 'cpanm .';

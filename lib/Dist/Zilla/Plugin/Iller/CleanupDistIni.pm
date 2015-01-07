@@ -17,6 +17,7 @@ with ('Dist::Zilla::Role::BeforeBuild', 'Dist::Zilla::Role::AfterBuild');
 sub before_build {
     my $self = shift;
 
+    return if !$ENV{'ILLER_BUILDING'};
     if(path('iller.ini')->exists) {
         $self->make_dist_ini;
     }
@@ -25,6 +26,7 @@ sub before_build {
 sub after_build {
     my $self = shift;
 
+    return if !$ENV{'ILLER_BUILDING'};
     if(path('iller.ini')->exists) {
         $self->make_dist_ini('PodWeaver');
     }

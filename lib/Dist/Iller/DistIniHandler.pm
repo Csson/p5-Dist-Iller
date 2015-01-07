@@ -9,8 +9,9 @@ use Dist::Zilla::Util::BundleInfo;
 use Config::INI::Reader;
 use DateTime;
 use List::AllUtils 'any';
+use experimental 'postderef';
 
-sub make_dist_ini {
+sub dist_ini_string {
     my @plugins_to_remove = @_;
 
     my $timestamp = DateTime->now;
@@ -25,16 +26,21 @@ sub make_dist_ini {
 
     PLUGIN:
     foreach my $plugin (sort keys $iller->%*) {
-        next PLUGIN if any { $plugin eq $_ } @plugins_to_remove;
 
         # Bundle?
         if($plugin =~ m{^@}) {
             my $settings = [ map { $_ => $iller->{ $plugin }{ $_ } } keys $iller->{ $plugin }->%* ];
             my $bundle = Dist::Zilla::Util::BundleInfo->new(bundle_name => $plugin, bundle_payload => $settings);
 
+            PLUGIN_IN_BUNDLE:
             foreach my $plugin_in_bundle ($bundle->plugins) {
-                $out .= $plugin_in_bundle->to_dist_ini;
-                $out .= "\n";
+                if(any { $plugin_in_bundle->{'name'} =~ m{.*/$_} } @plugins_to_remove) {
+                    warn sprintf '[PluginRemover] Removed plugin %s', $plugin_in_bundle->{'name'};
+                    next PLUGIN_IN_BUNDLE;
+                }
+                my $fordistini = $plugin_in_bundle->to_dist_ini;
+                $fordistini =~ s{ / Dist::Zilla::PluginBundle::Author::CSSON/[^/ ]+]}{]};
+                $out .= $fordistini;
             }
         }
         else {
@@ -46,7 +52,16 @@ sub make_dist_ini {
             $out .= "\n";
         }
     }
+    return $out;
+}
+
+sub make_dist_ini {
+    my @plugins_to_remove = @_;
+
+    my $out = dist_ini_string(@plugins_to_remove);
 
     path('dist.ini')->touch->spew_utf8($out);
             warn '   Has generated dist.ini';
 }
+
+1;

@@ -20,7 +20,6 @@ sub prepare_command {
 
     my($cmd, $opt, @args) = $self->SUPER::prepare_command(@_);
     $ENV{'ILLER_BUILDING'} = 1;
-    warn $ENV{'ILLER_BUILDING'} . ' <<<<<<<';
     Dist::Iller::DistIniHandler::make_dist_ini();
 
     if($cmd->isa('Dist::Zilla::App::Command::install')) {

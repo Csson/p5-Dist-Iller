@@ -88,6 +88,7 @@ sub configure {
                                     numify_version => 0,
                                   }
         ],
+        ['Iller::CleanupDistIni'],
         (
             $self->is_task ?
             ['TaskWeaver']

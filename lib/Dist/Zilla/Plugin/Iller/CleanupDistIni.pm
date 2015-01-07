@@ -10,6 +10,7 @@ use Moose;
 use Path::Tiny;
 use Dist::Zilla::Util::BundleInfo;
 use Config::INI::Reader;
+use DateTime;
 use List::AllUtils 'any';
 with ('Dist::Zilla::Role::BeforeBuild', 'Dist::Zilla::Role::AfterBuild');
 
@@ -37,7 +38,8 @@ sub after_build {
 sub make_dist_ini {
     my @plugins_to_remove = @_;
 
-    my $out = "; This file has been auto-generated\n\n";
+    my $timestamp = DateTime->now;
+    my $out = sprintf "; This file was auto-generated %s %s\n\n", $timestamp->ymd, $timestamp->hms;
     my $iller = Config::INI::Reader->read_file('iller.ini');
 
     foreach my $headerkey (sort keys $iller->{'_'}->%*) {

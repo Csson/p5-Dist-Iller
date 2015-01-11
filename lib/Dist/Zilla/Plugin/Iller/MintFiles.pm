@@ -57,16 +57,17 @@ requires 'perl', '5.010001';
 
 on test => sub {
     requires 'Test::More', '0.96';
-    requires 'Test::NoTabs';
 };
 
 ___[ dist.ini ]___
+
+___[ iller.ini ]___
 name = {{ $dist->name }}
 author = {{ $dist->authors->[0] }}
 license = Perl_5
 copyright_holder = {{ $dist->authors->[0] }}
 
-[@Iller]
+[@Author::CSSON]
 is_private = 0
 
 NextVersion::Semantic.major =

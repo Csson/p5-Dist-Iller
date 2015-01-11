@@ -9,9 +9,10 @@ package Dist::Zilla::Plugin::Iller::CleanupDistIni;
 use Moose;
 use Dist::Iller::DistIniHandler;
 use Path::Tiny;
+use Moose::Autobox;
 
 with ('Dist::Zilla::Role::AfterBuild', 'Dist::Zilla::Role::FileMunger');
-with 'Dist::Zilla::Role::FileFinderUser' => { default_finders => [qw/:All/] };
+with 'Dist::Zilla::Role::FileFinder';
 
 my @plugins_to_remove_on_build = ('PodWeaver', 'Iller::CleanupDistIni');
 
@@ -34,10 +35,15 @@ sub after_build {
     }
 }
 
+sub find_files {
+    my $self = shift;
+    return $self->zilla->files->grep(sub { $_->name eq 'dist.ini' });
+}
+
 sub munge_files {
     my $self = shift;
 
-    foreach my $file (@{ $self->found_files }) {
+    foreach my $file (@{ $self->find_files }) {
         next if $file->name ne 'dist.ini';
         $file->content(Dist::Iller::DistIniHandler::dist_ini_string(@plugins_to_remove_on_build));
     }

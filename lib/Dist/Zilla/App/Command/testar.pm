@@ -62,9 +62,9 @@ sub abstract { 'test your dist' }
 sub execute {
   my ($self, $opt, $arg) = @_;
   
-  local $ENV{'ILLER_AUTHOR_TEST'} = 1;
-  local $ENV{RELEASE_TESTING} = 1;
-  local $ENV{AUTHOR_TESTING} = 1;
+  $ENV{'ILLER_AUTHOR_TEST'} = 1;
+  $ENV{RELEASE_TESTING} = 1;
+  $ENV{AUTHOR_TESTING} = 1;
   local $ENV{AUTOMATED_TESTING} = 1 if $opt->automated or $opt->all;
  
   $self->zilla->test({

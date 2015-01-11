@@ -57,6 +57,7 @@ sub dist_ini_string {
 
 sub make_dist_ini {
     my @plugins_to_remove = @_;
+    return if !path('iller.ini')->exists;
 
     my $out = dist_ini_string(@plugins_to_remove);
 

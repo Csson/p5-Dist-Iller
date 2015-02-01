@@ -39,7 +39,8 @@ sub dist_ini_string {
                     next PLUGIN_IN_BUNDLE;
                 }
                 my $fordistini = $plugin_in_bundle->to_dist_ini;
-                $fordistini =~ s{ / Dist::Zilla::PluginBundle::Author::CSSON/[^/ ]+]}{]};
+                $fordistini =~ s{/[^/]*Dist::Zilla::PluginBundle::Author::CSSON.*]}{]};
+                $fordistini =~ s{\h\]}{]};
                 $out .= $fordistini;
             }
         }

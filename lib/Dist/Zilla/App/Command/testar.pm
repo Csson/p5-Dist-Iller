@@ -4,7 +4,7 @@ package Dist::Zilla::App::Command::testar;
 # ABSTRACT: test your dist
 $Dist::Zilla::App::Command::testar::VERSION = '5.030';
 use Dist::Zilla::App -command;
- 
+
 #pod =head1 SYNOPSIS
 #pod
 #pod   dzil test [ --release ] [ --no-author ] [ --automated ] [ --all ]
@@ -27,7 +27,7 @@ use Dist::Zilla::App -command;
 #pod be removed and F<dzil> will exit with status 0.
 #pod
 #pod =cut
- 
+
 sub opt_spec {
   [ 'release'   => 'enables the RELEASE_TESTING env variable', { default => 0 } ],
   [ 'automated' => 'enables the AUTOMATED_TESTING env variable', { default => 0 } ],
@@ -36,7 +36,7 @@ sub opt_spec {
   [ 'keep-build-dir|keep' => 'keep the build directory even after a success' ],
   [ 'jobs|j=i' => 'number of parallel test jobs to run' ],
 }
- 
+
 #pod =head1 OPTIONS
 #pod
 #pod =head2 --release
@@ -56,17 +56,17 @@ sub opt_spec {
 #pod Equivalent to --release --automated --author
 #pod
 #pod =cut
- 
+
 sub abstract { 'test your dist' }
- 
+
 sub execute {
   my ($self, $opt, $arg) = @_;
-  
+
   $ENV{'ILLER_AUTHOR_TEST'} = 1;
   $ENV{RELEASE_TESTING} = 1;
   $ENV{AUTHOR_TESTING} = 1;
   local $ENV{AUTOMATED_TESTING} = 1 if $opt->automated or $opt->all;
- 
+
   $self->zilla->test({
     $opt->keep_build_dir
       ? (keep_build_dir => 1)
@@ -76,7 +76,7 @@ sub execute {
       : (),
   });
 }
- 
+
 1;
- 
+
 __END__

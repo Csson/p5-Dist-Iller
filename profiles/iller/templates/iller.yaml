@@ -1,0 +1,52 @@
+--- !dist
+name: {{ $dist->name }}
+author: {{ $dist->authors->[0] }}
+license: Perl_5
+copyright_holder: {{ $dist->authors->[0] }}
+copyright_year: {{ (localtime)[5] + 1900 }}
+
+plugins:
+ - plugin: GatherDir
+ - plugin: PruneCruft
+ - plugin: ManifestSkip
+ - plugin: MetaYAML
+ - plugin: License
+ - plugin: Readme
+ - plugin: ExtraTests
+ - plugin: ExecDir
+ - plugin: ShareDir
+ - plugin: MakeMaker
+ - plugin: Manifest
+ - plugin: TestRelease
+ - plugin: ConfirmRelease
+ - plugin: UploadToCPAN
+
+
+
+
+
+
+
+
+--- !dist
+
+configs:
+ - config: Author::CSSON
+   plugins:
+    - remove_plugin: Readme
+   
+    - replace_plugin: ShareDir
+      dir: profiles
+   
+    - extend_plugin: NextVersion::Semantic
+      major: Rewrite
+   
+    - modify_plugin: Git::Tag
+      replace:
+        tag_message: Done
+   
+    - add_plugin: MapMetro::MakeLinesPod
+      __after: ExecDir
+      colors: 1
+
+  - config: Git

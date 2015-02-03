@@ -11,13 +11,15 @@ use File::chdir;
 use Git::Wrapper;
 use Path::Tiny;
 use YAML::XS;
+use Dist::Iller::Builder;
 
 sub _default_command_base { 'Dist::Zilla::App::Command' }
 
 sub prepare_command {
     my $self = shift;
 
-    generate_from_yaml();
+  #  generate_from_yaml();
+    Dist::Iller::Builder->new->parse->out;
     my($cmd, $opt, @args) = $self->SUPER::prepare_command(@_);
     $opt->{'profile'} = defined $opt->{'profile'} && $opt->{'profile'} eq 'default' ? 'iller' : $opt->{'profile'};
     $opt->{'provider'} = defined $opt->{'profile'} && $opt->{'provider'} eq 'Default' ? 'Iller' : $opt->{'provider'};

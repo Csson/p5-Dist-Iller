@@ -1,0 +1,79 @@
+__doctype: dist
+
+plugins:
+- plugin: GatherDir
+
+- plugin: PruneCruft
+
+- plugin: ManifestSkip
+
+- plugin: MetaYAML
+
+- plugin: License
+
+- plugin: Readme
+
+- plugin: ExtraTests
+
+- plugin: ExecDir
+
+- plugin: ShareDir
+
+- plugin: MakeMaker
+
+- plugin: Manifest
+
+- plugin: TestRelease
+
+- plugin: ConfirmRelease
+
+- plugin: UploadToCPAN
+
+---
+
+__doctype: weaver
+
+plugins:
+- plugin: '@CorePrep'
+
+- plugin: -SingleEncoding
+
+- plugin: Name
+
+- plugin: Version
+
+- plugin: prelude
+  __base: Region
+
+- plugin: Synopsis
+  __base: Generic
+
+- plugin: Description
+  __base: Generic
+
+- plugin: Overview
+  __base: Generic
+
+- plugin: Attributes
+  __base: Collect
+  command: attr
+  header: ATTRIBUTES
+
+- plugin: Methods
+  __base: Collect
+  command: method
+  header: METHODS
+
+- plugin: Functions
+  __base: Collect
+  command: func
+  header: FUNCTIONS
+
+- plugin: Leftovers
+
+- plugin: postlude
+  __base: Region
+
+- plugin: Authors
+
+- plugin: Legal

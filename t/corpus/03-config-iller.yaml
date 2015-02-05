@@ -1,4 +1,10 @@
+__doctype: dist
+
 author: Erik Carlsson
 
 plugins:
 - config: DistIllerTestConfig
+
+---
+
+__doctype: weaver

@@ -32,20 +32,7 @@ class Dist::Iller::Builder using Moose {
         coerce => 1,
     );
 
-    #has yaml => (
-    #    is => 'ro',
-    #    isa => Any,
-    #    init_arg => undef,
-    #);
-
-    #around BUILDARGS {
-    #    my $orig = shift;
-    #    my $class = shift;
-    #
-    #    $class->$orig(yaml => );
-    #}
-
-    method parse {
+    method parse() {
         use Data::Dump::Streamer;
         my $yaml = YAML::Tiny->read($self->filepath->stringify);
         foreach my $document (@$yaml) {
@@ -81,7 +68,19 @@ class Dist::Iller::Builder using Moose {
     method parse_plugins($set, $plugins) {
         foreach my $item (@$plugins) {
             $self->parse_plugin($set, $item) if exists $item->{'plugin'};
+            $self->parse_config($set, $item) if exists $item->{'config'};
         }
+    }
+
+    method parse_config($set, HashRef $config) {
+        my $config_name = delete $config->{'config'};
+        eval "use Dist::Iller::Config::$config_name";
+        if($@) {
+            die "Can't find Dist::Iller::Config::$config_name in: \n  " . join "\n  " => @INC;
+        }
+
+        my $configobj = "Dist::Iller::Config::$config_name"->new;
+        my $yaml = YAML::Tiny->read($configobj->filepath->stringify);
     }
 
     method parse_plugin($set, HashRef $plugin) {

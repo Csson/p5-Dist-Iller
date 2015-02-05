@@ -40,10 +40,10 @@ class Dist::Iller::Configuration using Moose {
 
     method to_string {
         my @strings = ();
-        push @strings => $self->author if $self->has_author;
-        push @strings => $self->license if $self->has_license;
-        push @strings => $self->copyright_holder if $self->has_copyright_holder;
-        push @strings => $self->copyright_year if $self->has_copyright_year;
+        push @strings => sprintf 'author = %s', $self->author if $self->has_author;
+        push @strings => sprintf 'license = %s', $self->license if $self->has_license;
+        push @strings => sprintf 'copyright_holder = %s', $self->copyright_holder if $self->has_copyright_holder;
+        push @strings => sprintf 'copyright_year = %s', $self->copyright_year if $self->has_copyright_year;
 
         foreach my $plugin ($self->all_plugins) {
             push @strings => $plugin->to_string;

@@ -1,5 +1,7 @@
 use Dist::Iller::Standard;
 
+# PODCLASSNAME
+
 class Dist::Iller::Configuration using Moose {
 
     has author => (
@@ -31,11 +33,11 @@ class Dist::Iller::Configuration using Moose {
 __END__
 
 __document_type: dist
-author: 
+author:
 
 plugins:
 - config: Default
-  
+
 ---
 __document_type: weaver
 plugins:

@@ -4,11 +4,8 @@ use Dist::Iller::Standard;
 # PODCLASSNAME
 
 role Dist::Iller::Role::Config using Moose {
-    has filepath => (
-        is => 'ro',
-        isa => Path,
-        coerce => 1,
-    );
+    requires 'filepath';
+
     method configdir {
         my $package = $self->package;
         $package =~ s{::}{-}g;
@@ -22,3 +19,5 @@ role Dist::Iller::Role::Config using Moose {
     }
 
 }
+
+1;

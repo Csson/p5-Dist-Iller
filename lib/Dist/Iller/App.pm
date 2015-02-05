@@ -19,7 +19,7 @@ sub prepare_command {
     my $self = shift;
 
   #  generate_from_yaml();
-    Dist::Iller::Builder->new->parse->out;
+    Dist::Iller::Builder->new->parse->generate_dist_ini;
     my($cmd, $opt, @args) = $self->SUPER::prepare_command(@_);
     $opt->{'profile'} = defined $opt->{'profile'} && $opt->{'profile'} eq 'default' ? 'iller' : $opt->{'profile'};
     $opt->{'provider'} = defined $opt->{'profile'} && $opt->{'provider'} eq 'Default' ? 'Iller' : $opt->{'provider'};

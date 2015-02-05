@@ -12,6 +12,7 @@ package #
     use Types::Path::Tiny();
     use MooseX::AttributeDocumented();
     use MooseX::AttributeShortcuts();
+    use PerlX::Maybe();
 
     sub import {
         my $class = shift;
@@ -19,6 +20,7 @@ package #
 
         push @{ $opts{'imports'} ||= [] } => (
             'List::AllUtils'    => [qw/any none sum uniq/],
+            'PerlX::Maybe'      => [qw/maybe/],
             'feature'           => [qw/:5.14/],
             'Path::Tiny'        => [],
             'Types::Path::Tiny'  => [{ replace => 1 }, '-types'],

@@ -4,6 +4,8 @@ use Dist::Iller::Standard;
 # PODCLASSNAME
 
 use YAML::Tiny;
+use Dist::Iller::Configuration;
+use Dist::Iller::Configuration::Plugin;
 
 class Dist::Iller::Builder using Moose {
 
@@ -44,17 +46,24 @@ class Dist::Iller::Builder using Moose {
     #}
 
     method parse {
-
-        foreach my $document (YAML::Tiny->read($self->filepath->stringify)) {
-            if(delete $document->{'__doctype'} eq 'dist') {
+        use Data::Dump::Streamer;
+        my $yaml = YAML::Tiny->read($self->filepath->stringify);
+        foreach my $document (@$yaml) {
+            warn '-------------------->';
+            warn Dump($document)->Out;
+            warn '<--------------------';
+            if($document->{'__doctype'} eq 'dist') {
                 next if $self->has_dist;
                 $self->parse_doc($self->dist, $document);
             }
-            elsif(delete $document->{'__doctype'} eq 'weaver') {
+            elsif($document->{'__doctype'} eq 'weaver') {
                 next if $self->has_weaver;
                 $self->parse_doc($self->weaver, $document);
             }
         }
+        warn $self->dist->to_string;
+        warn '=======';
+        warn $self->weaver->to_string;
     }
 
     method parse_doc($set, $yaml) {
@@ -70,9 +79,19 @@ class Dist::Iller::Builder using Moose {
     }
 
     method parse_plugins($set, $plugins) {
-        foreach my $plugin (@$plugins) {
-            $self->parse_plugin($set, $plugin) if exists $plugin->{'plugin'};
+        foreach my $item (@$plugins) {
+            $self->parse_plugin($set, $item) if exists $item->{'plugin'};
         }
+    }
+
+    method parse_plugin($set, HashRef $plugin) {
+        my $plugin_name = delete $plugin->{'plugin'};
+
+        $set->add_plugin({
+            plugin => $plugin_name,
+      maybe base => delete $plugin->{'__base'},
+            parameters => $plugin,
+        });
     }
 
     method generate_dist_ini {

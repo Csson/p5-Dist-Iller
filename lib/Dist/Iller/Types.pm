@@ -12,6 +12,7 @@ declares IllerConfigurationPlugin
 
     class_type IllerConfiguration       => { class => 'Dist::Iller::Configuration' };
     class_type IllerConfigurationPlugin => { class => 'Dist::Iller::Configuration::Plugin' };
+    class_type IllerDoctype             => { class => 'Dist::Iller::Doctype' };
 
     coerce IllerConfigurationPlugin,
         from HashRef, via {

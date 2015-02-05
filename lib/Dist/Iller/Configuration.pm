@@ -4,6 +4,10 @@ use Dist::Iller::Standard;
 
 class Dist::Iller::Configuration using Moose {
 
+    has doctype => (
+        is => 'ro',
+        isa => IllerDoctype,
+    );
     has author => (
         is => 'rw',
         isa => Str,

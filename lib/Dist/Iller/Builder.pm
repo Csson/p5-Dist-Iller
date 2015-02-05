@@ -6,6 +6,7 @@ use Dist::Iller::Standard;
 use YAML::Tiny;
 use Dist::Iller::Configuration;
 use Dist::Iller::Configuration::Plugin;
+use Dist::Iller::Doctype;
 
 class Dist::Iller::Builder using Moose with Dist::Iller::Role::ConfigBuilder {
 
@@ -15,7 +16,7 @@ class Dist::Iller::Builder using Moose with Dist::Iller::Role::ConfigBuilder {
         lazy => 1,
         predicate => 1,
         isa => IllerConfiguration,
-        default => sub { Dist::Iller::Configuration->new },
+        default => sub { Dist::Iller::Configuration->new(doctype => Dist::Iller::Doctype->dist) },
     );
     has weaver => (
         is => 'ro',
@@ -23,7 +24,7 @@ class Dist::Iller::Builder using Moose with Dist::Iller::Role::ConfigBuilder {
         lazy => 1,
         predicate => 1,
         isa => IllerConfiguration,
-        default => sub { Dist::Iller::Configuration->new },
+        default => sub { Dist::Iller::Configuration->new(doctype => Dist::Iller::Doctype->weaver) },
     );
     has filepath => (
         is => 'ro',

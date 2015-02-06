@@ -64,6 +64,8 @@ sub dist {
         [TestRelease]
 
         [ConfirmRelease]
+        default = $self.confirm_release
+        prompt = $
 
         [UploadToCPAN]
 

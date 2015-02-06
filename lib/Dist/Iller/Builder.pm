@@ -148,7 +148,7 @@ class Dist::Iller::Builder using Moose {
         $set->add_plugin({
                     plugin => $plugin_name,
               maybe base => delete $plugin->{'+base'},
-                    parameters => $plugin,
+                    parameters => $self->set_values_from_config($plugin),
         });
     }
 
@@ -161,7 +161,7 @@ class Dist::Iller::Builder using Moose {
         my $plugin = Dist::Iller::Configuration::Plugin->new(
                     plugin => $replace_with // $plugin_name,
               maybe base => delete $replacer->{'+base'},
-                    parameters => $replacer,
+                    parameters => $self->set_values_from_config($replacer),
         );
 
         $set->insert_plugin($plugin_name, $plugin, after => 0, replace => 1);
@@ -174,7 +174,7 @@ class Dist::Iller::Builder using Moose {
 
         my $plugin = Dist::Iller::Configuration::Plugin->new(
                     plugin => $plugin_name,
-                    parameters => $extender,
+                    parameters => $self->set_values_from_config($extender),
         );
 
         $set->extend_plugin($plugin_name, $plugin, remove => delete $extender->{'+remove'});
@@ -188,7 +188,7 @@ class Dist::Iller::Builder using Moose {
         my $plugin = Dist::Iller::Configuration::Plugin->new(
                     plugin => $plugin_name,
               maybe base => delete $adder->{'+base'},
-                    parameters => $adder,
+                    parameters => $self->set_values_from_config($adder),
         );
 
         my $after = delete $adder->{'+after'};
@@ -201,6 +201,26 @@ class Dist::Iller::Builder using Moose {
         return if !$self->check_conditionals($remover);
 
         $set->remove_plugin($remover->{'remove_plugin'});
+    }
+
+    method set_values_from_config($parameters) {
+        return $parameters if !$self->has_current_config;
+
+        foreach my $param (keys %$parameters) {
+            next if $param =~ m{^\+};
+            next if $parameters->{ $param } !~ m{[^.]\.[^.]};
+
+            my($type, $what) = split /\./ => $parameters->{ $param };
+            next if none { $_ eq $type } qw/$env $self/;
+
+            if($type eq '$env' && exists $ENV{ uc $what }) {
+                $parameters->{ $param } = $ENV{ uc $what };
+            }
+            elsif($type eq '$self' && $self->current_config->$_can($what)) {
+                $parameters->{ $param } = $self->current_config->$what;
+            }
+        }
+        return $parameters;
     }
 
     method check_conditionals(HashRef $plugin_data) {

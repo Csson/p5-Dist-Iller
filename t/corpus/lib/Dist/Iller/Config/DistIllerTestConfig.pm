@@ -21,8 +21,6 @@ class Dist::Iller::Config::DistIllerTestConfig using Moose with Dist::Iller::Rol
         isa => Str,
         default => '>',
     );
-    
-
     has is_task => (
         is => 'ro',
         isa => Bool,

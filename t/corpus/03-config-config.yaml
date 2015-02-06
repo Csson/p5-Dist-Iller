@@ -1,4 +1,4 @@
-__doctype: dist
++doctype: dist
 
 plugins:
 - plugin: GatherDir
@@ -6,16 +6,29 @@ plugins:
 - plugin: PruneCruft
 
 - plugin: ManifestSkip
+  +remove_if: $self.no_manifest_skip
+
+- plugin: PodWeaver
+  +remove_if: $self.is_task
+
+- plugin: TaskWeaver
+  +add_if: $self.is_task
 
 - plugin: MetaYAML
 
 - plugin: License
 
 - plugin: Readme
+  root: yes
+  more_root: no
+  suffix: txt
+  headings:
+  - head1
 
 - plugin: ExtraTests
 
 - plugin: ExecDir
+  dir: script
 
 - plugin: ShareDir
 
@@ -26,12 +39,14 @@ plugins:
 - plugin: TestRelease
 
 - plugin: ConfirmRelease
+  default: $self.confirm_release
+  prompt: $self.prompt
 
 - plugin: UploadToCPAN
 
 ---
 
-__doctype: weaver
++doctype: weaver
 
 plugins:
 - plugin: '@CorePrep'
@@ -43,36 +58,36 @@ plugins:
 - plugin: Version
 
 - plugin: prelude
-  __base: Region
+  +base: Region
 
 - plugin: Synopsis
-  __base: Generic
+  +base: Generic
 
 - plugin: Description
-  __base: Generic
+  +base: Generic
 
 - plugin: Overview
-  __base: Generic
+  +base: Generic
 
 - plugin: Attributes
-  __base: Collect
+  +base: Collect
   command: attr
   header: ATTRIBUTES
 
 - plugin: Methods
-  __base: Collect
+  +base: Collect
   command: method
   header: METHODS
 
 - plugin: Functions
-  __base: Collect
+  +base: Collect
   command: func
   header: FUNCTIONS
 
 - plugin: Leftovers
 
 - plugin: postlude
-  __base: Region
+  +base: Region
 
 - plugin: Authors
 

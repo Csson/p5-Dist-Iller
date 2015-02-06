@@ -5,13 +5,7 @@ use Dist::Iller::Standard;
 
 role Dist::Iller::Role::Config using Moose {
     requires 'filepath';
-    use Data::Dump::Streamer;
 
-    method configdir {
-        my $package = $self->package;
-        $package =~ s{::}{-}g;
-        return path(dist_dir($package));
-    }
     method configlocation {
         my $package = $self->package;
         $package =~ s{::}{-}g;
@@ -27,20 +21,29 @@ role Dist::Iller::Role::Config using Moose {
 
     method get_yaml_for_dist {
         my $yaml = YAML::Tiny->read($self->filepath->stringify);
-        warn "\n\n     IN THE CONFIG \n \n" . Dump($yaml)->Out;
-        warn '!!!--------------------!!!';
+
+        return (grep { $_->{'+doctype'} eq 'dist'} @$yaml)[0];
 
         foreach my $document (@$yaml) {
             if($document->{'+doctype'} eq 'dist') {
-                return $self->run_modifications($document);
+                return $document;
+            }
+        }
+
+    }
+    method get_yaml_for_weaver {
+        my $yaml = YAML::Tiny->read($self->filepath->stringify);
+
+        return (grep { $_->{'+doctype'} eq 'weaver'} @$yaml)[0];
+
+        foreach my $document (@$yaml) {
+            if($document->{'+doctype'} eq 'dist') {
+                return $document;
             }
         }
 
     }
 
-    method run_modifications(HashRef $yaml) {
-        return 1;
-    }
 
 }
 

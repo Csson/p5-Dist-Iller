@@ -10,7 +10,7 @@ use IPC::Run;
 use File::chdir;
 use Git::Wrapper;
 use Path::Tiny;
-use YAML::XS;
+use YAML::Tiny;
 use Dist::Iller::Builder;
 
 sub _default_command_base { 'Dist::Zilla::App::Command' }
@@ -19,7 +19,10 @@ sub prepare_command {
     my $self = shift;
 
   #  generate_from_yaml();
-    Dist::Iller::Builder->new->parse->generate_dist_ini;
+    my $builder = Dist::Iller::Builder->new->parse;
+    $builder->generate_dist_ini if defined $builder;
+    $builder->generate_weaver_ini if defined $builder;
+
     my($cmd, $opt, @args) = $self->SUPER::prepare_command(@_);
     $opt->{'profile'} = defined $opt->{'profile'} && $opt->{'profile'} eq 'default' ? 'iller' : $opt->{'profile'};
     $opt->{'provider'} = defined $opt->{'profile'} && $opt->{'provider'} eq 'Default' ? 'Iller' : $opt->{'provider'};
@@ -58,7 +61,6 @@ sub execute_command {
 
 sub generate_from_yaml {
     warn 'No iller.yaml to generate from' and return if !path('iller.yaml')->exists;
-    warn 'Generating...';
     my $yaml = path('iller.yaml')->slurp_utf8;
     my @configs = YAML::XS::Load($yaml);
 
@@ -91,7 +93,18 @@ sub generate_distini_from_yaml {
         push @contents => '';
     }
     my $contents = join "\n" => @contents, '';
-    path('dist.ini')->spew_utf8(join "\n" => $contents);
+    if(path('dist.ini')->exists) {
+        my $current_contents = path('dist.ini')->slurp_utf8;
+        $current_contents =~ s{^;.*$}{}g;
+        my $copied_contents = $contents;
+        $copied_contents =~ s{^;.*$}{}g;
+        if($current_contents ne $copied_contents) {
+            path('dist.ini')->spew_utf8($contents);
+        }
+    }
+    else {
+        path('dist.ini')->spew_utf8(join "\n" => $contents);
+    }
 }
 
 sub kv_out {

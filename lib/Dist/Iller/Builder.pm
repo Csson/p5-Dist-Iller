@@ -10,6 +10,7 @@ use Dist::Iller::Doctype;
 
 class Dist::Iller::Builder using Moose {
 
+    use Safe::Isa qw/$_can/;
     has dist => (
         is => 'ro',
         init_arg => undef,
@@ -32,14 +33,20 @@ class Dist::Iller::Builder using Moose {
         default => 'iller.yaml',
         coerce => 1,
     );
+    has current_config => (
+        is => 'rw',
+        isa => ConsumerOf['Dist::Iller::Role::Config'],
+        predicate => 1,
+        clearer => 1,
+    );
 
     method parse() {
-        use Data::Dump::Streamer;
+        if(!path('dist.ini')->exists) {
+            warn 'No dist.ini - quitting';
+            return;
+        }
         my $yaml = YAML::Tiny->read($self->filepath->stringify);
         foreach my $document (@$yaml) {
-            warn '-------------------->';
-            warn Dump($document)->Out;
-            warn '<--------------------';
             if($document->{'+doctype'} eq 'dist') {
                 next if $self->has_dist;
                 $self->parse_doc($self->dist, $document);
@@ -49,18 +56,53 @@ class Dist::Iller::Builder using Moose {
                 $self->parse_doc($self->weaver, $document);
             }
         }
-        warn $self->dist->to_string;
-        warn '=======';
-        warn $self->weaver->to_string;
+        return $self;
     }
 
     method generate_dist_ini {
-
-        use Data::Dump::Streamer;
-        warn Dump($self->yaml)->Out;
+        $self->generate_ini('dist.ini', $self->dist);
+    }
+    method generate_weaver_ini {
+        $self->generate_ini('weaver.ini', $self->weaver);
     }
 
-        method parse_doc(IllerConfiguration $set, HashRef $yaml) {
+    method generate_ini($filename, $config) {
+        my $plugins = delete $config->{'plugins'};
+
+        my @contents = ();
+        foreach my $key ('name', sort grep { $_ ne 'name' } keys %$config) {
+            push @contents => kv_out($config, $key);
+        }
+        push @contents => '';
+        foreach my $plugin (@$plugins) {
+            push @contents => plugin_name_out($plugin);
+
+            foreach my $key (sort keys %$plugin) {
+                push @contents => kv_out($plugin, $key);
+            }
+            push @contents => '';
+        }
+        my $contents = join "\n" => @contents, '';
+        if(path($filename)->exists) {
+            my $current_contents = path($filename)->slurp_utf8;
+            $current_contents =~ s{^;.*$}{}g;
+            my $copied_contents = $contents;
+            $copied_contents =~ s{^;.*$}{}g;
+            if($current_contents ne $copied_contents) {
+                path($filename)->spew_utf8($contents);
+                say "Generated $filename";
+            }
+            else {
+                say "No changes for $filename";
+            }
+        }
+        else {
+            path($filename)->spew_utf8(join "\n" => $contents);
+            say "Generated $filename";
+        }
+    }
+
+    method parse_doc(IllerConfiguration $set, HashRef $yaml) {
         foreach my $setting (qw/author license copyright_holder copyright_year/) {
             my $predicate = "has_$setting";
             if(exists $yaml->{ $setting } && !$set->$predicate) {
@@ -74,7 +116,6 @@ class Dist::Iller::Builder using Moose {
 
     method parse_plugins(IllerConfiguration $set, $plugins) {
         foreach my $item (@$plugins) {
-            warn Dump($item)->Out;
             $self->parse_plugin($set, $item) if exists $item->{'plugin'};
             $self->parse_config($set, $item) if exists $item->{'config'};
             $self->parse_remove($set, $item) if exists $item->{'remove_plugin'};
@@ -91,26 +132,18 @@ class Dist::Iller::Builder using Moose {
             die "Can't find Dist::Iller::Config::$config_name ($@) in: \n  " . join "\n  " => @INC;
         }
 
-        my $configobj = "Dist::Iller::Config::$config_name"->new;
+        my $configobj = "Dist::Iller::Config::$config_name"->new(%$config);
+        $self->current_config($configobj);
 
-        $configobj->get_yaml_for($set->doctype);
-#
-#        $configobj->get_dist_yaml;
-#        $configobj->get_weaver_yaml;
-
-        my $yaml = YAML::Tiny->read($configobj->filepath->stringify);
-
-        foreach my $document (@$yaml) {
-            if($document->{'+doctype'} eq $set->doctype->type) {
-                delete $document->{'+doctype'};
-                $self->parse_doc($set, $document);
-                last;
-            }
-        }
+        my $configdoc = $configobj->get_yaml_for($set->doctype);
+        $self->parse_doc($set, $configdoc);
+        $self->clear_current_config;
     }
 
     method parse_plugin(IllerConfiguration $set, HashRef $plugin) {
         my $plugin_name = delete $plugin->{'plugin'};
+
+        return if !$self->check_conditionals($plugin);
 
         $set->add_plugin({
                     plugin => $plugin_name,
@@ -171,13 +204,48 @@ class Dist::Iller::Builder using Moose {
     }
 
     method check_conditionals(HashRef $plugin_data) {
-        if(exists $plugin_data->{'+if'} && $plugin_data->{'+if'} =~ m{[^.]\.[^.]}) {
-            my($type, $what) = split /\./ => $plugin_data->{'+if'};
+
+        if(exists $plugin_data->{'+if'}) {
+            my($type, $what) = $self->get_type_what($plugin_data->{'+if'});
+            return if !defined $type;
+
             if($type eq '$env') {
                 return 0 if !$ENV{ uc $what };
             }
         }
+        elsif(exists $plugin_data->{'+remove_if'}) {
+            my($type, $what) = $self->get_type_what($plugin_data->{'+remove_if'});
+            return if !defined $type;
+
+            if($type eq '$env') {
+                return 0 if !$ENV{ uc $what };
+            }
+            elsif($type eq '$self' && $self->has_current_config) {
+                return 1 if !$self->current_config->$_can($what);
+                return !$self->current_config->$what;
+            }
+        }
+        elsif(exists $plugin_data->{'+add_if'}) {
+            my($type, $what) = $self->get_type_what($plugin_data->{'+add_if'});
+            return if !defined $type;
+
+            if($type eq '$env') {
+                return 1 if $ENV{ uc $what };
+            }
+            elsif($type eq '$self' && $self->has_current_config) {
+                return 0 if !$self->current_config->$_can($what);
+                return $self->current_config->$what;
+            }
+        }
+
         return 1;
+    }
+
+    method get_type_what(Str $from) {
+        return () if !defined $from;
+        return () if !length $from;
+        return () if $from !~ m{[^.]\.[^.]};
+        return split /\./ => $from;
     }
 
 }

@@ -55,19 +55,21 @@ class Dist::Iller::Configuration using Moose {
                 my @all_plugins = $self->all_plugins;
                 splice @all_plugins, ($after ? $index + 1 : $index), ($replace ? 1 : 0), $new_plugin;
                 $self->plugins(\@all_plugins);
-                warn "Replaced [$plugin_name]";
+                say "Replaced [$plugin_name]";
                 last;
             }
         }
     }
 
     method extend_plugin(Str $plugin_name, IllerConfigurationPlugin $new_plugin, :$remove) {
-        warn 'remove: ' . Dump($remove)->Out;
+
+        say 'remove: ' . Dump($remove)->Out;
 
         $remove = defined $remove ? ref $remove eq 'ARRAY' ? $remove
                                                            : [ $remove ]
                 :                                            []
                 ;
+        say sprintf 'From %s remove %s', $plugin_name, join ', ' => @$remove if scalar @$remove;
 
         foreach my $index (0 .. $self->count_plugins - 1) {
             my $current_plugin = $self->get_plugin($index);
@@ -90,7 +92,7 @@ class Dist::Iller::Configuration using Moose {
                 my @all_plugins = $self->all_plugins;
                 splice @all_plugins, $index, 1;
                 $self->plugins(\@all_plugins);
-                warn "Removed [$remove_name]";
+                say "Removed [$remove_name]";
                 last;
             }
         }
@@ -107,7 +109,7 @@ class Dist::Iller::Configuration using Moose {
             push @strings => $plugin->to_string;
         }
 
-        return join "\n" => @strings;
+        return join "\n" => @strings, '';
     }
 }
 

@@ -5,7 +5,6 @@ use Dist::Iller::Standard;
 
 class Dist::Iller::Configuration::Plugin using Moose {
 
-    use Data::Dump::Streamer;
     has plugin => (
         is => 'ro',
         isa => Str,
@@ -29,14 +28,10 @@ class Dist::Iller::Configuration::Plugin using Moose {
 
     method merge_with(IllerConfigurationPlugin $other_plugin) {
         foreach my $param ($other_plugin->parameter_keys) {
-            warn $param . ' ---';
             if($self->get_parameter($param)) {
-                warn 'other ref: ' . ref $other_plugin->get_parameter($param);
-                warn 'self ref:  ' . ref $self->get_parameter($param);
                 if(ref $other_plugin->get_parameter($param) eq 'ARRAY') {
                     if(ref $self->get_parameter($param) eq 'ARRAY') {
                         my $new_param_data = [ uniq @{ $self->get_parameter($param) }, @{ $other_plugin->get_parameter($param) } ];
-                        warn Dump($new_param_data)->Out;
                         $self->set_parameter($param, $new_param_data);
                     }
                     else {
@@ -51,17 +46,16 @@ class Dist::Iller::Configuration::Plugin using Moose {
             else {
                 $self->set_parameter($param, $other_plugin->get_parameter($param));
             }
-            warn ' = ' x 10;
         }
     }
 
     method to_string {
-        warn Dump($self->parameters)->Out;
         my @strings = $self->has_base ? (sprintf '[%s / %s]' => $self->base, $self->plugin)
                     :                   (sprintf '[%s]' => $self->plugin)
                     ;
 
         foreach my $parameter (sort $self->parameter_keys) {
+            next if $parameter =~ m{^\+};
             my $value = $self->get_parameter($parameter);
 
             if(ref $value eq 'ARRAY') {

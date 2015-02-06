@@ -4,6 +4,8 @@ use Dist::Iller::Standard;
 
 class Dist::Iller::Configuration using Moose {
 
+    use Data::Dump::Streamer;
+
     has doctype => (
         is => 'ro',
         isa => IllerDoctype,
@@ -39,8 +41,60 @@ class Dist::Iller::Configuration using Moose {
             all_plugins => 'elements',
             filter_plugins => 'grep',
             find_plugin => 'first',
+            count_plugins => 'count',
+            get_plugin => 'get',
         },
     );
+
+    method insert_plugin(Str $plugin_name, IllerConfigurationPlugin $new_plugin, Bool :$after = 0, Bool :$replace = 0) {
+
+        foreach my $index (0 .. $self->count_plugins - 1) {
+            my $current_plugin = $self->get_plugin($index);
+
+            if($current_plugin->plugin eq $plugin_name) {
+                my @all_plugins = $self->all_plugins;
+                splice @all_plugins, ($after ? $index + 1 : $index), ($replace ? 1 : 0), $new_plugin;
+                $self->plugins(\@all_plugins);
+                warn "Replaced [$plugin_name]";
+                last;
+            }
+        }
+    }
+
+    method extend_plugin(Str $plugin_name, IllerConfigurationPlugin $new_plugin, :$remove) {
+        warn 'remove: ' . Dump($remove)->Out;
+
+        $remove = defined $remove ? ref $remove eq 'ARRAY' ? $remove
+                                                           : [ $remove ]
+                :                                            []
+                ;
+
+        foreach my $index (0 .. $self->count_plugins - 1) {
+            my $current_plugin = $self->get_plugin($index);
+
+            if($current_plugin->plugin eq $plugin_name) {
+                foreach my $param_to_remove (@$remove) {
+                    $current_plugin->delete_parameter($param_to_remove);
+                }
+                $current_plugin->merge_with($new_plugin);
+                last;
+            }
+        }
+    }
+
+    method remove_plugin(Str $remove_name) {
+        foreach my $index (0 .. $self->count_plugins - 1) {
+            my $current_plugin = $self->get_plugin($index);
+
+            if($current_plugin->plugin eq $remove_name) {
+                my @all_plugins = $self->all_plugins;
+                splice @all_plugins, $index, 1;
+                $self->plugins(\@all_plugins);
+                warn "Removed [$remove_name]";
+                last;
+            }
+        }
+    }
 
     method to_string {
         my @strings = ();

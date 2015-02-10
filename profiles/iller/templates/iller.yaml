@@ -1,5 +1,5 @@
 ---
-__document_type: dist.ini
++doctype: dist
 name: {{ $dist->name }}
 author: {{ $dist->authors->[0] }}
 license: Perl_5
@@ -23,10 +23,10 @@ plugins:
  - plugin: UploadToCPAN
 
 ---
-__document_type: weaver.ini
++doctype: weaver
 
 plugins:
-- plugin: @CorePrep
+- plugin: '@CorePrep'
 
 - plugin: '-SingleEncoding'
 
@@ -93,69 +93,3 @@ plugins:
 - plugin: Splint
   xp:     -Transformer
   transformer: Splint
-
-
-
-
- push @plugins => (
-        ['@Author::CSSON/CorePrep',       xp('@CorePrep'),       { } ],
-        ['@Author::CSSON/SingleEncoding', xp('-SingleEncoding'), { } ],
-        ['@Author::CSSON/Name',           xp('Name'),            { } ],
-        ['@Author::CSSON/Version',        xp('Version'),         { format => q{Version %v, released %{YYYY-MM-dd}d.} } ],
-        ['@Author::CSSON/Prelude',        xp('Region'),          { region_name => 'prelude' } ],
-    );
-
-    foreach my $plugin (qw/Synopsis Description Overview Stability/) {
-        push @plugins => ['@Author::CSSON/'.$plugin, xp('Generic'), { header => uc $plugin } ];
-    }
-
-    foreach my $plugin ( ['Attributes', 'attr'],
-                         ['Methods', 'method'],
-                         ['Functions', 'func'],
-    ) {
-        push @plugins => [ $plugin->[0], xp('Collect'), { command => $plugin->[1], header => uc $plugin->[0] } ];
-    }
-    push @plugins => (
-        ['@Author::CSSON/Leftovers',             xp('Leftovers'), { } ],
-        ['@Author::CSSON/postlude',              xp('Region'),    { } ],
-        (
-            !$ENV{'ILLER_MINTING'} && $include_default_github ?
-            ['@Author::CSSON/Source::DefaultGitHub', xp('Source::DefaultGitHub'), { text => 'L<%s>' } ]
-            :
-            ()
-        ),
-        ['@Author::CSSON/Homepage::DefaultCPAN', xp('Homepage::DefaultCPAN'), { text => 'L<%s>' } ],
-        ['@Author::CSSON/Authors',               xp('Authors'),   { } ],
-        ['@Author::CSSON/Legal',                 xp('Legal'),     { } ],
-
-        ['@Author::CSSON/List', xp('-Transformer'), { transformer => 'List' } ],
-        ['@Author::CSSON/Splint', xp('-Transformer'), { transformer => 'Splint' } ],
-    );
-
-
-
-
-
-
---- !dist
-
-configs:
- - config: Author::CSSON
-   plugins:
-    - remove_plugin: Readme
-   
-    - replace_plugin: ShareDir
-      dir: profiles
-   
-    - extend_plugin: NextVersion::Semantic
-      major: Rewrite
-   
-    - modify_plugin: Git::Tag
-      replace:
-        tag_message: Done
-   
-    - add_plugin: MapMetro::MakeLinesPod
-      __after: ExecDir
-      colors: 1
-
-  - config: Git

@@ -13,7 +13,7 @@ my $builder = Dist::Iller::Builder->new(filepath => 't/corpus/03-config-iller.ya
 $builder->parse;
 
 eq_or_diff $builder->dist->to_string, clean(dist()), 'Correct dist.ini';
-eq_or_diff $builder->weaver->to_string, weaver(), 'Correct dist.ini';
+eq_or_diff $builder->weaver->to_string, clean(weaver()), 'Correct dist.ini';
 
 done_testing;
 

@@ -4,12 +4,22 @@ use Dist::Iller::Standard;
 # PODCLASSNAME
 
 role Dist::Iller::Role::Config using Moose {
+    use File::ShareDir 'dist_dir';
+
     requires 'filepath';
+    has distribution_name => (
+        is => 'ro',
+        isa => Str,
+    );
 
     method configlocation {
         my $package = $self->package;
         $package =~ s{::}{-}g;
-        my $dir = path(dist_dir($package));
+        my $dir = path('.');
+        try {
+            $dir = path(dist_dir($package));
+        }
+        finally { };
         return $dir->child($self->filepath);
     }
 
@@ -20,29 +30,16 @@ role Dist::Iller::Role::Config using Moose {
     }
 
     method get_yaml_for_dist {
-        my $yaml = YAML::Tiny->read($self->filepath->stringify);
+        my $yaml = YAML::Tiny->read($self->configlocation->absolute->stringify);
 
         return (grep { $_->{'+doctype'} eq 'dist'} @$yaml)[0];
-
-        foreach my $document (@$yaml) {
-            if($document->{'+doctype'} eq 'dist') {
-                return $document;
-            }
-        }
-
     }
     method get_yaml_for_weaver {
-        my $yaml = YAML::Tiny->read($self->filepath->stringify);
+        my $yaml = YAML::Tiny->read($self->configlocation->stringify);
 
         return (grep { $_->{'+doctype'} eq 'weaver'} @$yaml)[0];
-
-        foreach my $document (@$yaml) {
-            if($document->{'+doctype'} eq 'dist') {
-                return $document;
-            }
-        }
-
     }
+    # sharedir skulle kunna vara en tanke.
 
 
 }

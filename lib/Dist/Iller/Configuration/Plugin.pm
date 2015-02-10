@@ -59,15 +59,15 @@ class Dist::Iller::Configuration::Plugin using Moose {
             my $value = $self->get_parameter($parameter);
 
             if(ref $value eq 'ARRAY') {
-                foreach my $val (sort @$value) {
+                foreach my $val (@$value) {
                     push @strings => sprintf '%s = %s', $parameter, $val;
                 }
             }
             else {
-                push @strings => sprintf '%s = %s', $parameter, $value;
+                push @strings => sprintf '%s = %s', $parameter, $value // '';
             }
         }
 
-        return join "\n" => '', @strings;
+        return join "\n" => @strings;
     }
 }

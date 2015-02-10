@@ -3,6 +3,7 @@ use Dist::Iller::Standard;
 # VERSION
 # PODCLASSNAME
 
+use DateTime;
 use YAML::Tiny;
 use Dist::Iller::Configuration;
 use Dist::Iller::Configuration::Plugin;
@@ -40,19 +41,18 @@ class Dist::Iller::Builder using Moose {
         clearer => 1,
     );
 
-    method parse() {
-        if(!path('dist.ini')->exists) {
-            warn 'No dist.ini - quitting';
-            return;
-        }
+    method parse {
         my $yaml = YAML::Tiny->read($self->filepath->stringify);
+        my $seen_dist = 0;
+        my $seen_weaver = 0;
+
         foreach my $document (@$yaml) {
             if($document->{'+doctype'} eq 'dist') {
-                next if $self->has_dist;
+                next if $seen_dist; ++$seen_dist;
                 $self->parse_doc($self->dist, $document);
             }
             elsif($document->{'+doctype'} eq 'weaver') {
-                next if $self->has_weaver;
+                next if $seen_weaver;
                 $self->parse_doc($self->weaver, $document);
             }
         }
@@ -66,48 +66,48 @@ class Dist::Iller::Builder using Moose {
         $self->generate_ini('weaver.ini', $self->weaver);
     }
 
-    method generate_ini($filename, $config) {
-        my $plugins = delete $config->{'plugins'};
+    method make_contents_ready_for_compare(Str $contents) {
+        $contents =~ s{^;.*(?=\v)}{}g;
+        $contents =~ s{\v+}{\n}g;
 
-        my @contents = ();
-        foreach my $key ('name', sort grep { $_ ne 'name' } keys %$config) {
-            push @contents => kv_out($config, $key);
-        }
-        push @contents => '';
-        foreach my $plugin (@$plugins) {
-            push @contents => plugin_name_out($plugin);
+        return $contents;
+    }
 
-            foreach my $key (sort keys %$plugin) {
-                push @contents => kv_out($plugin, $key);
-            }
-            push @contents => '';
-        }
-        my $contents = join "\n" => @contents, '';
+    method generate_ini(Path $filename does coerce, IllerConfiguration $config) {
+        my $timestamp = DateTime->now;
+        my $intro = sprintf qq{; This file was auto-generated from iller.yaml on %s %s %s.\n\n}, $timestamp->ymd, $timestamp->hms, $timestamp->time_zone->name;
+
+        my $contents = $intro . $config->to_string;
+
         if(path($filename)->exists) {
-            my $current_contents = path($filename)->slurp_utf8;
-            $current_contents =~ s{^;.*$}{}g;
-            my $copied_contents = $contents;
-            $copied_contents =~ s{^;.*$}{}g;
+            my $current_contents = $self->make_contents_ready_for_compare(path($filename)->slurp_utf8);
+            my $copied_contents = $self->make_contents_ready_for_compare($contents);
+
             if($current_contents ne $copied_contents) {
-                path($filename)->spew_utf8($contents);
-                say "Generated $filename";
+                path($filename)->spew_utf8( $contents);
+                say "[DI] Generated $filename";
             }
             else {
-                say "No changes for $filename";
+                say "[DI] No changes for $filename";
             }
         }
         else {
-            path($filename)->spew_utf8(join "\n" => $contents);
-            say "Generated $filename";
+            path($filename)->spew_utf8($intro, $contents);
+            say "[DI] Generated $filename";
         }
     }
 
     method parse_doc(IllerConfiguration $set, HashRef $yaml) {
-        foreach my $setting (qw/author license copyright_holder copyright_year/) {
+        foreach my $setting (qw/name author license copyright_holder copyright_year/) {
             my $predicate = "has_$setting";
             if(exists $yaml->{ $setting } && !$set->$predicate) {
                 $set->$setting($yaml->{ $setting });
             }
+        }
+        if(exists $yaml->{'+authordeps'}) {
+            my $authordeps = delete $yaml->{'+authordeps'};
+            $authordeps = ref $authordeps eq 'ARRAY' ? $authordeps : [ $authordeps ];
+            $set->authordeps($authordeps);
         }
         if(exists $yaml->{'plugins'}) {
             $self->parse_plugins($set, $yaml->{'plugins'});
@@ -132,7 +132,7 @@ class Dist::Iller::Builder using Moose {
             die "Can't find Dist::Iller::Config::$config_name ($@) in: \n  " . join "\n  " => @INC;
         }
 
-        my $configobj = "Dist::Iller::Config::$config_name"->new(%$config);
+        my $configobj = "Dist::Iller::Config::$config_name"->new(%$config, maybe distribution_name => $set->name);
         $self->current_config($configobj);
 
         my $configdoc = $configobj->get_yaml_for($set->doctype);
@@ -144,9 +144,8 @@ class Dist::Iller::Builder using Moose {
         my $plugin_name = delete $plugin->{'plugin'};
 
         return if !$self->check_conditionals($plugin);
-
         $set->add_plugin({
-                    plugin => $plugin_name,
+                    plugin => $self->set_value_from_config($plugin_name),
               maybe base => delete $plugin->{'+base'},
                     parameters => $self->set_values_from_config($plugin),
         });
@@ -155,8 +154,8 @@ class Dist::Iller::Builder using Moose {
     method parse_replace(IllerConfiguration $set, HashRef $replacer) {
         return if !$self->check_conditionals($replacer);
 
-        my $plugin_name = delete $replacer->{'replace_plugin'};
-        my $replace_with = delete $replacer->{'+with'};
+        my $plugin_name = $self->set_value_from_config(delete $replacer->{'replace_plugin'});
+        my $replace_with = $self->set_value_from_config(delete $replacer->{'+with'});
 
         my $plugin = Dist::Iller::Configuration::Plugin->new(
                     plugin => $replace_with // $plugin_name,
@@ -173,7 +172,7 @@ class Dist::Iller::Builder using Moose {
         my $plugin_name = delete $extender->{'extend_plugin'};
 
         my $plugin = Dist::Iller::Configuration::Plugin->new(
-                    plugin => $plugin_name,
+                    plugin => $self->set_value_from_config($plugin_name),
                     parameters => $self->set_values_from_config($extender),
         );
 
@@ -186,7 +185,7 @@ class Dist::Iller::Builder using Moose {
         my $plugin_name = delete $adder->{'add_plugin'};
 
         my $plugin = Dist::Iller::Configuration::Plugin->new(
-                    plugin => $plugin_name,
+                    plugin => $self->set_value_from_config($plugin_name),
               maybe base => delete $adder->{'+base'},
                     parameters => $self->set_values_from_config($adder),
         );
@@ -200,27 +199,39 @@ class Dist::Iller::Builder using Moose {
     method parse_remove(IllerConfiguration $set, HashRef $remover) {
         return if !$self->check_conditionals($remover);
 
-        $set->remove_plugin($remover->{'remove_plugin'});
+        $set->remove_plugin($self->set_value_from_config($remover->{'remove_plugin'}));
     }
+
 
     method set_values_from_config($parameters) {
         return $parameters if !$self->has_current_config;
 
         foreach my $param (keys %$parameters) {
             next if $param =~ m{^\+};
-            next if $parameters->{ $param } !~ m{[^.]\.[^.]};
+            next if !defined $parameters->{ $param };
 
-            my($type, $what) = split /\./ => $parameters->{ $param };
-            next if none { $_ eq $type } qw/$env $self/;
+            $parameters->{ $param } = ref $parameters->{ $param } eq 'ARRAY' ? $parameters->{ $param } : [ $parameters->{ $param } ];
 
-            if($type eq '$env' && exists $ENV{ uc $what }) {
-                $parameters->{ $param } = $ENV{ uc $what };
-            }
-            elsif($type eq '$self' && $self->current_config->$_can($what)) {
-                $parameters->{ $param } = $self->current_config->$what;
+            VALUE:
+            foreach my $i (0 .. scalar @{ $parameters->{ $param } } - 1) {
+                $parameters->{ $param }[$i] = $self->set_value_from_config($parameters->{ $param }[$i]);
             }
         }
         return $parameters;
+    }
+    method set_value_from_config(Maybe[Str] $value) {
+        return $value if !defined $value;
+        return $value if $value !~ m{[^.]\.[^.]};
+        my($type, $what) = split /\./ => $value;
+        return $value if none { $_ eq $type } qw/$env $self/;
+
+        if($type eq '$env' && exists $ENV{ uc $what }) {
+            return $ENV{ uc $what };
+        }
+        elsif($type eq '$self' && $self->current_config->$_can($what)) {
+            return $self->current_config->$what;
+        }
+        return $value;
     }
 
     method check_conditionals(HashRef $plugin_data) {
@@ -250,7 +261,8 @@ class Dist::Iller::Builder using Moose {
             return if !defined $type;
 
             if($type eq '$env') {
-                return 1 if $ENV{ uc $what };
+                return 0 if !exists $ENV{ uc $what };
+                return $ENV{ uc $what };
             }
             elsif($type eq '$self' && $self->has_current_config) {
                 return 0 if !$self->current_config->$_can($what);
@@ -266,6 +278,12 @@ class Dist::Iller::Builder using Moose {
         return () if !length $from;
         return () if $from !~ m{[^.]\.[^.]};
         return split /\./ => $from;
+    }
+
+    sub plugin_name_out {
+        my $plugin = shift;
+
+        return sprintf '[%s]', delete $plugin->{'plugin'};
     }
 
 }

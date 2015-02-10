@@ -1,5 +1,8 @@
 +doctype: dist
 
++authordeps:
+- Moose
+
 plugins:
 - plugin: GatherDir
 

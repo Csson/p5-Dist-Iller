@@ -5,7 +5,9 @@ use Dist::Iller::Standard;
 
 class Dist::Iller::Configuration::Plugin using Moose {
 
-    has plugin => (
+    use MooseX::StrictConstructor;
+
+    has plugin_name => (
         is => 'ro',
         isa => Str,
     );
@@ -13,6 +15,11 @@ class Dist::Iller::Configuration::Plugin using Moose {
         is => 'ro',
         isa => Str,
         predicate => 1,
+    );
+    has in => (
+        is => 'ro',
+        isa => Enum[qw/Plugin PluginBundle Section/],
+        default => 'Plugin',
     );
     has parameters => (
         is => 'ro',
@@ -48,10 +55,15 @@ class Dist::Iller::Configuration::Plugin using Moose {
             }
         }
     }
+    method plugin_package_ending {
+        my $name = $self->has_base ? $self->base : $self->plugin_name;
+        $name =~ s{^[^a-zA-Z]}{};
+        return join '::' => $self->in, $name;
+    }
 
     method to_string {
-        my @strings = $self->has_base ? (sprintf '[%s / %s]' => $self->base, $self->plugin)
-                    :                   (sprintf '[%s]' => $self->plugin)
+        my @strings = $self->has_base ? (sprintf '[%s / %s]' => $self->base, $self->plugin_name)
+                    :                   (sprintf '[%s]' => $self->plugin_name)
                     ;
 
         foreach my $parameter (sort $self->parameter_keys) {

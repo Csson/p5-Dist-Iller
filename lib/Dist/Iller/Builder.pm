@@ -7,6 +7,7 @@ use DateTime;
 use YAML::Tiny;
 use Dist::Iller::Configuration;
 use Dist::Iller::Configuration::Plugin;
+use Dist::Iller::Configuration::Prereq;
 use Dist::Iller::Doctype;
 
 class Dist::Iller::Builder using Moose {
@@ -43,19 +44,17 @@ class Dist::Iller::Builder using Moose {
 
     method parse {
         my $yaml = YAML::Tiny->read($self->filepath->stringify);
-        my $seen_dist = 0;
-        my $seen_weaver = 0;
 
         foreach my $document (@$yaml) {
             if($document->{'+doctype'} eq 'dist') {
-                next if $seen_dist; ++$seen_dist;
                 $self->parse_doc($self->dist, $document);
             }
             elsif($document->{'+doctype'} eq 'weaver') {
-                next if $seen_weaver;
                 $self->parse_doc($self->weaver, $document);
             }
         }
+        $self->dist->add_prereqs_from_configuration($self->weaver);
+        $self->dist->add_prereq_plugins;
         return $self;
     }
 
@@ -104,29 +103,28 @@ class Dist::Iller::Builder using Moose {
                 $set->$setting($yaml->{ $setting });
             }
         }
-        if(exists $yaml->{'+authordeps'}) {
-            my $authordeps = delete $yaml->{'+authordeps'};
-            $authordeps = ref $authordeps eq 'ARRAY' ? $authordeps : [ $authordeps ];
-            $set->authordeps($authordeps);
+        if(exists $yaml->{'+prereqs'}) {
+            $self->parse_prereqs($set, delete $yaml->{'+prereqs'});
         }
-        if(exists $yaml->{'plugins'}) {
-            $self->parse_plugins($set, $yaml->{'plugins'});
+        if(exists $yaml->{'+plugins'}) {
+            $self->parse_plugins($set, $yaml->{'+plugins'});
         }
     }
 
     method parse_plugins(IllerConfiguration $set, $plugins) {
         foreach my $item (@$plugins) {
-            $self->parse_plugin($set, $item) if exists $item->{'plugin'};
-            $self->parse_config($set, $item) if exists $item->{'config'};
-            $self->parse_remove($set, $item) if exists $item->{'remove_plugin'};
-            $self->parse_replace($set, $item) if exists $item->{'replace_plugin'};
-            $self->parse_extend($set, $item) if exists $item->{'extend_plugin'};
-            $self->parse_add($set, $item) if exists $item->{'add_plugin'};
+            $self->parse_plugin($set, $item) if exists $item->{'+plugin'};
+            $self->parse_config($set, $item) if exists $item->{'+config'};
+            $self->parse_remove($set, $item) if exists $item->{'+remove_plugin'};
+            $self->parse_replace($set, $item) if exists $item->{'+replace_plugin'};
+            $self->parse_extend($set, $item) if exists $item->{'+extend_plugin'};
+            $self->parse_add($set, $item) if exists $item->{'+add_plugin'};
         }
     }
 
     method parse_config(IllerConfiguration $set, HashRef $config) {
-        my $config_name = delete $config->{'config'};
+        my $config_name = delete $config->{'+config'};
+
         eval "use Dist::Iller::Config::$config_name";
         if($@) {
             die "Can't find Dist::Iller::Config::$config_name ($@) in: \n  " . join "\n  " => @INC;
@@ -141,12 +139,14 @@ class Dist::Iller::Builder using Moose {
     }
 
     method parse_plugin(IllerConfiguration $set, HashRef $plugin) {
-        my $plugin_name = delete $plugin->{'plugin'};
+        my $plugin_name = delete $plugin->{'+plugin'};
 
         return if !$self->check_conditionals($plugin);
+
         $set->add_plugin({
-                    plugin => $self->set_value_from_config($plugin_name),
+                    plugin_name => $self->set_value_from_config($plugin_name),
               maybe base => delete $plugin->{'+base'},
+              maybe in => delete $plugin->{'+in'},
                     parameters => $self->set_values_from_config($plugin),
         });
     }
@@ -154,12 +154,13 @@ class Dist::Iller::Builder using Moose {
     method parse_replace(IllerConfiguration $set, HashRef $replacer) {
         return if !$self->check_conditionals($replacer);
 
-        my $plugin_name = $self->set_value_from_config(delete $replacer->{'replace_plugin'});
+        my $plugin_name = $self->set_value_from_config(delete $replacer->{'+replace_plugin'});
         my $replace_with = $self->set_value_from_config(delete $replacer->{'+with'});
 
         my $plugin = Dist::Iller::Configuration::Plugin->new(
-                    plugin => $replace_with // $plugin_name,
+                    plugin_name => $replace_with // $plugin_name,
               maybe base => delete $replacer->{'+base'},
+              maybe in => delete $replacer->{'+in'},
                     parameters => $self->set_values_from_config($replacer),
         );
 
@@ -169,10 +170,10 @@ class Dist::Iller::Builder using Moose {
     method parse_extend(IllerConfiguration $set, HashRef $extender) {
         return if !$self->check_conditionals($extender);
 
-        my $plugin_name = delete $extender->{'extend_plugin'};
+        my $plugin_name = delete $extender->{'+extend_plugin'};
 
         my $plugin = Dist::Iller::Configuration::Plugin->new(
-                    plugin => $self->set_value_from_config($plugin_name),
+                    plugin_name => $self->set_value_from_config($plugin_name),
                     parameters => $self->set_values_from_config($extender),
         );
 
@@ -182,11 +183,12 @@ class Dist::Iller::Builder using Moose {
     method parse_add(IllerConfiguration $set, HashRef $adder) {
         return if !$self->check_conditionals($adder);
 
-        my $plugin_name = delete $adder->{'add_plugin'};
+        my $plugin_name = delete $adder->{'+add_plugin'};
 
         my $plugin = Dist::Iller::Configuration::Plugin->new(
-                    plugin => $self->set_value_from_config($plugin_name),
+                    plugin_name => $self->set_value_from_config($plugin_name),
               maybe base => delete $adder->{'+base'},
+              maybe in => delete $adder->{'+in'},
                     parameters => $self->set_values_from_config($adder),
         );
 
@@ -199,9 +201,29 @@ class Dist::Iller::Builder using Moose {
     method parse_remove(IllerConfiguration $set, HashRef $remover) {
         return if !$self->check_conditionals($remover);
 
-        $set->remove_plugin($self->set_value_from_config($remover->{'remove_plugin'}));
+        $set->remove_plugin($self->set_value_from_config($remover->{'+remove_plugin'}));
     }
 
+    method parse_prereqs(IllerConfiguration $set, HashRef $prereqs) {
+
+        foreach my $phase (qw/build configure develop runtime test/) {
+
+            foreach my $relation (qw/requires recommends suggests conflicts/) {
+
+                foreach my $module (@{ $prereqs->{ $phase }{ $relation } }) {
+                    my $module_name = ref $module eq 'HASH' ? (keys %$module)[0] : $module;
+                    my $version     = ref $module eq 'HASH' ? (values %$module)[0] : 0;
+
+                    $set->add_prereq(Dist::Iller::Configuration::Prereq->new(
+                        module => $module_name,
+                        phase => $phase,
+                        relation => $relation,
+                        version => $version,
+                    ));
+                }
+            }
+        }
+    }
 
     method set_values_from_config($parameters) {
         return $parameters if !$self->has_current_config;

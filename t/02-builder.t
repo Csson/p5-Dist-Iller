@@ -22,8 +22,6 @@ sub clean {
 
 sub dist {
     return qs{
-        ; authordep Moose
-
         [GatherDir]
 
         [PruneCruft]
@@ -51,6 +49,33 @@ sub dist {
         [ConfirmRelease]
 
         [UploadToCPAN]
+
+        [Prereqs / DevelopRequires]
+        Pod::Weaver::Plugin::SingleEncoding = 0
+        Pod::Weaver::PluginBundle::CorePrep = 0
+        Pod::Weaver::Section::Authors = 0
+        Pod::Weaver::Section::Collect = 0
+        Pod::Weaver::Section::Generic = 0
+        Pod::Weaver::Section::Leftovers = 0
+        Pod::Weaver::Section::Legal = 0
+        Pod::Weaver::Section::Name = 0
+        Pod::Weaver::Section::Region = 0
+        Pod::Weaver::Section::Version = 0
+
+        [Prereqs / RuntimeRequires]
+        Moose = 0
+
+        ; authordep Moose
+        ; authordep Pod::Weaver::PluginBundle::CorePrep
+        ; authordep Pod::Weaver::Plugin::SingleEncoding
+        ; authordep Pod::Weaver::Section::Name
+        ; authordep Pod::Weaver::Section::Version
+        ; authordep Pod::Weaver::Section::Region
+        ; authordep Pod::Weaver::Section::Generic
+        ; authordep Pod::Weaver::Section::Collect
+        ; authordep Pod::Weaver::Section::Leftovers
+        ; authordep Pod::Weaver::Section::Authors
+        ; authordep Pod::Weaver::Section::Legal
     };
 }
 

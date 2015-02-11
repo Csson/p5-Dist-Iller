@@ -2,39 +2,44 @@
 
 author: Erik Carlsson
 
-plugins:
-- config: DistIllerTestConfig
-  no_manifest_skip: 0
-  is_task: 1
-  prompt: $
++prereqs:
+  develop:
+    requires:
+      - Another::Thing
 
-- add_plugin: PlacedBeforeExtraTests
-  +before: ExtraTests
-
-- remove_plugin: ExtraTests
-  +if: $env.noextratests
-
-- replace_plugin: ExecDir
-  dir: bin
-
-- replace_plugin: License
-  +with: LicenseImproved
-  license: perl_5
-
-- extend_plugin: Readme
-  +remove: root
-  suffix: md
-  headings:
-  - head2
-
-- add_plugin: PlacedAfter::ExecDir
-  +after: ExecDir
-
-- plugin: LastPlugin
-
++plugins:
+ - +config: DistIllerTestConfig
+   no_manifest_skip: 0
+   is_task: 1
+   prompt: $
+ 
+ - +add_plugin: PlacedBeforeExtraTests
+   +before: ExtraTests
+ 
+ - +remove_plugin: ExtraTests
+   +if: $env.noextratests
+ 
+ - +replace_plugin: ExecDir
+   dir: bin
+ 
+ - +replace_plugin: License
+   +with: LicenseImproved
+   license: perl_5
+ 
+ - +extend_plugin: Readme
+   +remove: root
+   suffix: md
+   headings:
+   - head2
+ 
+ - +add_plugin: PlacedAfter::ExecDir
+   +after: ExecDir
+ 
+ - +plugin: LastPlugin
+ 
 ---
 
 +doctype: weaver
 
-plugins:
-- config: DistIllerTestConfig
++plugins:
+ - +config: DistIllerTestConfig

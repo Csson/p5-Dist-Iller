@@ -24,6 +24,10 @@ class Dist::Iller::Doctype using Moose {
         return [qw/name author license copyright_holder copyright_year/] if $self->type eq 'dist';
         return [];
     }
+    method namespace {
+        return 'Dist::Zilla' if $self->type eq 'dist';
+        return 'Pod::Weaver' if $self->type eq 'weaver';
+    }
 
     method dist {
         return Dist::Iller::Doctype->new(type => 'dist');

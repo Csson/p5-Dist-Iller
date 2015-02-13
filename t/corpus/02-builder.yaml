@@ -89,7 +89,6 @@
 
  - +plugin: postlude
    +base: Region
-   +in: Section
 
  - +plugin: Authors
    +in: Section

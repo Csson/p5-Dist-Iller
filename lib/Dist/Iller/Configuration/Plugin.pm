@@ -70,8 +70,26 @@ class Dist::Iller::Configuration::Plugin using Moose {
             }
         }
         my $name = $self->has_base ? $self->base : $self->plugin_name;
-        $name =~ s{^[^a-zA-Z]}{};
-        push @packages => join '::' => $doctype->namespace, $self->in, $name;
+        $name =~ m{^(.)};
+        my $first = $1;
+
+        my $clean_name = $name;
+        $clean_name =~ s{^[-%=@]}{};
+
+        if($doctype->is_dist) {
+            push @packages => $first eq '%' ? sprintf '%s::%s::%s' => $doctype->namespace, 'Stash', $clean_name
+                           :  $first eq '@' ? sprintf '%s::%s::%s' => $doctype->namespace, 'PluginBundle', $clean_name
+                           :  $first eq '=' ? sprintf $clean_name
+                           :                  sprintf '%s::%s::%s' => $doctype->namespace, 'Plugin', $clean_name
+                           ;
+        }
+        elsif($doctype->is_weaver) {
+            push @packages => $first eq '-' ? sprintf '%s::%s::%s' => $doctype->namespace, 'Plugin', $clean_name
+                           :  $first eq '@' ? sprintf '%s::%s::%s' => $doctype->namespace, 'PluginBundle', $clean_name
+                           :  $first eq '=' ? sprintf $clean_name
+                           :                  sprintf '%s::%s::%s' => $doctype->namespace, 'Section', $clean_name
+                           ;
+        }
         return @packages;
     }
 

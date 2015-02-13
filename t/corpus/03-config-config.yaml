@@ -55,63 +55,48 @@
 
 +plugins:
  - +plugin: '@CorePrep'
-   +in: PluginBundle
 
  - +plugin: -SingleEncoding
-   +in: Plugin
 
  - +plugin: Name
-   +in: Section
 
  - +plugin: Version
-   +in: Section
 
  - +plugin: prelude
    +base: Region
-   +in: Section
 
  - +plugin: Synopsis
    +base: Generic
-   +in: Section
 
  - +plugin: Description
    +base: Generic
-   +in: Section
 
  - +plugin: Overview
    +base: Generic
-   +in: Section
 
  - +plugin: Attributes
    +base: Collect
-   +in: Section
    command: attr
    header: ATTRIBUTES
 
  - +plugin: Methods
    +base: Collect
-   +in: Section
    command: method
    header: METHODS
 
  - +plugin: Functions
    +base: Collect
-   +in: Section
    command: func
    header: FUNCTIONS
 
  - +plugin: Leftovers
-   +in: Section
 
  - +plugin: postlude
    +base: Region
-   +in: Section
 
  - +plugin: Authors
-   +in: Section
 
  - +plugin: Legal
-   +in: Section
 
  - +plugin: List
    +base: -Transformer

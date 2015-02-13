@@ -112,3 +112,8 @@
 
  - +plugin: Legal
    +in: Section
+
+ - +plugin: List
+   +base: -Transformer
+   +in: Elemental
+   transformer: List

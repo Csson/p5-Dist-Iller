@@ -138,12 +138,17 @@ class Dist::Iller::Configuration using Moose {
 
         foreach my $plugin ($other_config->all_plugins) {
 
-            $self->add_prereq(Dist::Iller::Configuration::Prereq->new(
-                module => join ('::' => $other_config->doctype->namespace, $plugin->plugin_package_ending),
-                version => 0,
-                phase => 'develop',
-                relation => 'requires',
-            ));
+            # Usually only one, but for things like (in weaver) [-Transformer / Lists] we add
+            # both Pod::Elemental::Transformer::List and Pod::Weaver::Plugin::Transformer.
+            foreach my $plugin_package ($plugin->plugin_package($other_config->doctype)) {
+
+                $self->add_prereq(Dist::Iller::Configuration::Prereq->new(
+                    module => $plugin_package,
+                    version => 0,
+                    phase => 'develop',
+                    relation => 'requires',
+                ));
+            }
         }
     }
 

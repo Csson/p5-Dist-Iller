@@ -73,7 +73,9 @@ sub dist {
 
         [Prereqs / DevelopRequires]
         Another::Thing = 0
+        Pod::Elemental::Transformer::List = 0
         Pod::Weaver::Plugin::SingleEncoding = 0
+        Pod::Weaver::Plugin::Transformer = 0
         Pod::Weaver::PluginBundle::CorePrep = 0
         Pod::Weaver::Section::Authors = 0
         Pod::Weaver::Section::Collect = 0
@@ -97,6 +99,8 @@ sub dist {
         ; authordep Pod::Weaver::Section::Leftovers
         ; authordep Pod::Weaver::Section::Authors
         ; authordep Pod::Weaver::Section::Legal
+        ; authordep Pod::Elemental::Transformer::List
+        ; authordep Pod::Weaver::Plugin::Transformer
     };
 }
 
@@ -137,5 +141,8 @@ sub weaver {
         [Authors]
 
         [Legal]
+
+        [-Transformer / List]
+        transformer = List
     };
 }

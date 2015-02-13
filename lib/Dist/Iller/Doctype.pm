@@ -35,4 +35,10 @@ class Dist::Iller::Doctype using Moose {
     method weaver {
         return Dist::Iller::Doctype->new(type => 'weaver');
     }
+    method is_weaver {
+        return $self->type eq 'weaver' ? 1 : 0;
+    }
+    method is_dist {
+        return $self->type eq 'dist' ? 1 : 0;
+    }
 }

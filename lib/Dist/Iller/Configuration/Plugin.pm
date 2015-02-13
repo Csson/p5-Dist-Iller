@@ -17,8 +17,9 @@ class Dist::Iller::Configuration::Plugin using Moose {
         predicate => 1,
     );
     has in => (
-        is => 'ro',
-        isa => Enum[qw/Plugin PluginBundle Section/],
+        is => 'rw',
+        predicate => 1,
+        isa => Enum[qw/Plugin PluginBundle Section Elemental/],
         default => 'Plugin',
     );
     has parameters => (
@@ -55,10 +56,23 @@ class Dist::Iller::Configuration::Plugin using Moose {
             }
         }
     }
-    method plugin_package_ending {
+    method plugin_package(IllerDoctype $doctype) {
+
+        my @packages = ();
+        # For -Transformer
+        if($doctype->is_weaver && $self->has_in && $self->has_base) {
+            if($self->in eq 'Elemental') {
+                my $base = $self->base;
+                $base =~ s{^[^a-zA-Z]}{};
+
+                push @packages => join '::' => 'Pod::Elemental', $base, $self->plugin_name;
+                $self->in('Plugin'); # eg. Pod::Elemental::Transformer -> Pod::Weaver::Plugin::Transformer (a bit messy)
+            }
+        }
         my $name = $self->has_base ? $self->base : $self->plugin_name;
         $name =~ s{^[^a-zA-Z]}{};
-        return join '::' => $self->in, $name;
+        push @packages => join '::' => $doctype->namespace, $self->in, $name;
+        return @packages;
     }
 
     method to_string {
@@ -72,11 +86,11 @@ class Dist::Iller::Configuration::Plugin using Moose {
 
             if(ref $value eq 'ARRAY') {
                 foreach my $val (@$value) {
-                    push @strings => sprintf '%s = %s', $parameter, $val;
+                    push @strings => sprintf '%s =%s%s', $parameter, defined $val ? ' ' : '', $val;
                 }
             }
             else {
-                push @strings => sprintf '%s = %s', $parameter, $value // '';
+                push @strings => sprintf '%s =%s%s', $parameter, defined $value ? ' ' : '', $value // '';
             }
         }
 

@@ -1,11 +1,11 @@
-+doctype: dist
+doctype: dist
 
-+prereqs:
+prereqs:
   runtime:
     requires:
       - Moose
 
-+plugins:
+plugins:
  - +plugin: GatherDir
 
  - +plugin: PruneCruft
@@ -36,9 +36,9 @@
 
 ---
 
-+doctype: weaver
+doctype: weaver
 
-+plugins:
+plugins:
  - +plugin: '@CorePrep'
 
  - +plugin: -SingleEncoding

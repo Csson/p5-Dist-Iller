@@ -1,11 +1,11 @@
-+doctype: dist
+doctype: dist
 
-+prereqs:
+prereqs:
   develop:
     requires:
       - This::Thing
 
-+plugins:
+plugins:
  - +plugin: GatherDir
 
  - +plugin: PruneCruft
@@ -51,9 +51,9 @@
 
 ---
 
-+doctype: weaver
+doctype: weaver
 
-+plugins:
+plugins:
  - +plugin: '@CorePrep'
 
  - +plugin: -SingleEncoding

@@ -46,10 +46,10 @@ class Dist::Iller::Builder using Moose {
         my $yaml = YAML::Tiny->read($self->filepath->stringify);
 
         foreach my $document (@$yaml) {
-            if($document->{'+doctype'} eq 'dist') {
+            if($document->{'doctype'} eq 'dist') {
                 $self->parse_doc($self->dist, $document);
             }
-            elsif($document->{'+doctype'} eq 'weaver') {
+            elsif($document->{'doctype'} eq 'weaver') {
                 $self->parse_doc($self->weaver, $document);
             }
         }
@@ -97,17 +97,21 @@ class Dist::Iller::Builder using Moose {
     }
 
     method parse_doc(IllerConfiguration $set, HashRef $yaml) {
-        foreach my $setting (qw/name author license copyright_holder copyright_year/) {
-            my $predicate = "has_$setting";
-            if(exists $yaml->{ $setting } && !$set->$predicate) {
-                $set->$setting($yaml->{ $setting });
+        if(exists $yaml->{'header'}) {
+            my $header = delete $yaml->{'header'};
+
+            foreach my $setting (qw/name author license copyright_holder copyright_year/) {
+                my $predicate = "has_$setting";
+                if(exists $header->{ $setting } && !$set->$predicate) {
+                    $set->$setting($header->{ $setting });
+                }
             }
         }
-        if(exists $yaml->{'+prereqs'}) {
-            $self->parse_prereqs($set, delete $yaml->{'+prereqs'});
+        if(exists $yaml->{'prereqs'}) {
+            $self->parse_prereqs($set, delete $yaml->{'prereqs'});
         }
-        if(exists $yaml->{'+plugins'}) {
-            $self->parse_plugins($set, $yaml->{'+plugins'});
+        if(exists $yaml->{'plugins'}) {
+            $self->parse_plugins($set, $yaml->{'plugins'});
         }
     }
 

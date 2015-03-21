@@ -59,7 +59,8 @@ cmp_deeply(
 diag 'got log messages: ', explain \$tzil->log_messages
     if not Test::Builder->new->is_passing;
 PLUGIN
-        : 'use ' . $dist->name =~ s/-/::/gr . ';'
-            . "\n\nfail('this test is TODO!');"
+        : sprintf(q{BEGIN { use_ok '%s'; } }, $dist->name =~ s/-/::/gr)
+            . "\n\nfail('Tests not written...');"
 }}
+
 done_testing;

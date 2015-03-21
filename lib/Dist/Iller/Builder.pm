@@ -1,4 +1,5 @@
 use Dist::Iller::Standard;
+use feature ':5.14';
 
 # VERSION
 # PODCLASSNAME
@@ -91,6 +92,10 @@ class Dist::Iller::Builder using Moose {
             }
         }
         else {
+            if(!$config->has_plugins) {
+                say "[DI] No plugins for $filename, does not create.";
+                return;
+            }
             path($filename)->spew_utf8($intro, $contents);
             say "[DI] Generated $filename";
         }
@@ -275,7 +280,8 @@ class Dist::Iller::Builder using Moose {
             return if !defined $type;
 
             if($type eq '$env') {
-                return 0 if !$ENV{ uc $what };
+                return 0 if !exists $ENV{ uc $what };
+                return !$ENV{ uc $what };
             }
             elsif($type eq '$self' && $self->has_current_config) {
                 return 1 if !$self->current_config->$_can($what);

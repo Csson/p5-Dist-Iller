@@ -55,6 +55,7 @@ class Dist::Iller::Configuration using Moose {
             filter_plugins => 'grep',
             find_plugin => 'first',
             count_plugins => 'count',
+            has_plugins => 'count',
             get_plugin => 'get',
         },
     );

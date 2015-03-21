@@ -1,4 +1,4 @@
-package Dist::Zilla::MintingProfile::Iller;
+package Dist::Zilla::MintingProfile::DistIller;
 
 # VERSION
 

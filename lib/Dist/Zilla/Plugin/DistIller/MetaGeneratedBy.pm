@@ -1,4 +1,4 @@
-package Dist::Zilla::Plugin::Iller::MetaGeneratedBy;
+package Dist::Zilla::Plugin::DistIller::MetaGeneratedBy;
 
 # VERSION
 

@@ -146,12 +146,6 @@ It only has a C<plugins> list.
 
 L<Dist::Zilla>
 
-L<Dist::Milla>
-
 L<Pod::Weaver>
-
-L<Dist::Zilla::PluginBundle::Author::CSSON>
-
-L<Pod::Weaver::PluginBundle::Author::CSSON>
 
 =cut

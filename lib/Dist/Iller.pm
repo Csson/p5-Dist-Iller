@@ -8,7 +8,7 @@ use 5.10.1;
 
 1;
 
-# ABSTRACT: (deprecated)
+# ABSTRACT: A Dist::Zilla & Pod::Weaver preprocessor
 
 __END__
 

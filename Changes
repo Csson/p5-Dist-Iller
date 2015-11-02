@@ -1,36 +1,4 @@
 Revision history for Dist-Iller
 
 {{$NEXT}}
- [API Changes]
-
- [Bug Fixes]
-
- [Documentation]
-
- [Enhancements]
-
- [Meta]
-
- [New Features]
-
- [Revision]
-
-0.1101 2015-01-07T00:00:23Z CET
- - Deprecated.
-
-0.1100 2015-01-06T19:53:14Z CET
- [Enhancements]
- - Added a PodWeaver bundle
- - Added Test::Kwalitee::Extra to Dzil plugin bundle
- - Adapted the module template to work with Pod::Weaver
-
- [Meta]
- - Fixed Kwalitee test failures.
-
-0.1001 2015-01-05T00:25:01Z CET
- [Documentation]
- - Typo.
-
-0.1000 2015-01-05T00:20:55Z CET
- - Initial release
-
+ Initial release

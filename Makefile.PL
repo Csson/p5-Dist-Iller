@@ -14,7 +14,7 @@ install_share module => "Dist::Zilla::MintingProfile::DistIller::Basic", "profil
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "(deprecated)",
+  "ABSTRACT" => "A Dist::Zilla & Pod::Weaver preprocessor",
   "AUTHOR" => "Erik Carlsson <info\@code301.com>",
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => 0,

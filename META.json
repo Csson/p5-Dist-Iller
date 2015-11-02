@@ -1,5 +1,5 @@
 {
-   "abstract" : "(deprecated)",
+   "abstract" : "A Dist::Zilla & Pod::Weaver preprocessor",
    "author" : [
       "Erik Carlsson <info@code301.com>"
    ],

@@ -1,6 +1,6 @@
 # NAME
 
-Dist::Iller - (deprecated)
+Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 
 # VERSION
 

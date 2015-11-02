@@ -15,8 +15,15 @@ class Dist::Iller::Configuration using Moose {
     );
     has author => (
         is => 'rw',
-        isa => Str,
-        predicate => 1,
+        isa => ArrayRefStr,
+        traits => ['Array'],
+        default => sub { [ ] },
+        coerce => 1,
+        handles => {
+            all_authors => 'elements',
+            map_authors => 'map',
+            has_author => 'count',
+        },
     );
     has license => (
         is => 'rw',
@@ -157,7 +164,10 @@ class Dist::Iller::Configuration using Moose {
 
         my @strings = ();
         push @strings => sprintf 'name = %s', $self->name if $self->name;
-        push @strings => sprintf 'author = %s', $self->author if $self->has_author;
+
+        if($self->has_author) {
+            push @strings => $self->map_authors(sub { qq{author = $_} });
+        }
         push @strings => sprintf 'license = %s', $self->license if $self->has_license;
         push @strings => sprintf 'copyright_holder = %s', $self->copyright_holder if $self->has_copyright_holder;
         push @strings => sprintf 'copyright_year = %s', $self->copyright_year if $self->has_copyright_year;

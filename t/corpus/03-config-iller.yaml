@@ -1,7 +1,9 @@
 doctype: dist
 
 header:
-  author: Erik Carlsson
+  author:
+   - Erik Carlsson
+   - Ex Ample
 
 prereqs:
   develop:

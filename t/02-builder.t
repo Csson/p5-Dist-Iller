@@ -22,6 +22,8 @@ sub clean {
 
 sub dist {
     return qs{
+        author = Erik Carlsson
+
         [GatherDir]
 
         [PruneCruft]

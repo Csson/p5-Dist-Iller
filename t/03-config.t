@@ -26,6 +26,7 @@ sub clean {
 sub dist {
     return qs{
         author = Erik Carlsson
+        author = Ex Ample
 
         [GatherDir]
 

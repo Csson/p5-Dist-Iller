@@ -7,7 +7,8 @@ use Moops;
 library  Dist::Iller::Types
 
 declares IllerConfigurationPlugin,
-         IllerConfigurationPrereq
+         IllerConfigurationPrereq,
+         ArrayRefStr
 
 {
 
@@ -22,6 +23,14 @@ declares IllerConfigurationPlugin,
 
             "Dist::Iller::Configuration::Plugin"->new(%$hash);
         };
+
+    declare ArrayRefStr,
+    as ArrayRef[Str];
+
+    coerce ArrayRefStr,
+    from Str,
+    via { [ $_ ] };
+
 }
 
 1;

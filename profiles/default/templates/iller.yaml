@@ -10,6 +10,8 @@ header:
   copyright_year: {{ (localtime)[5] + 1900 }}
 
 plugins:
+ - +plugin: DistIller::MetaGeneratedBy
+ - +plugin: AutoVersion
  - +plugin: GatherDir
  - +plugin: PruneCruft
  - +plugin: ManifestSkip

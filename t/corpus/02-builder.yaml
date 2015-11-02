@@ -1,5 +1,8 @@
 doctype: dist
 
+header:
+  author: Erik Carlsson
+
 prereqs:
   runtime:
     requires:

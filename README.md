@@ -4,7 +4,7 @@ Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 
 # VERSION
 
-version 0.1102
+version 0.0001
 
 # SYNOPSIS
 
@@ -137,13 +137,7 @@ It only has a `plugins` list.
 
 [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla)
 
-[Dist::Milla](https://metacpan.org/pod/Dist::Milla)
-
 [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver)
-
-[Dist::Zilla::PluginBundle::Author::CSSON](https://metacpan.org/pod/Dist::Zilla::PluginBundle::Author::CSSON)
-
-[Pod::Weaver::PluginBundle::Author::CSSON](https://metacpan.org/pod/Pod::Weaver::PluginBundle::Author::CSSON)
 
 # AUTHOR
 

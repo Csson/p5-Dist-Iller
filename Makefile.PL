@@ -50,8 +50,10 @@ my %WriteMakefileArgs = (
     "parent" => 0
   },
   "TEST_REQUIRES" => {
+    "Syntax::Feature::Qs" => 0,
     "Test::Differences" => 0,
-    "Test::More" => "0.96"
+    "Test::More" => "0.96",
+    "syntax" => 0
   },
   "VERSION" => "0.0001",
   "test" => {
@@ -77,13 +79,15 @@ my %FallbackPrereqs = (
   "Path::Tiny" => 0,
   "PerlX::Maybe" => 0,
   "Pod::Weaver::Config::Assembler" => 0,
+  "Syntax::Feature::Qs" => 0,
   "Test::Differences" => 0,
   "Test::More" => "0.96",
   "Types::Path::Tiny" => 0,
   "Types::Standard" => 0,
   "YAML::Tiny" => 0,
   "namespace::autoclean" => 0,
-  "parent" => 0
+  "parent" => 0,
+  "syntax" => 0
 );
 
 

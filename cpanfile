@@ -71,4 +71,6 @@ on develop => sub {
 on 'test' => sub {
     requires 'Test::Differences';
     requires 'Test::More', '0.96';
+    requires 'syntax';
+    requires 'Syntax::Feature::Qs';
 };

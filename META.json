@@ -99,8 +99,10 @@
       },
       "test" : {
          "requires" : {
+            "Syntax::Feature::Qs" : "0",
             "Test::Differences" : "0",
-            "Test::More" : "0.96"
+            "Test::More" : "0.96",
+            "syntax" : "0"
          }
       }
    },

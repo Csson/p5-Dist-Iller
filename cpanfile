@@ -1,9 +1,9 @@
-requires 'perl', '5.010001';
+requires 'perl', '5.014000';
 requires 'parent';
 requires 'Moose', '2.0000';
 requires 'Moops', '0.034';
 requires 'Dist::Zilla';
-requires 'IPC::Run';
+#requires 'IPC::Run';
 requires 'File::chdir';
 requires 'Git::Wrapper';
 requires 'MooseX::AttributeDocumented';
@@ -21,8 +21,6 @@ requires 'Path::Tiny';
 requires 'Pod::Weaver::Config::Assembler';
 requires 'namespace::autoclean';
 requires 'PerlX::Maybe';
-
-
 
 on develop => sub {
     requires 'Dist::Zilla::Plugin::PodWeaver', '4.000';
@@ -45,7 +43,6 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::ModuleBuildTiny';
     requires 'Dist::Zilla::Plugin::MetaJSON';
     requires 'Dist::Zilla::Plugin::ContributorsFromGit';
-    #requires 'Dist::Zilla::Plugin::Test::EOL';
     requires 'Dist::Zilla::Plugin::PodSyntaxTests';
     requires 'Dist::Zilla::Plugin::MetaYAML';
     requires 'Dist::Zilla::Plugin::License';
@@ -62,13 +59,12 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::Git::Tag';
     requires 'Dist::Zilla::Plugin::Git::Push';
     requires 'Dist::Zilla::Plugin::PodnameFromFilename';
-    #requires 'Test::NoTabs';
     requires 'Test::More', '0.96';
 
 };
 
 
-on 'test' => sub {
+on test => sub {
     requires 'Test::Differences';
     requires 'Test::More', '0.96';
     requires 'syntax';

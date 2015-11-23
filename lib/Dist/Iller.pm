@@ -4,7 +4,7 @@ package Dist::Iller;
 
 use strict;
 use warnings;
-use 5.10.1;
+use 5.14.0;
 
 1;
 
@@ -22,16 +22,60 @@ __END__
 
     $ iller build
 
+=head1 STATUS
+
+This is alpha software. Anything can change at any time.
+
+It is mostly here to document how I build my distributions.
 
 =head1 DESCRIPTION
 
-Dist::Iller is a L<Dist::Zilla> and L<Pod::Weaver> preprocessor.
+Dist::Iller is a L<Dist::Zilla> and L<Pod::Weaver> preprocessor. It comes with a command line tool (C<iller>) which is a C<dzil> wrapper: When run, it first generates
+C<dist.ini> and/or C<weaver.ini> from C<iller.yaml> in the current directory.
 
-It uses one L<YAML> configuration file from which it then generates C<dist.ini> and C<weaver.ini>:
+=head2 Rationale
+
+PluginBundles for both L<Dist::Zilla> and L<Pod::Weaver> have a few downsides:
+
+=for :list
+* Mixes code and configuration
+* Not straightforward to remove specific plugins for a certain distribution
+* Difficult to insert specific plugins before another plugin for a certain distribution.
+* PluginBundles can change after a distribution has been released.
+
+C<Dist::Iller> tries to solve this:
+
+=for :list
+* Dist::Iller configs (similar to PluginBundles) also has a C<iller.yaml> for specifying which plugins it includes. The config module is basically only necessary
+  for options (see tests and L<Dist::Iller::Config::Author::CSSON>).
+* Remove a plugin:
+
+       +remove_plugin: GatherDir
+
+=for :list
+* Insert a plugin:
+
+       +add_plugin: Git::GatherDir
+       +before: AutoVersion
+
+=for :list
+* Replace a plugin:
+
+       +replace_plugin: ShareDir
+       +With: ShareDir::Tarball
+
+=for :list
+* Since C<dist.ini> and C<weaver.ini> are generated each time C<iller> is run, the files included in the distribution are always identical to how they looked at release time.
+
+=head2 iller.yaml
+
+This is the general syntax of C<iller.yaml>:
 
     ---
+    # This specifies that this yaml document will generate C<dist.ini>.
     doctype: dist
 
+    # This generates the top part of C<dist.ini>. C<author> can be a list or string.
     header:
       name: My-Module
       author: Ex Ample <ample@example.org>
@@ -39,113 +83,62 @@ It uses one L<YAML> configuration file from which it then generates C<dist.ini> 
       copyright_holder: Ex Ample
       copyright_year: 2015
 
+    # It is possible to list all prereqs. The groups are specified in CPAN::Meta::Spec.
+    # Minimum version numbers are optional.
     prereqs:
       runtime:
         requires:
           - perl: 5.010001
           - Moose
 
+    # List all plugins under the 'plugins' key.
+    # Each +plugin item is a Dist::Zilla> plugin.
+    # All commands for Dist::Iller is prepended with a +.
     plugins:
-     - +plugin: DistIller::MetaGeneratedBy
-     - +plugin: AutoVersion
-     - +plugin: GatherDir
-     - +plugin: ShareDir
-       dir: myshare
+      # Includes all plugins specified in Dist::Iller::Config::My::Config
+      - +config: My::Config
+      - +plugin: DistIller::MetaGeneratedBy
+      - +plugin: AutoVersion
+      - +plugin: GatherDir
+      # 'dir' is a parameter for ShareDir
+      - +plugin: ShareDir
+        dir: myshare
 
     [...]
 
     ---
+    # Here starts the C<weaver.ini> configuration.
     doctype: weaver
 
     plugins:
-     - +plugin: '@CorePrep'
+      # Same Dist::Iller::Config as in the 'dist' document
+      - +config: My::Config
 
-     - +plugin: -SingleEncoding
+      # Use PluginBundles, but they need ''.
+      - +plugin: '@CorePrep'
 
-     - +plugin: Name
+      - +plugin: -SingleEncoding
 
-     - +plugin: Version
-       format: Version %v, released %{YYYY-MM-dd}d.
+      - +plugin: Name
 
-     - +plugin: prelude
-       +base:  Region
+      - +plugin: Version
+        format: Version %v, released %{YYYY-MM-dd}d.
 
-     - +plugin: List
-       +base: -Transformer
-       +in: Elemental
-       transformer: List
+      - +plugin: prelude
+        +base:  Region
+
+      - +plugin: List
+        +base: -Transformer
+        +in: Elemental
+        transformer: List
 
      [...]
 
-This is a shortened C<iller.yaml> that displays most of the functionality.
-
-Lets walk through it:
-
-    doctype: dist
-
-This specifies that this yaml document will generate C<dist.ini>.
-
-    header:
-      name: My-Module
-      author: Ex Ample <ample@example.org>
-      license: Perl_5
-      copyright_holder: Ex Ample
-      copyright_year: 2015
-
-This generates the top part of C<dist.ini>. C<author> can be a list or string.
-
-    prereqs:
-      runtime:
-        requires:
-          - perl: 5.010001
-          - Moose
-
-It is possible to list all prereqs. The groups are specified in L<CPAN::Meta::Spec>.
-
-It is optional to specify the version numbers.
-
-    plugins:
-     - +plugin: DistIller::MetaGeneratedBy
-     - +plugin: AutoVersion
-     - +plugin: GatherDir
-     - +plugin: ShareDir
-       dir: myshare
-
-List all plugins under the C<plugins> key. Each item in the list is a L<Dist::Zilla> plugin. All commands for C<Dist::Iller> is prepended with a C<+>.
-
-Under C<ShareDir>, C<dir> is a parameter for the C<ShareDir> plugin. Since the keys are in different namespaces there are no collisions.
-
-It is possible to use C<Dist::Zilla::PluginBundles> by prepending C<@> as usual.
-
-    ---
-    doctype: weaver
-
-Here starts the C<weaver.ini> configuration.
-
-    plugins:
-     - +plugin: '@CorePrep'
-
-     - +plugin: -SingleEncoding
-
-     - +plugin: Name
-
-     - +plugin: Version
-       format: Version %v, released %{YYYY-MM-dd}d.
-
-     - +plugin: prelude
-       +base:  Region
-
-     - +plugin: List
-       +base: -Transformer
-       +in: Elemental
-       transformer: List
-
-It only has a C<plugins> list.
-
 =head1 SEE ALSO
 
-L<Dist::Zilla>
-
-L<Pod::Weaver>
+=for :list
+* L<Dist::Zilla>
+* L<Pod::Weaver>
+* L<Dist::Iller::Config::Author::CSSON>
 
 =cut

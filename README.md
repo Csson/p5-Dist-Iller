@@ -2,9 +2,11 @@
 
 Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 
+![Requires Perl 5.14+](https://img.shields.io/badge/perl-5.14+-brightgreen.svg) [![Travis status](https://api.travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master)](https://travis-ci.org/Csson/p5-Dist-Iller)
+
 # VERSION
 
-version 0.0001
+Version 0.0001, released 2015-11-23.
 
 # SYNOPSIS
 
@@ -14,15 +16,54 @@ version 0.0001
 
     $ iller build
 
+# STATUS
+
+This is alpha software. Anything can change at any time.
+
+It is mostly here to document how I build my distributions.
+
 # DESCRIPTION
 
-Dist::Iller is a [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver) preprocessor.
+Dist::Iller is a [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver) preprocessor. It comes with a command line tool (`iller`) which is a `dzil` wrapper: When run, it first generates
+`dist.ini` and/or `weaver.ini` from `iller.yaml` in the current directory.
 
-It uses one [YAML](https://metacpan.org/pod/YAML) configuration file from which it then generates `dist.ini` and `weaver.ini`:
+## Rationale
+
+PluginBundles for both [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver) have a few downsides:
+
+- Mixes code and configuration
+- Not straightforward to remove specific plugins for a certain distribution
+- Difficult to insert specific plugins before another plugin for a certain distribution.
+- PluginBundles can change after a distribution has been released.
+
+`Dist::Iller` tries to solve this:
+
+- Dist::Iller configs (similar to PluginBundles) also has a `iller.yaml` for specifying which plugins it includes. The config module is basically only necessary for options (see tests and [Dist::Iller::Config::Author::CSSON](https://metacpan.org/pod/Dist::Iller::Config::Author::CSSON)).
+- Remove a plugin:
+
+       +remove_plugin: GatherDir
+
+- Insert a plugin:
+
+       +add_plugin: Git::GatherDir
+       +before: AutoVersion
+
+- Replace a plugin:
+
+       +replace_plugin: ShareDir
+       +With: ShareDir::Tarball
+
+- Since `dist.ini` and `weaver.ini` are generated each time `iller` is run, the files included in the distribution are always identical to how they looked at release time.
+
+## iller.yaml
+
+This is the general syntax of `iller.yaml`:
 
     ---
+    # This specifies that this yaml document will generate C<dist.ini>.
     doctype: dist
 
+    # This generates the top part of C<dist.ini>. C<author> can be a list or string.
     header:
       name: My-Module
       author: Ex Ample <ample@example.org>
@@ -30,114 +71,70 @@ It uses one [YAML](https://metacpan.org/pod/YAML) configuration file from which 
       copyright_holder: Ex Ample
       copyright_year: 2015
 
+    # It is possible to list all prereqs. The groups are specified in CPAN::Meta::Spec.
+    # Minimum version numbers are optional.
     prereqs:
       runtime:
         requires:
           - perl: 5.010001
           - Moose
 
+    # List all plugins under the 'plugins' key.
+    # Each +plugin item is a Dist::Zilla> plugin.
+    # All commands for Dist::Iller is prepended with a +.
     plugins:
-     - +plugin: DistIller::MetaGeneratedBy
-     - +plugin: AutoVersion
-     - +plugin: GatherDir
-     - +plugin: ShareDir
-       dir: myshare
+      # Includes all plugins specified in Dist::Iller::Config::My::Config
+      - +config: My::Config
+      - +plugin: DistIller::MetaGeneratedBy
+      - +plugin: AutoVersion
+      - +plugin: GatherDir
+      # 'dir' is a parameter for ShareDir
+      - +plugin: ShareDir
+        dir: myshare
 
     [...]
 
     ---
+    # Here starts the C<weaver.ini> configuration.
     doctype: weaver
 
     plugins:
-     - +plugin: '@CorePrep'
+      # Same Dist::Iller::Config as in the 'dist' document
+      - +config: My::Config
 
-     - +plugin: -SingleEncoding
+      # Use PluginBundles, but they need ''.
+      - +plugin: '@CorePrep'
 
-     - +plugin: Name
+      - +plugin: -SingleEncoding
 
-     - +plugin: Version
-       format: Version %v, released %{YYYY-MM-dd}d.
+      - +plugin: Name
 
-     - +plugin: prelude
-       +base:  Region
+      - +plugin: Version
+        format: Version %v, released %{YYYY-MM-dd}d.
 
-     - +plugin: List
-       +base: -Transformer
-       +in: Elemental
-       transformer: List
+      - +plugin: prelude
+        +base:  Region
+
+      - +plugin: List
+        +base: -Transformer
+        +in: Elemental
+        transformer: List
 
      [...]
 
-This is a shortened `iller.yaml` that displays most of the functionality.
-
-Lets walk through it:
-
-    doctype: dist
-
-This specifies that this yaml document will generate `dist.ini`.
-
-    header:
-      name: My-Module
-      author: Ex Ample <ample@example.org>
-      license: Perl_5
-      copyright_holder: Ex Ample
-      copyright_year: 2015
-
-This generates the top part of `dist.ini`. `author` can be a list or string.
-
-    prereqs:
-      runtime:
-        requires:
-          - perl: 5.010001
-          - Moose
-
-It is possible to list all prereqs. The groups are specified in [CPAN::Meta::Spec](https://metacpan.org/pod/CPAN::Meta::Spec).
-
-It is optional to specify the version numbers.
-
-    plugins:
-     - +plugin: DistIller::MetaGeneratedBy
-     - +plugin: AutoVersion
-     - +plugin: GatherDir
-     - +plugin: ShareDir
-       dir: myshare
-
-List all plugins under the `plugins` key. Each item in the list is a [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) plugin. All commands for `Dist::Iller` is prepended with a `+`.
-
-Under `ShareDir`, `dir` is a parameter for the `ShareDir` plugin. Since the keys are in different namespaces there are no collisions.
-
-It is possible to use `Dist::Zilla::PluginBundles` by prepending `@` as usual.
-
-    ---
-    doctype: weaver
-
-Here starts the `weaver.ini` configuration.
-
-    plugins:
-     - +plugin: '@CorePrep'
-
-     - +plugin: -SingleEncoding
-
-     - +plugin: Name
-
-     - +plugin: Version
-       format: Version %v, released %{YYYY-MM-dd}d.
-
-     - +plugin: prelude
-       +base:  Region
-
-     - +plugin: List
-       +base: -Transformer
-       +in: Elemental
-       transformer: List
-
-It only has a `plugins` list.
-
 # SEE ALSO
 
-[Dist::Zilla](https://metacpan.org/pod/Dist::Zilla)
+- [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla)
+- [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver)
+- [Dist::Iller::Config::Author::CSSON](https://metacpan.org/pod/Dist::Iller::Config::Author::CSSON)
 
-[Pod::Weaver](https://metacpan.org/pod/Pod::Weaver)
+# SOURCE
+
+[https://github.com/Csson/p5-Dist-Iller](https://github.com/Csson/p5-Dist-Iller)
+
+# HOMEPAGE
+
+[https://metacpan.org/release/Dist-Iller](https://metacpan.org/release/Dist-Iller)
 
 # AUTHOR
 

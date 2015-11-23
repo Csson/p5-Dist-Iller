@@ -1,10 +1,16 @@
-#!/usr/bin/env perl
+#!perl
 use strict;
-use Dist::Iller::App;
+use warnings;
+
+use Dist::Iller::Builder;
 
 # VERSION
 # PODNAME: iller
 
-Dist::Iller::App->run;
+my $builder = Dist::Iller::Builder->new->parse;
+$builder->generate_dist_ini if defined $builder;
+$builder->generate_weaver_ini if defined $builder;
+
+system('dzil', @ARGV);
 
 __END__

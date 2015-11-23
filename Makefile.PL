@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use 5.010001;
+use 5.014000;
 
 use ExtUtils::MakeMaker;
 
@@ -24,7 +24,7 @@ my %WriteMakefileArgs = (
     "script/iller"
   ],
   "LICENSE" => "perl",
-  "MIN_PERL_VERSION" => "5.010001",
+  "MIN_PERL_VERSION" => "5.014000",
   "NAME" => "Dist::Iller",
   "PREREQ_PM" => {
     "Config::INI" => 0,
@@ -33,7 +33,6 @@ my %WriteMakefileArgs = (
     "File::ShareDir" => 0,
     "File::chdir" => 0,
     "Git::Wrapper" => 0,
-    "IPC::Run" => 0,
     "List::AllUtils" => 0,
     "Moops" => "0.034",
     "Moose" => "2.0000",
@@ -69,7 +68,6 @@ my %FallbackPrereqs = (
   "File::ShareDir" => 0,
   "File::chdir" => 0,
   "Git::Wrapper" => 0,
-  "IPC::Run" => 0,
   "List::AllUtils" => 0,
   "Moops" => "0.034",
   "Moose" => "2.0000",

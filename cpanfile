@@ -35,7 +35,7 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::ModuleBuildTiny';
     requires 'Dist::Zilla::Plugin::MetaJSON';
     requires 'Dist::Zilla::Plugin::ContributorsFromGit';
-    requires 'Dist::Zilla::Plugin::Test::EOL';
+    #requires 'Dist::Zilla::Plugin::Test::EOL';
     requires 'Dist::Zilla::Plugin::PodSyntaxTests';
     requires 'Dist::Zilla::Plugin::MetaYAML';
     requires 'Dist::Zilla::Plugin::License';
@@ -52,7 +52,7 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::Git::Tag';
     requires 'Dist::Zilla::Plugin::Git::Push';
     requires 'Dist::Zilla::Plugin::PodnameFromFilename';
-    requires 'Test::NoTabs';
+    #requires 'Test::NoTabs';
     requires 'Test::More', '0.96';
 
 };

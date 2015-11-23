@@ -59,6 +59,7 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::Git::Tag';
     requires 'Dist::Zilla::Plugin::Git::Push';
     requires 'Dist::Zilla::Plugin::PodnameFromFilename';
+    requires 'Pod::Weaver::Section::Badges';
     requires 'Test::More', '0.96';
 
 };

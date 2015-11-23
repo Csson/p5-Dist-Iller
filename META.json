@@ -67,6 +67,7 @@
             "Dist::Zilla::Role::PluginBundle::Config::Slicer" : "0",
             "Dist::Zilla::Role::PluginBundle::Easy" : "0",
             "Dist::Zilla::Role::PluginBundle::PluginRemover" : "0",
+            "Pod::Weaver::Section::Badges" : "0",
             "Test::More" : "0.96",
             "Test::Pod" : "1.41"
          }

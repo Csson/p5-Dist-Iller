@@ -42,9 +42,7 @@ my %WriteMakefileArgs = (
   },
   "TEST_REQUIRES" => {
     "Test::Differences" => 0,
-    "Test::EOL" => 0,
-    "Test::More" => "0.96",
-    "Test::NoTabs" => 0
+    "Test::More" => "0.96"
   },
   "VERSION" => "0.0001",
   "test" => {
@@ -65,9 +63,7 @@ my %FallbackPrereqs = (
   "Path::Tiny" => 0,
   "Pod::Weaver::Config::Assembler" => 0,
   "Test::Differences" => 0,
-  "Test::EOL" => 0,
   "Test::More" => "0.96",
-  "Test::NoTabs" => 0,
   "Types::Standard" => 0,
   "namespace::autoclean" => 0
 );

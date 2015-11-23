@@ -94,9 +94,7 @@
       "test" : {
          "requires" : {
             "Test::Differences" : "0",
-            "Test::EOL" : "0",
-            "Test::More" : "0.96",
-            "Test::NoTabs" : "0"
+            "Test::More" : "0.96"
          }
       }
    },

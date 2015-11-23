@@ -59,8 +59,6 @@ on develop => sub {
 
 
 on 'test' => sub {
-    requires 'Test::NoTabs';
-    requires 'Test::EOL';
     requires 'Test::Differences';
     requires 'Test::More', '0.96';
 };

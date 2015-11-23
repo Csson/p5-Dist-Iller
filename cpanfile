@@ -1,19 +1,28 @@
 requires 'perl', '5.010001';
+requires 'parent';
 requires 'Moose', '2.0000';
 requires 'Moops', '0.034';
 requires 'Dist::Zilla';
 requires 'IPC::Run';
 requires 'File::chdir';
 requires 'Git::Wrapper';
+requires 'MooseX::AttributeDocumented';
 requires 'MooseX::AttributeShortcuts';
+requires 'MooseX::StrictConstructor';
 requires 'Types::Standard';
-
+requires 'Types::Path::Tiny';
+requires 'DateTime';
+requires 'YAML::Tiny';
+requires 'File::ShareDir';
 requires 'Dist::Zilla', '5.000';
 requires 'Config::INI';
 requires 'List::AllUtils';
 requires 'Path::Tiny';
 requires 'Pod::Weaver::Config::Assembler';
 requires 'namespace::autoclean';
+requires 'PerlX::Maybe';
+
+
 
 on develop => sub {
     requires 'Dist::Zilla::Plugin::PodWeaver', '4.000';

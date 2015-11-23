@@ -28,18 +28,26 @@ my %WriteMakefileArgs = (
   "NAME" => "Dist::Iller",
   "PREREQ_PM" => {
     "Config::INI" => 0,
+    "DateTime" => 0,
     "Dist::Zilla" => "5.000",
+    "File::ShareDir" => 0,
     "File::chdir" => 0,
     "Git::Wrapper" => 0,
     "IPC::Run" => 0,
     "List::AllUtils" => 0,
     "Moops" => "0.034",
     "Moose" => "2.0000",
+    "MooseX::AttributeDocumented" => 0,
     "MooseX::AttributeShortcuts" => 0,
+    "MooseX::StrictConstructor" => 0,
     "Path::Tiny" => 0,
+    "PerlX::Maybe" => 0,
     "Pod::Weaver::Config::Assembler" => 0,
+    "Types::Path::Tiny" => 0,
     "Types::Standard" => 0,
-    "namespace::autoclean" => 0
+    "YAML::Tiny" => 0,
+    "namespace::autoclean" => 0,
+    "parent" => 0
   },
   "TEST_REQUIRES" => {
     "Test::Differences" => 0,
@@ -54,20 +62,28 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Config::INI" => 0,
+  "DateTime" => 0,
   "Dist::Zilla" => "5.000",
+  "File::ShareDir" => 0,
   "File::chdir" => 0,
   "Git::Wrapper" => 0,
   "IPC::Run" => 0,
   "List::AllUtils" => 0,
   "Moops" => "0.034",
   "Moose" => "2.0000",
+  "MooseX::AttributeDocumented" => 0,
   "MooseX::AttributeShortcuts" => 0,
+  "MooseX::StrictConstructor" => 0,
   "Path::Tiny" => 0,
+  "PerlX::Maybe" => 0,
   "Pod::Weaver::Config::Assembler" => 0,
   "Test::Differences" => 0,
   "Test::More" => "0.96",
+  "Types::Path::Tiny" => 0,
   "Types::Standard" => 0,
-  "namespace::autoclean" => 0
+  "YAML::Tiny" => 0,
+  "namespace::autoclean" => 0,
+  "parent" => 0
 );
 
 

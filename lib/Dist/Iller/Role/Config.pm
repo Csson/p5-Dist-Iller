@@ -39,7 +39,6 @@ role Dist::Iller::Role::Config using Moose {
 
         return (grep { $_->{'doctype'} eq 'weaver'} @$yaml)[0];
     }
-    # sharedir skulle kunna vara en tanke.
 
 
 }

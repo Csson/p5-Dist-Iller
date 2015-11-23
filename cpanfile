@@ -1,5 +1,6 @@
 requires 'perl', '5.010001';
 requires 'Moose', '2.0000';
+requires 'Moops', '0.034';
 requires 'Dist::Zilla';
 requires 'IPC::Run';
 requires 'File::chdir';

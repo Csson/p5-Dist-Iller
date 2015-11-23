@@ -59,6 +59,20 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::Git::Tag';
     requires 'Dist::Zilla::Plugin::Git::Push';
     requires 'Dist::Zilla::Plugin::PodnameFromFilename';
+    requires 'Pod::Elemental::Transformer::List';
+    requires 'Pod::Weaver::Plugin::SingleEncoding';
+    requires 'Pod::Weaver::Plugin::Transformer';
+    requires 'Pod::Weaver::PluginBundle::CorePrep';
+    requires 'Pod::Weaver::Section::Authors';
+    requires 'Pod::Weaver::Section::Collect';
+    requires 'Pod::Weaver::Section::Generic';
+    requires 'Pod::Weaver::Section::Homepage::DefaultCPAN';
+    requires 'Pod::Weaver::Section::Leftovers';
+    requires 'Pod::Weaver::Section::Legal';
+    requires 'Pod::Weaver::Section::Name';
+    requires 'Pod::Weaver::Section::Region';
+    requires 'Pod::Weaver::Section::Source::DefaultGitHub';
+    requires 'Pod::Weaver::Section::Version';
     requires 'Test::More', '0.96';
 
 };

@@ -54,7 +54,7 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::TestRelease';
     requires 'Dist::Zilla::Plugin::ConfirmRelease';
     requires 'Dist::Zilla::Plugin::UploadToCPAN';
-    requires 'Dist::Zilla::Plugin::UploadToStratopan';
+    #requires 'Dist::Zilla::Plugin::UploadToStratopan';
     requires 'Dist::Zilla::Plugin::Git::Commit';
     requires 'Dist::Zilla::Plugin::Git::Tag';
     requires 'Dist::Zilla::Plugin::Git::Push';

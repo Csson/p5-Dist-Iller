@@ -63,7 +63,6 @@
             "Dist::Zilla::Plugin::ShareDir" : "0",
             "Dist::Zilla::Plugin::TestRelease" : "0",
             "Dist::Zilla::Plugin::UploadToCPAN" : "0",
-            "Dist::Zilla::Plugin::UploadToStratopan" : "0",
             "Dist::Zilla::Role::PluginBundle::Config::Slicer" : "0",
             "Dist::Zilla::Role::PluginBundle::Easy" : "0",
             "Dist::Zilla::Role::PluginBundle::PluginRemover" : "0",

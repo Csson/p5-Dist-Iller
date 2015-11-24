@@ -4,6 +4,8 @@ use Dist::Iller::Standard;
 
 class Dist::Iller::Configuration::Prereq using Moose {
 
+    # VERSION
+
     has module => (
         is => 'ro',
         isa => Str,

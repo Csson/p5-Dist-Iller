@@ -4,6 +4,8 @@ use Dist::Iller::Standard;
 
 class Dist::Iller::Configuration using Moose {
 
+    # VERSION
+
     has doctype => (
         is => 'ro',
         isa => IllerDoctype,

@@ -5,6 +5,8 @@ use Dist::Iller::Standard;
 
 class Dist::Iller::Configuration::Plugin using Moose {
 
+    # VERSION
+
     use MooseX::StrictConstructor;
 
     has plugin_name => (

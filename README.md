@@ -4,7 +4,7 @@ Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 
 # VERSION
 
-Version 0.0001, released 2015-11-23.
+Version 0.0001, released 2015-11-24.
 
 # SYNOPSIS
 
@@ -18,44 +18,16 @@ Version 0.0001, released 2015-11-23.
 
 This is alpha software. Anything can change at any time.
 
-It is mostly here to document how I build my distributions.
+It is mostly here to document how I build my distributions. It is perfectly fine to use `dzil` with a `Dist::Iller` built distribution (after a fork, for example).
 
 # DESCRIPTION
 
 Dist::Iller is a [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver) preprocessor. It comes with a command line tool (`iller`) which is a `dzil` wrapper: When run, it first generates
-`dist.ini` and/or `weaver.ini` from `iller.yaml` in the current directory.
-
-## Rationale
-
-PluginBundles for both [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver) have a few downsides:
-
-- Mixes code and configuration
-- Not straightforward to remove specific plugins for a certain distribution
-- Difficult to insert specific plugins before another plugin for a certain distribution.
-- PluginBundles can change after a distribution has been released.
-
-`Dist::Iller` tries to solve this:
-
-- Dist::Iller configs (similar to PluginBundles) also has a `iller.yaml` for specifying which plugins it includes. The config module is basically only necessary for options (see tests and [Dist::Iller::Config::Author::CSSON](https://metacpan.org/pod/Dist::Iller::Config::Author::CSSON)).
-- Remove a plugin:
-
-       +remove_plugin: GatherDir
-
-- Insert a plugin:
-
-       +add_plugin: Git::GatherDir
-       +before: AutoVersion
-
-- Replace a plugin:
-
-       +replace_plugin: ShareDir
-       +With: ShareDir::Tarball
-
-- Since `dist.ini` and `weaver.ini` are generated each time `iller` is run, the files included in the distribution are always identical to how they looked at release time.
+`dist.ini` and/or `weaver.ini` from `iller.yaml` in the current directory and then executes `dzil` automatically. (Since `iller` requires that an `iller.yaml` is present, `iller new ...` does not work.)
 
 ## iller.yaml
 
-This is the general syntax of `iller.yaml`:
+This is the general syntax of an `iller.yaml` file:
 
     ---
     # This specifies that this yaml document will generate C<dist.ini>.
@@ -119,6 +91,41 @@ This is the general syntax of `iller.yaml`:
         transformer: List
 
      [...]
+
+## Rationale
+
+PluginBundles for both [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver) have a few downsides:
+
+- Mixes code and configuration.
+- Not straightforward to remove specific plugins for a certain distribution
+- Difficult to insert a plugin before another plugin for a certain distribution.
+- Difficult for others to understand which plugins actually were in effect when building the distribution.
+- PluginBundles can change after a distribution has been released.
+
+`Dist::Iller` tries to solve this:
+
+- Dist::Iller configs (similar to PluginBundles) also has a separate `iller.yaml` (normally in `share/`) for specifying which plugins it includes. See tests and [Dist::Iller::Config::Author::CSSON](https://metacpan.org/pod/Dist::Iller::Config::Author::CSSON)).
+- Remove a plugin:
+
+      - +remove_plugin: GatherDir
+
+- Insert a plugin:
+
+      - +add_plugin: Git::GatherDir
+        +before: AutoVersion
+
+- Replace a plugin:
+
+      - +replace_plugin: ShareDir
+        +with: ShareDir::Tarball
+
+- Set more attributes for an already included plugin:
+
+      - +extend_plugin: Git::GatherDir
+        exclude_match:
+          - examples/.*\.html
+
+- Since `dist.ini` and `weaver.ini` are generated each time `iller` is run, the plugins listed in them are those that were used to build the distribution.
 
 # SEE ALSO
 

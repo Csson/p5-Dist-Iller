@@ -13,7 +13,7 @@ role Dist::Iller::Role::Config using Moose {
     );
 
     method configlocation {
-        my $package = $self->package;
+        my $package = $self->meta->name;
         $package =~ s{::}{-}g;
         my $dir = path('.');
         try {

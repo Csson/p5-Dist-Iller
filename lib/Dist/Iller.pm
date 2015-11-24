@@ -26,50 +26,16 @@ __END__
 
 This is alpha software. Anything can change at any time.
 
-It is mostly here to document how I build my distributions.
+It is mostly here to document how I build my distributions. It is perfectly fine to use C<dzil> with a C<Dist::Iller> built distribution (after a fork, for example).
 
 =head1 DESCRIPTION
 
 Dist::Iller is a L<Dist::Zilla> and L<Pod::Weaver> preprocessor. It comes with a command line tool (C<iller>) which is a C<dzil> wrapper: When run, it first generates
-C<dist.ini> and/or C<weaver.ini> from C<iller.yaml> in the current directory.
-
-=head2 Rationale
-
-PluginBundles for both L<Dist::Zilla> and L<Pod::Weaver> have a few downsides:
-
-=for :list
-* Mixes code and configuration
-* Not straightforward to remove specific plugins for a certain distribution
-* Difficult to insert specific plugins before another plugin for a certain distribution.
-* PluginBundles can change after a distribution has been released.
-
-C<Dist::Iller> tries to solve this:
-
-=for :list
-* Dist::Iller configs (similar to PluginBundles) also has a C<iller.yaml> for specifying which plugins it includes. The config module is basically only necessary
-  for options (see tests and L<Dist::Iller::Config::Author::CSSON>).
-* Remove a plugin:
-
-       +remove_plugin: GatherDir
-
-=for :list
-* Insert a plugin:
-
-       +add_plugin: Git::GatherDir
-       +before: AutoVersion
-
-=for :list
-* Replace a plugin:
-
-       +replace_plugin: ShareDir
-       +With: ShareDir::Tarball
-
-=for :list
-* Since C<dist.ini> and C<weaver.ini> are generated each time C<iller> is run, the files included in the distribution are always identical to how they looked at release time.
+C<dist.ini> and/or C<weaver.ini> from C<iller.yaml> in the current directory and then executes C<dzil> automatically. (Since C<iller> requires that an C<iller.yaml> is present, C<iller new ...> does not work.)
 
 =head2 iller.yaml
 
-This is the general syntax of C<iller.yaml>:
+This is the general syntax of an C<iller.yaml> file:
 
     ---
     # This specifies that this yaml document will generate C<dist.ini>.
@@ -133,6 +99,47 @@ This is the general syntax of C<iller.yaml>:
         transformer: List
 
      [...]
+
+=head2 Rationale
+
+PluginBundles for both L<Dist::Zilla> and L<Pod::Weaver> have a few downsides:
+
+=for :list
+* Mixes code and configuration.
+* Not straightforward to remove specific plugins for a certain distribution
+* Difficult to insert a plugin before another plugin for a certain distribution.
+* Difficult for others to understand which plugins actually were in effect when building the distribution.
+* PluginBundles can change after a distribution has been released.
+
+C<Dist::Iller> tries to solve this:
+
+=for :list
+* Dist::Iller configs (similar to PluginBundles) also has a separate C<iller.yaml> (normally in C<share/>) for specifying which plugins it includes. See tests and L<Dist::Iller::Config::Author::CSSON>).
+* Remove a plugin:
+
+      - +remove_plugin: GatherDir
+
+=for :list
+* Insert a plugin:
+
+      - +add_plugin: Git::GatherDir
+        +before: AutoVersion
+
+=for :list
+* Replace a plugin:
+
+      - +replace_plugin: ShareDir
+        +with: ShareDir::Tarball
+
+=for :list
+* Set more attributes for an already included plugin:
+
+      - +extend_plugin: Git::GatherDir
+        exclude_match:
+          - examples/.*\.html
+
+=for :list
+* Since C<dist.ini> and C<weaver.ini> are generated each time C<iller> is run, the plugins listed in them are those that were used to build the distribution.
 
 =head1 SEE ALSO
 

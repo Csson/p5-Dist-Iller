@@ -3,7 +3,7 @@ requires 'parent';
 requires 'Moose', '2.0000';
 requires 'Moops', '0.034';
 requires 'Dist::Zilla';
-#requires 'IPC::Run';
+requires 'Safe::Isa';
 requires 'File::chdir';
 requires 'Git::Wrapper';
 requires 'MooseX::AttributeDocumented';
@@ -74,6 +74,7 @@ on develop => sub {
     requires 'Pod::Weaver::Section::Source::DefaultGitHub';
     requires 'Pod::Weaver::Section::Version';
     requires 'Test::More', '0.96';
+    requires 'Test::Pod';
 
 };
 

@@ -1,4 +1,6 @@
 use feature ':5.14';
+use strict;
+use warnings;
 use Moops;
 
 # VERSION

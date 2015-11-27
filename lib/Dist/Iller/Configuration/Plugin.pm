@@ -1,7 +1,8 @@
+use strict;
+use warnings;
 use Dist::Iller::Standard;
 
 # PODCLASSNAME
-
 
 class Dist::Iller::Configuration::Plugin using Moose {
 

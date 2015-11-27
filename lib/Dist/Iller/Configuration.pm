@@ -1,3 +1,5 @@
+use strict;
+use warnings;
 use Dist::Iller::Standard;
 
 # PODCLASSNAME

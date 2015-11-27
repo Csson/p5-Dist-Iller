@@ -1,7 +1,8 @@
-use Dist::Iller::Standard;
 use feature ':5.14';
+use strict;
+use warnings;
+use Dist::Iller::Standard;
 
-# VERSION
 # PODCLASSNAME
 
 use DateTime;
@@ -12,6 +13,8 @@ use Dist::Iller::Configuration::Prereq;
 use Dist::Iller::Doctype;
 
 class Dist::Iller::Builder using Moose {
+
+    # VERSION
 
     use Safe::Isa qw/$_can/;
     has dist => (

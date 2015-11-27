@@ -11,9 +11,12 @@ Revision history for Dist-Iller
 
  [Meta]
 
- [New Features]
+ [Requirements]
+ - Fixed missing prereq (fixes #2, SREZIC++)
+ - Test::Pod should now be a develop prereq rather than build.
 
- [Revision]
+ [Other Changes]
+ - Fixed some minor kwalitee issues.
 
 0.1201 2015-11-24T12:56:59Z UTC
  [Meta]
@@ -21,4 +24,3 @@ Revision history for Dist-Iller
 
 0.1200 2015-11-24T12:42:53Z UTC
  - Initial release
-

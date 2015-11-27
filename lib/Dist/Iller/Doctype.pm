@@ -1,9 +1,12 @@
+use strict;
+use warnings;
 use Dist::Iller::Standard;
 
-# VERSION
 # PODCLASSNAME
 
 class Dist::Iller::Doctype using Moose {
+
+    # VERSION
 
     has type => (
         is => 'ro',

@@ -124,43 +124,43 @@
    "provides" : {
       "Dist::Iller" : {
          "file" : "lib/Dist/Iller.pm",
-         "version" : "0.1210"
+         "version" : "0.1203"
       },
       "Dist::Iller::Builder" : {
          "file" : "lib/Dist/Iller/Builder.pm",
-         "version" : "0.1210"
+         "version" : "0.1203"
       },
       "Dist::Iller::Configuration" : {
          "file" : "lib/Dist/Iller/Configuration.pm",
-         "version" : "0.1210"
+         "version" : "0.1203"
       },
       "Dist::Iller::Configuration::Plugin" : {
          "file" : "lib/Dist/Iller/Configuration/Plugin.pm",
-         "version" : "0.1210"
+         "version" : "0.1203"
       },
       "Dist::Iller::Configuration::Prereq" : {
          "file" : "lib/Dist/Iller/Configuration/Prereq.pm",
-         "version" : "0.1210"
+         "version" : "0.1203"
       },
       "Dist::Iller::Doctype" : {
          "file" : "lib/Dist/Iller/Doctype.pm",
-         "version" : "0.1210"
+         "version" : "0.1203"
       },
       "Dist::Iller::Role::Config" : {
          "file" : "lib/Dist/Iller/Role/Config.pm",
-         "version" : "0.1210"
+         "version" : "0.1203"
       },
       "Dist::Iller::Standard" : {
          "file" : "lib/Dist/Iller/Standard.pm",
-         "version" : "0.1210"
+         "version" : "0.1203"
       },
       "Dist::Zilla::MintingProfile::DistIller::Basic" : {
          "file" : "lib/Dist/Zilla/MintingProfile/DistIller/Basic.pm",
-         "version" : "0.1210"
+         "version" : "0.1203"
       },
       "Dist::Zilla::Plugin::DistIller::MetaGeneratedBy" : {
          "file" : "lib/Dist/Zilla/Plugin/DistIller/MetaGeneratedBy.pm",
-         "version" : "0.1210"
+         "version" : "0.1203"
       }
    },
    "release_status" : "stable",
@@ -175,6 +175,6 @@
          "web" : "https://github.com/Csson/p5-Dist-Iller"
       }
    },
-   "version" : "0.1210"
+   "version" : "0.1203"
 }
 

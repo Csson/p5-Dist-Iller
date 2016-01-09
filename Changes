@@ -17,6 +17,21 @@ Revision history for Dist-Iller
 
  [Testing]
 
+0.1203 2016-01-09T21:53:44Z UTC
+ [Documentation]
+ - Fixed outdated example in the synopsis.
+
+ [Enhancements]
+ - Mention in the .ini-files which configs (and versions) where used to
+   build them.
+
+ [Other Changes]
+ - Add provides in Meta for all classes.
+
+ [Requirements]
+ - New develop requirements: D::Z::P::MetaProvides::Package,
+   D::Z::P::MetaProvides::Class.
+
 0.1202 2015-11-27T15:29:57Z UTC
  [Other Changes]
  - Fixed some minor kwalitee issues.

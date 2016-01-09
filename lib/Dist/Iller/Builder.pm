@@ -45,6 +45,16 @@ class Dist::Iller::Builder using Moose {
         predicate => 1,
         clearer => 1,
     );
+    has included_configs => (
+        is => 'ro',
+        isa => HashRef,
+        traits => ['Hash'],
+        default => sub { { } },
+        handles => {
+            set_included_config => 'set',
+            all_included_configs => 'kv',
+        },
+    );
 
     method parse {
         my $yaml = YAML::Tiny->read($self->filepath->stringify);
@@ -78,7 +88,11 @@ class Dist::Iller::Builder using Moose {
 
     method generate_ini(Path $filename does coerce, IllerConfiguration $config) {
         my $timestamp = DateTime->now;
-        my $intro = sprintf qq{; This file was auto-generated from iller.yaml on %s %s %s.\n\n}, $timestamp->ymd, $timestamp->hms, $timestamp->time_zone->name;
+        my $intro = sprintf qq{; This file was auto-generated from iller.yaml on %s %s %s.\n}, $timestamp->ymd, $timestamp->hms, $timestamp->time_zone->name;
+        if(scalar $self->all_included_configs) {
+            $intro .= join "\n" => ('; Used configs:', map { "; * $_->[0]: $_->[1]" } $self->all_included_configs);
+        }
+        $intro .= "\n\n";
 
         my $contents = $intro . $config->to_string;
 
@@ -136,13 +150,14 @@ class Dist::Iller::Builder using Moose {
 
     method parse_config(IllerConfiguration $set, HashRef $config) {
         my $config_name = delete $config->{'+config'};
-
-        eval "use Dist::Iller::Config::$config_name";
+        my $config_class = "Dist::Iller::Config::$config_name";
+        eval "use $config_class";
         if($@) {
-            die "Can't find Dist::Iller::Config::$config_name ($@) in: \n  " . join "\n  " => @INC;
+            die "Can't find $config_class ($@) in: \n  " . join "\n  " => @INC;
         }
 
-        my $configobj = "Dist::Iller::Config::$config_name"->new(%$config, maybe distribution_name => $set->name);
+        my $configobj = $config_class->new(%$config, maybe distribution_name => $set->name);
+        $self->set_included_config($configobj->meta->name, $config_class->VERSION);
         $self->current_config($configobj);
 
         my $configdoc = $configobj->get_yaml_for($set->doctype);

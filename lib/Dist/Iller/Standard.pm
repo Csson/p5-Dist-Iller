@@ -3,8 +3,7 @@ use strict;
 use warnings;
 
 
-package #
-    Dist::Iller::Standard {
+package Dist::Iller::Standard {
 
     # VERSION
 

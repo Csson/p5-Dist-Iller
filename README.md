@@ -4,7 +4,7 @@ Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 
 # VERSION
 
-Version 0.1202, released 2015-11-27.
+Version 0.1203, released 2016-01-09.
 
 # SYNOPSIS
 
@@ -18,7 +18,7 @@ Version 0.1202, released 2015-11-27.
 
 This is alpha software. Anything can change at any time.
 
-It is mostly here to document how I build my distributions. It is perfectly fine to use `dzil` with a `Dist::Iller` built distribution (after a fork, for example).
+It is mostly here to document how I build my distributions. It is perfectly fine to use `dzil` with a distribution normally built with `Dist::Iller` (after a fork, for example).
 
 # DESCRIPTION
 
@@ -99,12 +99,13 @@ PluginBundles for both [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and [
 - Mixes code and configuration.
 - Not straightforward to remove specific plugins for a certain distribution
 - Difficult to insert a plugin before another plugin for a certain distribution.
-- Difficult for others to understand which plugins actually were in effect when building the distribution.
 - PluginBundles can change after a distribution has been released.
+- Difficult for others to understand/know which plugins actually were in effect when the distribution was built.
 
 `Dist::Iller` tries to solve this:
 
-- Dist::Iller configs (similar to PluginBundles) also has a separate `iller.yaml` (normally in `share/`) for specifying which plugins it includes. See tests and [Dist::Iller::Config::Author::CSSON](https://metacpan.org/pod/Dist::Iller::Config::Author::CSSON)).
+- Dist::Iller configs (similar to PluginBundles) has their own `iller.yaml` (normally in `share/`) where plugins are specified. See tests and [Dist::Iller::Config::Author::CSSON](https://metacpan.org/pod/Dist::Iller::Config::Author::CSSON)).
+- Since `dist.ini` and `weaver.ini` are generated each time `iller` is run, the plugins listed in them are those that were used to build the distribution.
 - Remove a plugin:
 
       - +remove_plugin: GatherDir
@@ -124,8 +125,6 @@ PluginBundles for both [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and [
       - +extend_plugin: Git::GatherDir
         exclude_match:
           - examples/.*\.html
-
-- Since `dist.ini` and `weaver.ini` are generated each time `iller` is run, the plugins listed in them are those that were used to build the distribution.
 
 # SEE ALSO
 
@@ -147,7 +146,7 @@ Erik Carlsson <info@code301.com>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2015 by Erik Carlsson.
+This software is copyright (c) 2016 by Erik Carlsson.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

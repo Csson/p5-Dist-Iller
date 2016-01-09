@@ -3,6 +3,7 @@ use Dist::Iller::Standard;
 class Dist::Iller::Config::DistIllerTestConfig using Moose with Dist::Iller::Role::Config {
 
     use YAML::Tiny;
+    our $VERSION = '0.0001';
 
     has filepath => (
         is => 'ro',

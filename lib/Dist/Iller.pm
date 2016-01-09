@@ -16,10 +16,12 @@ __END__
 
 =head1 SYNOPSIS
 
-    $ iller new -P DistIller::AMintingProvider My::Module
+    # dzil new, but... 
+    $ dzil new -P DistIller::AMintingProvider My::Module
 
     $ cd My/Module
 
+    # ...all other commands can be used via iller
     $ iller build
 
 =head1 STATUS

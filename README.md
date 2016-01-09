@@ -8,17 +8,19 @@ Version 0.1203, released 2016-01-09.
 
 # SYNOPSIS
 
-    $ iller new -P DistIller::AMintingProvider My::Module
+    # dzil new, but... 
+    $ dzil new -P DistIller::AMintingProvider My::Module
 
     $ cd My/Module
 
+    # ...all other commands can be used via iller
     $ iller build
 
 # STATUS
 
 This is alpha software. Anything can change at any time.
 
-It is mostly here to document how I build my distributions. It is perfectly fine to use `dzil` with a distribution normally built with `Dist::Iller` (after a fork, for example).
+It is mostly here to document how I build my distributions. It is perfectly fine to use `dzil` with a distribution built with `Dist::Iller` (after a fork, for example).
 
 # DESCRIPTION
 

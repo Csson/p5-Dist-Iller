@@ -5,9 +5,7 @@ use Path::Tiny;
 use Dist::Iller::Builder;
 use syntax 'qs';
 
-use lib path('t/corpus/lib')->absolute->stringify;
-
-ok 1, 'Loaded';
+use lib 't/corpus/lib';
 
 my $builder = Dist::Iller::Builder->new(filepath => 't/corpus/03-config-iller.yaml');
 $builder->parse;

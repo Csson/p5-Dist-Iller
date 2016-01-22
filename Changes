@@ -12,10 +12,14 @@ Revision history for Dist-Iller
  [New Features]
 
  [Other Changes]
+  - Removed [CheckExtraTests].
+  - Added [Test::Compile] (and removed t/basic.t).
 
  [Requirements]
+  - New prereqs: Module::Load, Carp.
 
  [Testing]
+  - Fixed config test.
 
 0.1203 2016-01-09T21:53:44Z UTC
  [Documentation]

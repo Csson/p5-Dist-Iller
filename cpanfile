@@ -21,6 +21,8 @@ requires 'Path::Tiny';
 requires 'Pod::Weaver::Config::Assembler';
 requires 'namespace::autoclean';
 requires 'PerlX::Maybe';
+requires 'Module::Load';
+requires 'Carp';
 
 on develop => sub {
     requires 'Dist::Zilla::Plugin::PodWeaver', '4.000';

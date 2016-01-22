@@ -13,9 +13,15 @@ role Dist::Iller::Role::Config using Moose {
         is => 'ro',
         isa => Str,
     );
+    has main_module => (
+        is => 'ro',
+        isa => Str,
+        predicate => 1,
+        documentation => q{Override this attribute when there's more than one config in a distribution. It uses the main_module's sharedir location for the config files.},
+    );
 
     method configlocation {
-        my $package = $self->meta->name;
+        my $package = $self->has_main_module ? $self->main_module : $self->meta->name;
         $package =~ s{::}{-}g;
         my $dir = path('.');
         try {

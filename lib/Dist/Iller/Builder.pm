@@ -16,7 +16,10 @@ class Dist::Iller::Builder using Moose {
 
     # VERSION
 
+    use Carp;
+    use Module::Load qw/load/;
     use Safe::Isa qw/$_can/;
+
     has dist => (
         is => 'ro',
         init_arg => undef,
@@ -69,6 +72,7 @@ class Dist::Iller::Builder using Moose {
         }
         $self->dist->add_prereqs_from_configuration($self->weaver);
         $self->dist->add_prereq_plugins;
+
         return $self;
     }
 
@@ -151,10 +155,13 @@ class Dist::Iller::Builder using Moose {
     method parse_config(IllerConfiguration $set, HashRef $config) {
         my $config_name = delete $config->{'+config'};
         my $config_class = "Dist::Iller::Config::$config_name";
-        eval "use $config_class";
-        if($@) {
-            die "Can't find $config_class ($@) in: \n  " . join "\n  " => @INC;
+
+        try {
+            load "$config_class";
         }
+        catch {
+            croak "Can't find $config_class ($_)";
+        };
 
         my $configobj = $config_class->new(%$config, maybe distribution_name => $set->name);
         $self->set_included_config($configobj->meta->name, $config_class->VERSION);

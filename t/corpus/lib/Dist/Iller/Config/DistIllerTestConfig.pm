@@ -1,9 +1,13 @@
-use Dist::Iller::Standard;
+use 5.14.0;
+use warnings;
 
-class Dist::Iller::Config::DistIllerTestConfig using Moose with Dist::Iller::Role::Config {
+package Dist::Iller::Config::DistIllerTestConfig {
 
-    use YAML::Tiny;
     our $VERSION = '0.0001';
+
+    use Moose;
+    use Types::Standard qw/Str Bool/;
+    use Types::Path::Tiny qw/Path/;
 
     has filepath => (
         is => 'ro',
@@ -27,10 +31,9 @@ class Dist::Iller::Config::DistIllerTestConfig using Moose with Dist::Iller::Rol
         isa => Bool,
         default => 0,
     );
+    with 'Dist::Iller::Role::Config';
 
-    method package {
-        return __PACKAGE__;
-    }
+    sub package { __PACKAGE__ }
 
 }
 

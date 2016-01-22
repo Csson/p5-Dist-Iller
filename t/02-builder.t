@@ -4,8 +4,6 @@ use Test::Differences;
 use Dist::Iller::Builder;
 use syntax 'qs';
 
-ok 1;
-
 my $builder = Dist::Iller::Builder->new(filepath => 't/corpus/02-builder.yaml');
 $builder->parse;
 

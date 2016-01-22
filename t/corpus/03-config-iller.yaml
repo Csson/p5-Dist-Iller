@@ -1,3 +1,4 @@
+---
 doctype: dist
 
 header:
@@ -41,7 +42,6 @@ plugins:
  - +plugin: LastPlugin
  
 ---
-
 doctype: weaver
 
 plugins:

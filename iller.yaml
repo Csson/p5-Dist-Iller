@@ -23,12 +23,14 @@ prereqs:
       - DateTime
       - YAML::Tiny
       - File::ShareDir
+      - List::Util
       - List::MoreUtils
       - Path::Tiny
       - Pod::Weaver::Config::Assembler
       - PerlX::Maybe
       - Module::Load
       - Carp
+      - Try::Tiny
 
   test:
     requires:

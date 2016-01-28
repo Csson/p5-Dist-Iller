@@ -11,6 +11,7 @@ use File::ShareDir 'dist_dir';
 use Types::Standard qw/Str/;
 use MooseX::AttributeShortcuts;
 use Path::Tiny;
+use Try::Tiny;
 
 requires 'filepath';
 has distribution_name => (
@@ -34,6 +35,7 @@ sub configlocation {
         $dir = path(dist_dir($package));
     }
     finally { };
+
     return $dir->child($self->filepath);
 }
 

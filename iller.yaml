@@ -1,0 +1,54 @@
+---
+doctype: dist
+
+header:
+  name: Dist-Iller
+
+prereqs:
+  runtime:
+    requires:
+      - perl: 5.010001
+      - Moose: 2.1400
+      - namespace::autoclean: 0.18
+      - parent
+      - Dist::Zilla: 5.000
+      - Safe::Isa
+      - File::chdir
+      - Git::Wrapper
+      - MooseX::AttributeDocumented
+      - MooseX::AttributeShortcuts
+      - MooseX::StrictConstructor
+      - Types::Standard
+      - Types::Path::Tiny
+      - DateTime
+      - YAML::Tiny
+      - File::ShareDir
+      - List::MoreUtils
+      - Path::Tiny
+      - Pod::Weaver::Config::Assembler
+      - PerlX::Maybe
+      - Module::Load
+      - Carp
+
+  test:
+    requires:
+     - Test::Differences
+     - syntax
+     - Syntax::Feature::Qs
+
+plugins:
+  - +config: Author::CSSON
+
+  - +replace_plugin: ShareDir
+    +with: ModuleShareDirs
+    Dist::Zilla::MintingProfile::DistIller::Basic: profiles
+
+  - +extend_plugin: ExecDir
+    dir: script
+
+---
+doctype: weaver
+
+plugins:
+  - +config: Author::CSSON
+    splint: 0

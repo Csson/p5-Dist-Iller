@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use 5.014000;
+use 5.010001;
 
 use ExtUtils::MakeMaker;
 
@@ -24,20 +24,18 @@ my %WriteMakefileArgs = (
     "script/iller"
   ],
   "LICENSE" => "perl",
-  "MIN_PERL_VERSION" => "5.014000",
+  "MIN_PERL_VERSION" => "5.010001",
   "NAME" => "Dist::Iller",
   "PREREQ_PM" => {
     "Carp" => 0,
-    "Config::INI" => 0,
     "DateTime" => 0,
     "Dist::Zilla" => "5.000",
     "File::ShareDir" => 0,
     "File::chdir" => 0,
     "Git::Wrapper" => 0,
-    "List::AllUtils" => 0,
+    "List::MoreUtils" => 0,
     "Module::Load" => 0,
-    "Moops" => "0.034",
-    "Moose" => "2.0000",
+    "Moose" => "2.1400",
     "MooseX::AttributeDocumented" => 0,
     "MooseX::AttributeShortcuts" => 0,
     "MooseX::StrictConstructor" => 0,
@@ -48,10 +46,11 @@ my %WriteMakefileArgs = (
     "Types::Path::Tiny" => 0,
     "Types::Standard" => 0,
     "YAML::Tiny" => 0,
-    "namespace::autoclean" => 0,
+    "namespace::autoclean" => "0.18",
     "parent" => 0
   },
   "TEST_REQUIRES" => {
+    "ExtUtils::MakeMaker" => 0,
     "File::Spec" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
@@ -60,7 +59,7 @@ my %WriteMakefileArgs = (
     "Test::More" => "0.96",
     "syntax" => 0
   },
-  "VERSION" => "0.1204",
+  "VERSION" => "0.1205",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -69,19 +68,18 @@ my %WriteMakefileArgs = (
 
 my %FallbackPrereqs = (
   "Carp" => 0,
-  "Config::INI" => 0,
   "DateTime" => 0,
   "Dist::Zilla" => "5.000",
+  "ExtUtils::MakeMaker" => 0,
   "File::ShareDir" => 0,
   "File::Spec" => 0,
   "File::chdir" => 0,
   "Git::Wrapper" => 0,
   "IO::Handle" => 0,
   "IPC::Open3" => 0,
-  "List::AllUtils" => 0,
+  "List::MoreUtils" => 0,
   "Module::Load" => 0,
-  "Moops" => "0.034",
-  "Moose" => "2.0000",
+  "Moose" => "2.1400",
   "MooseX::AttributeDocumented" => 0,
   "MooseX::AttributeShortcuts" => 0,
   "MooseX::StrictConstructor" => 0,
@@ -95,7 +93,7 @@ my %FallbackPrereqs = (
   "Types::Path::Tiny" => 0,
   "Types::Standard" => 0,
   "YAML::Tiny" => 0,
-  "namespace::autoclean" => 0,
+  "namespace::autoclean" => "0.18",
   "parent" => 0,
   "syntax" => 0
 );

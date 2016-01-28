@@ -1,38 +1,40 @@
-use feature ':5.14';
+use 5.10.1;
 use strict;
 use warnings;
-use Moops;
+
+package Dist::Iller::Types;
 
 # VERSION
-# PODCLASSNAME
 
-library  Dist::Iller::Types
+use Type::Library
+    -base,
+    -declare => qw/
+        IllerConfigurationPlugin
+        IllerConfigurationPrereq
+        ArrayRefStr
+/;
+use Type::Utils -all;
+use Types::Standard qw/HashRef ArrayRef Str/;
 
-declares IllerConfigurationPlugin,
-         IllerConfigurationPrereq,
-         ArrayRefStr
+class_type IllerConfiguration       => { class => 'Dist::Iller::Configuration' };
+class_type IllerConfigurationPlugin => { class => 'Dist::Iller::Configuration::Plugin' };
+class_type IllerConfigurationPrereq => { class => 'Dist::Iller::Configuration::Prereq' };
+class_type IllerDoctype             => { class => 'Dist::Iller::Doctype' };
 
-{
+coerce IllerConfigurationPlugin,
+    from HashRef, via {
+        my $hash = $_;
 
-    class_type IllerConfiguration       => { class => 'Dist::Iller::Configuration' };
-    class_type IllerConfigurationPlugin => { class => 'Dist::Iller::Configuration::Plugin' };
-    class_type IllerConfigurationPrereq => { class => 'Dist::Iller::Configuration::Prereq' };
-    class_type IllerDoctype             => { class => 'Dist::Iller::Doctype' };
+        "Dist::Iller::Configuration::Plugin"->new(%$hash);
+    };
 
-    coerce IllerConfigurationPlugin,
-        from HashRef, via {
-            my $hash = $_;
+declare ArrayRefStr,
+as ArrayRef[Str];
 
-            "Dist::Iller::Configuration::Plugin"->new(%$hash);
-        };
-
-    declare ArrayRefStr,
-    as ArrayRef[Str];
-
-    coerce ArrayRefStr,
-    from Str,
-    via { [ $_ ] };
-
-}
+coerce ArrayRefStr,
+from Str,
+via { [ $_ ] };
 
 1;
+
+__END__

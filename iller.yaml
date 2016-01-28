@@ -18,6 +18,8 @@ prereqs:
       - MooseX::AttributeDocumented
       - MooseX::AttributeShortcuts
       - MooseX::StrictConstructor
+      - Type::Library: 1.000000
+      - Type::Utils: 1.000000
       - Types::Standard
       - Types::Path::Tiny
       - DateTime

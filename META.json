@@ -121,6 +121,8 @@
             "Pod::Weaver::Config::Assembler" : "0",
             "Safe::Isa" : "0",
             "Try::Tiny" : "0",
+            "Type::Library" : "1.000000",
+            "Type::Utils" : "1.000000",
             "Types::Path::Tiny" : "0",
             "Types::Standard" : "0",
             "YAML::Tiny" : "0",
@@ -178,8 +180,8 @@
          "file" : "lib/Dist/Iller/Role/Config.pm",
          "version" : "0.1205"
       },
-      "Dist::Iller::Standard" : {
-         "file" : "lib/Dist/Iller/Standard.pm",
+      "Dist::Iller::Types" : {
+         "file" : "lib/Dist/Iller/Types.pm",
          "version" : "0.1205"
       },
       "Dist::Zilla::MintingProfile::DistIller::Basic" : {

@@ -1,14 +1,13 @@
+use 5.10.1;
+use strict;
+use warnings;
+
 package Dist::Iller;
 
 # VERSION
-
-use strict;
-use warnings;
-use 5.14.0;
+# ABSTRACT: A Dist::Zilla & Pod::Weaver preprocessor
 
 1;
-
-# ABSTRACT: A Dist::Zilla & Pod::Weaver preprocessor
 
 __END__
 
@@ -16,7 +15,7 @@ __END__
 
 =head1 SYNOPSIS
 
-    # dzil new, but... 
+    # dzil new, but...
     $ dzil new -P DistIller::AMintingProvider My::Module
 
     $ cd My/Module

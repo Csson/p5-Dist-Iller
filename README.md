@@ -2,13 +2,15 @@
 
 Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 
+![Requires Perl 5.10.1+](https://img.shields.io/badge/perl-5.10.1+-brightgreen.svg) [![Travis status](https://api.travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master)](https://travis-ci.org/Csson/p5-Dist-Iller) ![coverage 79.8%](https://img.shields.io/badge/coverage-79.8%-orange.svg)
+
 # VERSION
 
-Version 0.1204, released 2016-01-22.
+Version 0.1205, released 2016-01-29.
 
 # SYNOPSIS
 
-    # dzil new, but... 
+    # dzil new, but...
     $ dzil new -P DistIller::AMintingProvider My::Module
 
     $ cd My/Module

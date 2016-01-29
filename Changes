@@ -12,6 +12,8 @@ Revision history for Dist-Iller
  [New Features]
 
  [Other Changes]
+  - Removed dependency on Moops/Kavorka, should now work on 5.10+.
+  - Built using dzil plugins in Dist::Iller::Config::Author::CSSON instead of maintaining separate plugin list.
 
  [Requirements]
 

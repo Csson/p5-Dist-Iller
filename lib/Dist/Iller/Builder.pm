@@ -14,6 +14,7 @@ use Module::Load qw/load/;
 use Safe::Isa qw/$_can/;
 use PerlX::Maybe;
 use DateTime;
+use Path::Tiny;
 use YAML::Tiny;
 use List::Util qw/none/;
 use Dist::Iller::Configuration;

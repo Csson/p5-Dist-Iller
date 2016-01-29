@@ -42,13 +42,15 @@ prereqs:
 
 plugins:
   - +config: Author::CSSON
+    travis_perl_min: 10
 
   - +replace_plugin: ShareDir
     +with: ModuleShareDirs
     Dist::Zilla::MintingProfile::DistIller::Basic: profiles
 
   - +extend_plugin: TravisYML
-    perl_version: 5.10 5.12 5.14 5.16 5.18 5.20 5.22
+    post_before_install:
+     - cpanm Dist::Iller::Config::Author::CSSON~0.0201 --verbose
 
   - +extend_plugin: ExecDir
     dir: script

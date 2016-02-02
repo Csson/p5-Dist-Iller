@@ -42,7 +42,6 @@ prereqs:
 
 plugins:
   - +config: Author::CSSON
-    travis_perl_min: 14
 
   - +replace_plugin: ShareDir
     +with: ModuleShareDirs

@@ -20,7 +20,7 @@ prereqs:
       - MooseX::StrictConstructor
       - Type::Library: 1.000000
       - Type::Utils: 1.000000
-      - Types::Standard
+      - Types::Standard: 1.000000
       - Types::Path::Tiny
       - DateTime
       - YAML::Tiny

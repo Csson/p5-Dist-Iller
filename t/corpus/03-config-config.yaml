@@ -27,6 +27,7 @@ plugins:
  - +plugin: License
 
  - +plugin: Readme
+   +version: 0.01
    root: yes
    more_root: no
    suffix: txt
@@ -104,4 +105,5 @@ plugins:
  - +plugin: List
    +base: -Transformer
    +in: Elemental
+   +version: 0.03
    transformer: List

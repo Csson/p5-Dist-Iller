@@ -51,6 +51,20 @@ sub dist {
         [UploadToCPAN]
 
         [Prereqs / DevelopRequires]
+        Dist::Zilla::Plugin::ConfirmRelease = 0
+        Dist::Zilla::Plugin::ExecDir = 0
+        Dist::Zilla::Plugin::ExtraTests = 0
+        Dist::Zilla::Plugin::GatherDir = 0
+        Dist::Zilla::Plugin::License = 0
+        Dist::Zilla::Plugin::MakeMaker = 0
+        Dist::Zilla::Plugin::Manifest = 0
+        Dist::Zilla::Plugin::ManifestSkip = 0
+        Dist::Zilla::Plugin::MetaYAML = 0
+        Dist::Zilla::Plugin::PruneCruft = 0
+        Dist::Zilla::Plugin::Readme = 0
+        Dist::Zilla::Plugin::ShareDir = 0
+        Dist::Zilla::Plugin::TestRelease = 0
+        Dist::Zilla::Plugin::UploadToCPAN = 0
         Pod::Weaver::Plugin::SingleEncoding = 0
         Pod::Weaver::PluginBundle::CorePrep = 0
         Pod::Weaver::Section::Authors = 0
@@ -65,17 +79,31 @@ sub dist {
         [Prereqs / RuntimeRequires]
         Moose = 0
 
-        ; authordep Moose
-        ; authordep Pod::Weaver::PluginBundle::CorePrep
-        ; authordep Pod::Weaver::Plugin::SingleEncoding
-        ; authordep Pod::Weaver::Section::Name
-        ; authordep Pod::Weaver::Section::Version
-        ; authordep Pod::Weaver::Section::Region
-        ; authordep Pod::Weaver::Section::Generic
-        ; authordep Pod::Weaver::Section::Collect
-        ; authordep Pod::Weaver::Section::Leftovers
-        ; authordep Pod::Weaver::Section::Authors
-        ; authordep Pod::Weaver::Section::Legal
+        ; authordep Dist::Zilla::Plugin::ConfirmRelease = 0
+        ; authordep Dist::Zilla::Plugin::ExecDir = 0
+        ; authordep Dist::Zilla::Plugin::ExtraTests = 0
+        ; authordep Dist::Zilla::Plugin::GatherDir = 0
+        ; authordep Dist::Zilla::Plugin::License = 0
+        ; authordep Dist::Zilla::Plugin::MakeMaker = 0
+        ; authordep Dist::Zilla::Plugin::Manifest = 0
+        ; authordep Dist::Zilla::Plugin::ManifestSkip = 0
+        ; authordep Dist::Zilla::Plugin::MetaYAML = 0
+        ; authordep Dist::Zilla::Plugin::PruneCruft = 0
+        ; authordep Dist::Zilla::Plugin::Readme = 0
+        ; authordep Dist::Zilla::Plugin::ShareDir = 0
+        ; authordep Dist::Zilla::Plugin::TestRelease = 0
+        ; authordep Dist::Zilla::Plugin::UploadToCPAN = 0
+        ; authordep Moose = 0
+        ; authordep Pod::Weaver::Plugin::SingleEncoding = 0
+        ; authordep Pod::Weaver::PluginBundle::CorePrep = 0
+        ; authordep Pod::Weaver::Section::Authors = 0
+        ; authordep Pod::Weaver::Section::Collect = 0
+        ; authordep Pod::Weaver::Section::Generic = 0
+        ; authordep Pod::Weaver::Section::Leftovers = 0
+        ; authordep Pod::Weaver::Section::Legal = 0
+        ; authordep Pod::Weaver::Section::Name = 0
+        ; authordep Pod::Weaver::Section::Region = 0
+        ; authordep Pod::Weaver::Section::Version = 0
     };
 }
 

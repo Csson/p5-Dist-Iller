@@ -28,6 +28,11 @@ has in => (
     isa => Enum[qw/Plugin PluginBundle Section Elemental/],
     default => 'Plugin',
 );
+has version => (
+    is => 'rw',
+    isa => Str,
+    default => '0',
+);
 has parameters => (
     is => 'ro',
     isa => HashRef,

@@ -183,14 +183,19 @@ sub add_prereqs_from_configuration {
 
         # Usually only one, but for things like (in weaver) [-Transformer / Lists] we add
         # both Pod::Elemental::Transformer::List and Pod::Weaver::Plugin::Transformer.
+        # if +version is given, only apply it to the first package returned.
+        my $version = $plugin->version;
+        PLUGIN_PACKAGE:
         foreach my $plugin_package ($plugin->plugin_package($other_config->doctype)) {
+            next PLUGIN_PACKAGE if scalar $self->filter_prereqs(sub { $_->module eq $plugin_package });
 
             $self->add_prereq(Dist::Iller::Configuration::Prereq->new(
                 module => $plugin_package,
-                version => 0,
+                version => $version,
                 phase => 'develop',
                 relation => 'requires',
             ));
+            $version = 0;
         }
     }
 }
@@ -212,12 +217,20 @@ sub to_string {
     foreach my $plugin ($self->all_plugins) {
         push @strings => $plugin->to_string, '';
     }
-    my $had_author_deps = 0;
-    foreach my $authordep_module (uniq map { $_->module } $self->filter_prereqs(sub { $_->relation eq 'requires' && $_->module ne 'perl' })) {
-        push @strings => sprintf '; authordep %s', $authordep_module;
-        ++$had_author_deps;
+
+    {
+        my $has_author_deps = 0;
+        my $previous_module = '';
+
+        AUTHORDEP:
+        foreach my $authordep (sort { $a->module cmp $b->module } $self->filter_prereqs(sub { $_->relation eq 'requires' && $_->module ne 'perl' })) {
+            next AUTHORDEP if $authordep->module eq $previous_module;
+            push @strings => sprintf '; authordep %s = %s', $authordep->module, $authordep->version;
+            $has_author_deps = 1;
+            $previous_module = $authordep->module;
+        }
+        push @strings => '' if $has_author_deps;
     }
-    push @strings => '' if $had_author_deps;
 
 
     return join "\n" => @strings;

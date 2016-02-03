@@ -77,6 +77,7 @@ sub parse {
             $self->parse_doc($self->weaver, $document);
         }
     }
+    $self->dist->add_prereqs_from_configuration($self->dist);
     $self->dist->add_prereqs_from_configuration($self->weaver);
     $self->dist->add_prereq_plugins;
 
@@ -227,6 +228,7 @@ sub parse_plugin {
                 plugin_name => $self->set_value_from_config($plugin_name),
           maybe base => delete $plugin->{'+base'},
           maybe in => delete $plugin->{'+in'},
+          maybe version => delete $plugin->{'+version'},
                 parameters => $self->set_values_from_config($plugin),
     });
 }
@@ -247,6 +249,7 @@ sub parse_replace {
                 plugin_name => $replace_with // $plugin_name,
           maybe base => delete $replacer->{'+base'},
           maybe in => delete $replacer->{'+in'},
+          maybe version => delete $replacer->{'+version'},
                 parameters => $self->set_values_from_config($replacer),
     );
 
@@ -287,6 +290,7 @@ sub parse_add {
                 plugin_name => $self->set_value_from_config($plugin_name),
           maybe base => delete $adder->{'+base'},
           maybe in => delete $adder->{'+in'},
+          maybe version => delete $adder->{'+version'},
                 parameters => $self->set_values_from_config($adder),
     );
 
@@ -319,6 +323,7 @@ sub parse_prereqs {
 
         foreach my $relation (qw/requires recommends suggests conflicts/) {
 
+            MODULE:
             foreach my $module (@{ $prereqs->{ $phase }{ $relation } }) {
                 my $module_name = ref $module eq 'HASH' ? (keys %$module)[0] : $module;
                 my $version     = ref $module eq 'HASH' ? (values %$module)[0] : 0;

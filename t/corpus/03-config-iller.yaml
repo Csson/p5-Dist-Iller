@@ -40,6 +40,7 @@ plugins:
    +after: ExecDir
 
  - +plugin: LastPlugin
+   +version: 0.02
 
 ---
 doctype: weaver

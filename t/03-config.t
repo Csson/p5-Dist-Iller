@@ -72,7 +72,25 @@ sub dist {
 
         [Prereqs / DevelopRequires]
         Another::Thing = 0
-        Pod::Elemental::Transformer::List = 0
+        Dist::Zilla::Plugin::ConfirmRelease = 0
+        Dist::Zilla::Plugin::ExecDir = 0
+        Dist::Zilla::Plugin::ExtraTests = 0
+        Dist::Zilla::Plugin::GatherDir = 0
+        Dist::Zilla::Plugin::LastPlugin = 0.02
+        Dist::Zilla::Plugin::LicenseImproved = 0
+        Dist::Zilla::Plugin::MakeMaker = 0
+        Dist::Zilla::Plugin::Manifest = 0
+        Dist::Zilla::Plugin::ManifestSkip = 0
+        Dist::Zilla::Plugin::MetaYAML = 0
+        Dist::Zilla::Plugin::PlacedAfter::ExecDir = 0
+        Dist::Zilla::Plugin::PlacedBeforeExtraTests = 0
+        Dist::Zilla::Plugin::PruneCruft = 0
+        Dist::Zilla::Plugin::Readme = 0.01
+        Dist::Zilla::Plugin::ShareDir = 0
+        Dist::Zilla::Plugin::TaskWeaver = 0
+        Dist::Zilla::Plugin::TestRelease = 0
+        Dist::Zilla::Plugin::UploadToCPAN = 0
+        Pod::Elemental::Transformer::List = 0.03
         Pod::Weaver::Plugin::SingleEncoding = 0
         Pod::Weaver::Plugin::Transformer = 0
         Pod::Weaver::PluginBundle::CorePrep = 0
@@ -86,20 +104,38 @@ sub dist {
         Pod::Weaver::Section::Version = 0
         This::Thing = 0
 
-        ; authordep Another::Thing
-        ; authordep This::Thing
-        ; authordep Pod::Weaver::PluginBundle::CorePrep
-        ; authordep Pod::Weaver::Plugin::SingleEncoding
-        ; authordep Pod::Weaver::Section::Name
-        ; authordep Pod::Weaver::Section::Version
-        ; authordep Pod::Weaver::Section::Region
-        ; authordep Pod::Weaver::Section::Generic
-        ; authordep Pod::Weaver::Section::Collect
-        ; authordep Pod::Weaver::Section::Leftovers
-        ; authordep Pod::Weaver::Section::Authors
-        ; authordep Pod::Weaver::Section::Legal
-        ; authordep Pod::Elemental::Transformer::List
-        ; authordep Pod::Weaver::Plugin::Transformer
+        ; authordep Another::Thing = 0
+        ; authordep Dist::Zilla::Plugin::ConfirmRelease = 0
+        ; authordep Dist::Zilla::Plugin::ExecDir = 0
+        ; authordep Dist::Zilla::Plugin::ExtraTests = 0
+        ; authordep Dist::Zilla::Plugin::GatherDir = 0
+        ; authordep Dist::Zilla::Plugin::LastPlugin = 0.02
+        ; authordep Dist::Zilla::Plugin::LicenseImproved = 0
+        ; authordep Dist::Zilla::Plugin::MakeMaker = 0
+        ; authordep Dist::Zilla::Plugin::Manifest = 0
+        ; authordep Dist::Zilla::Plugin::ManifestSkip = 0
+        ; authordep Dist::Zilla::Plugin::MetaYAML = 0
+        ; authordep Dist::Zilla::Plugin::PlacedAfter::ExecDir = 0
+        ; authordep Dist::Zilla::Plugin::PlacedBeforeExtraTests = 0
+        ; authordep Dist::Zilla::Plugin::PruneCruft = 0
+        ; authordep Dist::Zilla::Plugin::Readme = 0.01
+        ; authordep Dist::Zilla::Plugin::ShareDir = 0
+        ; authordep Dist::Zilla::Plugin::TaskWeaver = 0
+        ; authordep Dist::Zilla::Plugin::TestRelease = 0
+        ; authordep Dist::Zilla::Plugin::UploadToCPAN = 0
+        ; authordep Pod::Elemental::Transformer::List = 0.03
+        ; authordep Pod::Weaver::Plugin::SingleEncoding = 0
+        ; authordep Pod::Weaver::Plugin::Transformer = 0
+        ; authordep Pod::Weaver::PluginBundle::CorePrep = 0
+        ; authordep Pod::Weaver::Section::Authors = 0
+        ; authordep Pod::Weaver::Section::Collect = 0
+        ; authordep Pod::Weaver::Section::Generic = 0
+        ; authordep Pod::Weaver::Section::Leftovers = 0
+        ; authordep Pod::Weaver::Section::Legal = 0
+        ; authordep Pod::Weaver::Section::Name = 0
+        ; authordep Pod::Weaver::Section::Region = 0
+        ; authordep Pod::Weaver::Section::Version = 0
+        ; authordep This::Thing = 0
     };
 }
 

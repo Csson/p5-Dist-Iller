@@ -223,7 +223,7 @@ sub to_string {
         my $previous_module = '';
 
         AUTHORDEP:
-        foreach my $authordep (sort { $a->module cmp $b->module } $self->filter_prereqs(sub { $_->relation eq 'requires' && $_->module ne 'perl' })) {
+        foreach my $authordep (sort { $a->module cmp $b->module } $self->filter_prereqs(sub { $_->relation eq 'requires' && $_->module ne 'perl' && $_->phase eq 'develop' })) {
             next AUTHORDEP if $authordep->module eq $previous_module;
             push @strings => sprintf '; authordep %s = %s', $authordep->module, $authordep->version;
             $has_author_deps = 1;

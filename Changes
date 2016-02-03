@@ -8,6 +8,7 @@ Revision history for Dist-Iller
  [Documentation]
 
  [Enhancements]
+  - Only add develop requirements to authordeps.
 
  [New Features]
 

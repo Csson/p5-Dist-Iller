@@ -4,12 +4,10 @@ Revision history for Dist-Iller
  [API Changes]
 
  [Bug Fixes]
-  - Add Dist::Zilla plugins to authordeps (and not just Pod::Weaver plugins).
 
  [Documentation]
 
  [Enhancements]
-  - Add +version parameter for plugins to set minimum required version.
 
  [New Features]
 
@@ -18,6 +16,14 @@ Revision history for Dist-Iller
  [Requirements]
 
  [Testing]
+
+0.1301 2016-02-03T15:47:08Z UTC
+ [Bug Fixes]
+ - Add Dist::Zilla plugins to authordeps (and not just Pod::Weaver
+   plugins).
+
+ [Enhancements]
+ - Add +version parameter for plugins to set minimum required version.
 
 0.1300 2016-01-29T17:21:18Z UTC
  [Other Changes]

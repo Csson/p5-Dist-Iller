@@ -4,6 +4,8 @@ use warnings;
 
 package Dist::Iller::DocType;
 
+# VERSION
+
 use Moose::Role;
 use MooseX::AttributeShortcuts;
 use Try::Tiny;

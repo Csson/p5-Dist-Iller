@@ -44,14 +44,14 @@ my %WriteMakefileArgs = (
     "PerlX::Maybe" => 0,
     "Pod::Weaver::Config::Assembler" => 0,
     "Safe::Isa" => 0,
+    "String::CamelCase" => "0.02",
     "Try::Tiny" => 0,
     "Type::Library" => "1.000000",
-    "Type::Utils" => "1.000000",
     "Types::Path::Tiny" => 0,
     "Types::Standard" => "1.000000",
     "YAML::Tiny" => 0,
     "namespace::autoclean" => "0.18",
-    "parent" => 0
+    "version" => 0
   },
   "TEST_REQUIRES" => {
     "ExtUtils::MakeMaker" => 0,
@@ -92,18 +92,18 @@ my %FallbackPrereqs = (
   "PerlX::Maybe" => 0,
   "Pod::Weaver::Config::Assembler" => 0,
   "Safe::Isa" => 0,
+  "String::CamelCase" => "0.02",
   "Syntax::Feature::Qs" => 0,
   "Test::Differences" => 0,
   "Test::More" => "0.96",
   "Try::Tiny" => 0,
   "Type::Library" => "1.000000",
-  "Type::Utils" => "1.000000",
   "Types::Path::Tiny" => 0,
   "Types::Standard" => "1.000000",
   "YAML::Tiny" => 0,
   "namespace::autoclean" => "0.18",
-  "parent" => 0,
-  "syntax" => 0
+  "syntax" => 0,
+  "version" => 0
 );
 
 

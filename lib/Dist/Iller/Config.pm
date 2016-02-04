@@ -4,6 +4,8 @@ use warnings;
 
 package Dist::Iller::Config;
 
+# VERSION
+
 use Moose::Role;
 use MooseX::AttributeShortcuts;
 use Module::Load qw/load/;

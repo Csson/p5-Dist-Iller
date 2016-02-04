@@ -121,15 +121,15 @@
             "PerlX::Maybe" : "0",
             "Pod::Weaver::Config::Assembler" : "0",
             "Safe::Isa" : "0",
+            "String::CamelCase" : "0.02",
             "Try::Tiny" : "0",
             "Type::Library" : "1.000000",
-            "Type::Utils" : "1.000000",
             "Types::Path::Tiny" : "0",
             "Types::Standard" : "1.000000",
             "YAML::Tiny" : "0",
             "namespace::autoclean" : "0.18",
-            "parent" : "0",
-            "perl" : "5.010001"
+            "perl" : "5.010001",
+            "version" : "0"
          }
       },
       "test" : {
@@ -153,24 +153,8 @@
          "file" : "lib/Dist/Iller.pm",
          "version" : "0.1303"
       },
-      "Dist::Iller::Builder" : {
-         "file" : "lib/Dist/Iller/Builder.pm",
-         "version" : "0.1303"
-      },
       "Dist::Iller::Config" : {
          "file" : "lib/Dist/Iller/Config.pm",
-         "version" : "0.1303"
-      },
-      "Dist::Iller::Configuration" : {
-         "file" : "lib/Dist/Iller/Configuration.pm",
-         "version" : "0.1303"
-      },
-      "Dist::Iller::Configuration::Plugin" : {
-         "file" : "lib/Dist/Iller/Configuration/Plugin.pm",
-         "version" : "0.1303"
-      },
-      "Dist::Iller::Configuration::Prereq" : {
-         "file" : "lib/Dist/Iller/Configuration/Prereq.pm",
          "version" : "0.1303"
       },
       "Dist::Iller::DocType" : {
@@ -185,10 +169,6 @@
          "file" : "lib/Dist/Iller/DocType/Weaver.pm",
          "version" : "0.1303"
       },
-      "Dist::Iller::Doctype" : {
-         "file" : "lib/Dist/Iller/Doctype.pm",
-         "version" : "0.1303"
-      },
       "Dist::Iller::Elk" : {
          "file" : "lib/Dist/Iller/Elk.pm",
          "version" : "0.1303"
@@ -201,20 +181,12 @@
          "file" : "lib/Dist/Iller/Prereq.pm",
          "version" : "0.1303"
       },
-      "Dist::Iller::Role::Config" : {
-         "file" : "lib/Dist/Iller/Role/Config.pm",
-         "version" : "0.1303"
-      },
       "Dist::Iller::Role::HasPlugins" : {
          "file" : "lib/Dist/Iller/Role/HasPlugins.pm",
          "version" : "0.1303"
       },
       "Dist::Iller::Role::HasPrereqs" : {
          "file" : "lib/Dist/Iller/Role/HasPrereqs.pm",
-         "version" : "0.1303"
-      },
-      "Dist::Iller::Types" : {
-         "file" : "lib/Dist/Iller/Types.pm",
          "version" : "0.1303"
       },
       "Dist::Zilla::MintingProfile::DistIller::Basic" : {

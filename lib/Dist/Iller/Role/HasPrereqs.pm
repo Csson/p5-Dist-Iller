@@ -4,6 +4,8 @@ use warnings;
 
 package Dist::Iller::Role::HasPrereqs;
 
+# VERSION
+
 use Moose::Role;
 use version;
 use Types::Standard qw/ArrayRef InstanceOf/;

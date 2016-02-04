@@ -4,6 +4,8 @@ use warnings;
 
 package Dist::Iller::Role::HasPlugins;
 
+# VERSION
+
 use Moose::Role;
 use Types::Standard qw/ArrayRef InstanceOf/;
 use PerlX::Maybe qw/maybe provided/;

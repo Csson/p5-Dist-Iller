@@ -4,6 +4,8 @@ use warnings;
 
 package Dist::Iller::DocType::Weaver;
 
+# VERSION
+
 use Dist::Iller::Elk;
 with qw/
     Dist::Iller::DocType

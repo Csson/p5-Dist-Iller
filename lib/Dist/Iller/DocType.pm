@@ -62,8 +62,10 @@ sub parse_config {
     return if !defined $yaml;
 
     if(ref $yaml eq 'ARRAY') {
-        ...
-        # recurse
+        warn 'Multiple configs found';
+        for my $doc (@{ $yaml }) {
+            $self->parse_config($doc);
+        }
     }
     else {
         my $config_name = delete $yaml->{'+config'};

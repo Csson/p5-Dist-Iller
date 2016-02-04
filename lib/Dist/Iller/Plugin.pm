@@ -2,7 +2,7 @@ use 5.10.1;
 use strict;
 use warnings;
 
-package Dist::Iller::Configuration::Plugin;
+package Dist::Iller::Plugin;
 
 # VERSION
 
@@ -24,7 +24,6 @@ has base => (
 );
 has in => (
     is => 'rw',
-    predicate => 1,
     isa => Enum[qw/Plugin PluginBundle Section Elemental/],
     default => 'Plugin',
 );
@@ -42,10 +41,10 @@ has parameters => (
         get_parameter => 'get',
         parameter_keys => 'keys',
         delete_parameter => 'delete',
+        parameters_kv => 'kv',
     },
 );
 
-# $other_plugin: IllerConfigurationPlugin
 sub merge_with {
     my $self = shift;
     my $other_plugin = shift;
@@ -72,7 +71,6 @@ sub merge_with {
     }
 }
 
-# $doctype: IllerDoctype
 sub plugin_package {
     my $self = shift;
     my $doctype = shift;

@@ -1,15 +1,14 @@
 #!perl
+use 5.10.1;
 use strict;
 use warnings;
 
-use Dist::Iller::Builder;
+use Dist::Iller;
 
 # VERSION
 # PODNAME: iller
 
-my $builder = Dist::Iller::Builder->new->parse;
-$builder->generate_dist_ini if defined $builder;
-$builder->generate_weaver_ini if defined $builder;
+Dist::Iller->new->parse->generate_files;
 
 system('dzil', @ARGV);
 

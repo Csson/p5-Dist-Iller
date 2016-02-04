@@ -2,27 +2,32 @@ use strict;
 use Test::More;
 use Test::Differences;
 use Path::Tiny;
-use Dist::Iller::Builder;
+use Dist::Iller;
 use syntax 'qs';
 
 use lib 't/corpus/lib';
 
-my $builder = Dist::Iller::Builder->new(filepath => 't/corpus/03-config-iller.yaml');
-$builder->parse;
+my $iller = Dist::Iller->new(filepath => 't/corpus/03-config-iller.yaml');
+$iller->parse;
 
-eq_or_diff $builder->dist->to_string, clean(dist()), 'Correct dist.ini';
-eq_or_diff $builder->weaver->to_string, clean(weaver()), 'Correct dist.ini';
+eq_or_diff clean($iller->get_doc('dist')->to_string), clean(dist()), 'Correct dist.ini';
+eq_or_diff clean($iller->get_doc('weaver')->to_string), clean(weaver()), 'Correct weaver.ini';
 
 done_testing;
 
 sub clean {
     my $string = shift;
     $string =~ s{^\v}{};
+    $string =~ s{^(\s*?;.* on).*}{$1...};
     return $string;
 }
 
 sub dist {
     return qs{
+        ; This file was auto-generated from iller.yaml on...
+        ; The follow configs were used:
+        ; * Dist::Iller::Config::DistIllerTestConfig: 0.0001
+
         author = Erik Carlsson
         author = Ex Ample
 
@@ -141,6 +146,10 @@ sub dist {
 
 sub weaver {
     return qs{
+        ; This file was auto-generated from iller.yaml on...
+        ; The follow configs were used:
+        ; * Dist::Iller::Config::DistIllerTestConfig: 0.0001
+
         [@CorePrep]
 
         [-SingleEncoding]

@@ -2,12 +2,11 @@ use 5.10.1;
 use strict;
 use warnings;
 
-package Dist::Iller::Configuration::Prereq;
+package Dist::Iller::Prereq;
 
 # VERSION
 
 use Dist::Iller::Elk;
-use namespace::autoclean;
 use Types::Standard qw/Str Enum/;
 
 has module => (

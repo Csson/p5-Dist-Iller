@@ -7,6 +7,80 @@ package Dist::Iller;
 # VERSION
 # ABSTRACT: A Dist::Zilla & Pod::Weaver preprocessor
 
+use Dist::Iller::Elk;
+use namespace::autoclean;
+use Types::Standard -types;
+use Types::Path::Tiny qw/Path/;
+use String::CamelCase qw/camelize/;
+use Try::Tiny;
+
+
+use Carp;
+use Module::Load qw/load/;
+use Safe::Isa qw/$_can $_does/;
+use PerlX::Maybe;
+use DateTime;
+use Path::Tiny;
+use YAML::Tiny;
+
+has docs => (
+    is => 'ro',
+    isa => Map[Str, ConsumerOf['Dist::Iller::DocType'] ],
+    default => sub { +{ } },
+    traits => ['Hash'],
+    handles => {
+        set_doc => 'set',
+        get_doc => 'get',
+        doc_keys => 'keys',
+        doc_kv => 'kv',
+    },
+);
+has filepath => (
+    is => 'ro',
+    isa => Path,
+    default => 'iller.yaml',
+    coerce => 1,
+);
+
+sub parse {
+    my $self = shift;
+
+    my $yaml = YAML::Tiny->read($self->filepath->stringify);
+
+    foreach my $document (@$yaml) {
+        my $doctype_class = sprintf 'Dist::Iller::DocType::%s', camelize($document->{'doctype'});
+        try {
+            load $doctype_class;
+        }
+        catch {
+            die "Can't load $doctype_class: $_";
+        };
+
+        $self->set_doc($document->{'doctype'}, $doctype_class->new->parse($document));
+    }
+    if($self->get_doc('dist')) {
+        DOC:
+        for my $doc ($self->doc_kv) {
+            if($doc->[1]->$_does('Dist::Iller::Role::HasPlugins')) {
+                $self->get_doc('dist')->add_plugins_as_prereqs($doc->[1]->packages_for_plugin, $doc->[1]->all_plugins);
+                my $pl = [$doc->[1]->map_plugins(sub { $_->plugin_name })];
+            }
+            next DOC if $doc->[0] eq 'dist';
+            if($doc->[1]->$_does('Dist::Iller::Role::HasPrereqs')) {
+                $self->get_doc('dist')->merge_prereqs($doc->[1]->all_prereqs);
+            }
+        }
+    }
+}
+
+sub generate_files {
+    my $self = shift;
+
+    for my $doc ($self->doc_kv) {
+        $doc->[1]->generate_file;
+    }
+}
+
 1;
 
 __END__

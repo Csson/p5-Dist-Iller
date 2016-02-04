@@ -8,7 +8,6 @@ Revision history for Dist-Iller
  [Documentation]
 
  [Enhancements]
-  - Only add develop requirements to authordeps.
 
  [New Features]
 
@@ -17,6 +16,10 @@ Revision history for Dist-Iller
  [Requirements]
 
  [Testing]
+
+0.1302 2016-02-03T17:18:44Z UTC
+ [Enhancements]
+ - Only add develop requirements to authordeps.
 
 0.1301 2016-02-03T15:47:08Z UTC
  [Bug Fixes]

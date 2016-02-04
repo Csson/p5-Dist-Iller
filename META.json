@@ -151,47 +151,47 @@
    "provides" : {
       "Dist::Iller" : {
          "file" : "lib/Dist/Iller.pm",
-         "version" : "0.1400"
+         "version" : "0.1302"
       },
       "Dist::Iller::Builder" : {
          "file" : "lib/Dist/Iller/Builder.pm",
-         "version" : "0.1400"
+         "version" : "0.1302"
       },
       "Dist::Iller::Configuration" : {
          "file" : "lib/Dist/Iller/Configuration.pm",
-         "version" : "0.1400"
+         "version" : "0.1302"
       },
       "Dist::Iller::Configuration::Plugin" : {
          "file" : "lib/Dist/Iller/Configuration/Plugin.pm",
-         "version" : "0.1400"
+         "version" : "0.1302"
       },
       "Dist::Iller::Configuration::Prereq" : {
          "file" : "lib/Dist/Iller/Configuration/Prereq.pm",
-         "version" : "0.1400"
+         "version" : "0.1302"
       },
       "Dist::Iller::Doctype" : {
          "file" : "lib/Dist/Iller/Doctype.pm",
-         "version" : "0.1400"
+         "version" : "0.1302"
       },
       "Dist::Iller::Elk" : {
          "file" : "lib/Dist/Iller/Elk.pm",
-         "version" : "0.1400"
+         "version" : "0.1302"
       },
       "Dist::Iller::Role::Config" : {
          "file" : "lib/Dist/Iller/Role/Config.pm",
-         "version" : "0.1400"
+         "version" : "0.1302"
       },
       "Dist::Iller::Types" : {
          "file" : "lib/Dist/Iller/Types.pm",
-         "version" : "0.1400"
+         "version" : "0.1302"
       },
       "Dist::Zilla::MintingProfile::DistIller::Basic" : {
          "file" : "lib/Dist/Zilla/MintingProfile/DistIller/Basic.pm",
-         "version" : "0.1400"
+         "version" : "0.1302"
       },
       "Dist::Zilla::Plugin::DistIller::MetaGeneratedBy" : {
          "file" : "lib/Dist/Zilla/Plugin/DistIller/MetaGeneratedBy.pm",
-         "version" : "0.1400"
+         "version" : "0.1302"
       }
    },
    "release_status" : "stable",
@@ -206,6 +206,6 @@
          "web" : "https://github.com/Csson/p5-Dist-Iller"
       }
    },
-   "version" : "0.1400"
+   "version" : "0.1302"
 }
 

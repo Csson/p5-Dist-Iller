@@ -2,27 +2,42 @@ use strict;
 use Test::More;
 use Test::Differences;
 use Path::Tiny;
-use Dist::Iller::Builder;
+use File::chdir;
+use Dist::Iller;
 use syntax 'qs';
 
 use lib 't/corpus/lib';
+use Dist::Iller::Config::DistIllerTestConfig;
 
-my $builder = Dist::Iller::Builder->new(filepath => 't/corpus/03-config-iller.yaml');
-$builder->parse;
+my $iller = Dist::Iller->new(filepath => 't/corpus/03-config-iller.yaml');
+$iller->parse;
 
-eq_or_diff $builder->dist->to_string, clean(dist()), 'Correct dist.ini';
-eq_or_diff $builder->weaver->to_string, clean(weaver()), 'Correct dist.ini';
+my $tempdir = Path::Tiny->tempdir();
+
+my $current_dir = path('.')->realpath;
+{
+    local $CWD = $tempdir->stringify;
+    $iller->generate_files;
+}
+
+eq_or_diff clean($tempdir->child('dist.ini')->slurp_utf8), clean(dist()), 'Correct dist.ini';
+eq_or_diff clean($tempdir->child('weaver.ini')->slurp_utf8), clean(weaver()), 'Correct weaver.ini';
 
 done_testing;
 
 sub clean {
     my $string = shift;
     $string =~ s{^\v}{};
+    $string =~ s{^(\s*?;.* on).*}{$1...};
     return $string;
 }
 
 sub dist {
-    return qs{
+    return qqs{
+        ; This file was auto-generated from iller.yaml on...
+        ; The follow configs were used:
+        ; * Dist::Iller::Config::DistIllerTestConfig: 0.0001
+
         author = Erik Carlsson
         author = Ex Ample
 
@@ -63,8 +78,8 @@ sub dist {
         [TestRelease]
 
         [ConfirmRelease]
-        default = $self.confirm_release
-        prompt = $
+        default = @{[ '$self.confirm_release' ]}
+        prompt = \$
 
         [UploadToCPAN]
 
@@ -72,6 +87,8 @@ sub dist {
 
         [Prereqs / DevelopRequires]
         Another::Thing = 0
+        Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
+        Dist::Iller::Config::DistIllerTestConfig = @{[ 'Dist::Iller::Config::DistIllerTestConfig'->VERSION ]}
         Dist::Zilla::Plugin::ConfirmRelease = 0
         Dist::Zilla::Plugin::ExecDir = 0
         Dist::Zilla::Plugin::ExtraTests = 0
@@ -105,6 +122,8 @@ sub dist {
         This::Thing = 0
 
         ; authordep Another::Thing = 0
+        ; authordep Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
+        ; authordep Dist::Iller::Config::DistIllerTestConfig = @{[ 'Dist::Iller::Config::DistIllerTestConfig'->VERSION ]}
         ; authordep Dist::Zilla::Plugin::ConfirmRelease = 0
         ; authordep Dist::Zilla::Plugin::ExecDir = 0
         ; authordep Dist::Zilla::Plugin::ExtraTests = 0
@@ -141,6 +160,10 @@ sub dist {
 
 sub weaver {
     return qs{
+        ; This file was auto-generated from iller.yaml on...
+        ; The follow configs were used:
+        ; * Dist::Iller::Config::DistIllerTestConfig: 0.0001
+
         [@CorePrep]
 
         [-SingleEncoding]

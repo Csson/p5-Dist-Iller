@@ -2,14 +2,12 @@ use 5.10.1;
 use strict;
 use warnings;
 
-package Dist::Iller::Configuration::Plugin;
+package Dist::Iller::Plugin;
 
 # VERSION
 
 use Dist::Iller::Elk;
-use namespace::autoclean;
 use Types::Standard qw/Str Enum HashRef/;
-use Dist::Iller::Types -types;
 use List::MoreUtils qw/uniq/;
 use MooseX::StrictConstructor;
 
@@ -24,7 +22,6 @@ has base => (
 );
 has in => (
     is => 'rw',
-    predicate => 1,
     isa => Enum[qw/Plugin PluginBundle Section Elemental/],
     default => 'Plugin',
 );
@@ -42,10 +39,10 @@ has parameters => (
         get_parameter => 'get',
         parameter_keys => 'keys',
         delete_parameter => 'delete',
+        parameters_kv => 'kv',
     },
 );
 
-# $other_plugin: IllerConfigurationPlugin
 sub merge_with {
     my $self = shift;
     my $other_plugin = shift;
@@ -70,46 +67,6 @@ sub merge_with {
             $self->set_parameter($param, $other_plugin->get_parameter($param));
         }
     }
-}
-
-# $doctype: IllerDoctype
-sub plugin_package {
-    my $self = shift;
-    my $doctype = shift;
-
-    my @packages = ();
-    # For -Transformer
-    if($doctype->is_weaver && $self->has_in && $self->has_base) {
-        if($self->in eq 'Elemental') {
-            my $base = $self->base;
-            $base =~ s{^[^a-zA-Z]}{};
-
-            push @packages => join '::' => 'Pod::Elemental', $base, $self->plugin_name;
-            $self->in('Plugin'); # eg. Pod::Elemental::Transformer -> Pod::Weaver::Plugin::Transformer (a bit messy)
-        }
-    }
-    my $name = $self->has_base ? $self->base : $self->plugin_name;
-    $name =~ m{^(.)};
-    my $first = $1;
-
-    my $clean_name = $name;
-    $clean_name =~ s{^[-%=@]}{};
-
-    if($doctype->is_dist) {
-        push @packages => $first eq '%' ? sprintf '%s::%s::%s' => $doctype->namespace, 'Stash', $clean_name
-                       :  $first eq '@' ? sprintf '%s::%s::%s' => $doctype->namespace, 'PluginBundle', $clean_name
-                       :  $first eq '=' ? sprintf $clean_name
-                       :                  sprintf '%s::%s::%s' => $doctype->namespace, 'Plugin', $clean_name
-                       ;
-    }
-    elsif($doctype->is_weaver) {
-        push @packages => $first eq '-' ? sprintf '%s::%s::%s' => $doctype->namespace, 'Plugin', $clean_name
-                       :  $first eq '@' ? sprintf '%s::%s::%s' => $doctype->namespace, 'PluginBundle', $clean_name
-                       :  $first eq '=' ? sprintf $clean_name
-                       :                  sprintf '%s::%s::%s' => $doctype->namespace, 'Section', $clean_name
-                       ;
-    }
-    return @packages;
 }
 
 sub to_string {

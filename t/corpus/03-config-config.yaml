@@ -43,6 +43,8 @@ plugins:
 
  - +plugin: MakeMaker
 
+ - +plugin: MakeMaker
+
  - +plugin: Manifest
 
  - +plugin: TestRelease

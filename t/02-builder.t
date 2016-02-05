@@ -1,25 +1,38 @@
 use strict;
 use Test::More;
 use Test::Differences;
-use Dist::Iller::Builder;
+use Dist::Iller;
 use syntax 'qs';
+use Path::Tiny;
+use File::chdir;
 
-my $builder = Dist::Iller::Builder->new(filepath => 't/corpus/02-builder.yaml');
-$builder->parse;
+my $iller = Dist::Iller->new(filepath => 't/corpus/02-builder.yaml');
+$iller->parse;
 
-eq_or_diff $builder->dist->to_string, clean(dist()), 'Correct dist.ini';
-eq_or_diff $builder->weaver->to_string, clean(weaver()), 'Correct dist.ini';
+my $tempdir = Path::Tiny->tempdir();
+
+my $current_dir = path('.')->realpath;
+{
+    local $CWD = $tempdir->stringify;
+    $iller->generate_files;
+}
+
+eq_or_diff clean($tempdir->child('dist.ini')->slurp_utf8), clean(dist()), 'Correct dist.ini';
+eq_or_diff clean($tempdir->child('weaver.ini')->slurp_utf8), clean(weaver()), 'Correct weaver.ini';
 
 done_testing;
 
 sub clean {
     my $string = shift;
     $string =~ s{^\v}{};
+    $string =~ s{^(\s*?;.* on).*}{$1...};
     return $string;
 }
 
 sub dist {
-    return qs{
+    return qqs{
+        ; This file was auto-generated from iller.yaml on
+
         author = Erik Carlsson
 
         [GatherDir]
@@ -51,6 +64,7 @@ sub dist {
         [UploadToCPAN]
 
         [Prereqs / DevelopRequires]
+        Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
         Dist::Zilla::Plugin::ConfirmRelease = 0
         Dist::Zilla::Plugin::ExecDir = 0
         Dist::Zilla::Plugin::ExtraTests = 0
@@ -79,6 +93,7 @@ sub dist {
         [Prereqs / RuntimeRequires]
         Moose = 0
 
+        ; authordep Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
         ; authordep Dist::Zilla::Plugin::ConfirmRelease = 0
         ; authordep Dist::Zilla::Plugin::ExecDir = 0
         ; authordep Dist::Zilla::Plugin::ExtraTests = 0
@@ -108,6 +123,8 @@ sub dist {
 
 sub weaver {
     return qs{
+        ; This file was auto-generated from iller.yaml on
+
         [@CorePrep]
 
         [-SingleEncoding]

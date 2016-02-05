@@ -9,6 +9,7 @@ package Dist::Iller::Elk;
 use Moose();
 use MooseX::AttributeShortcuts();
 use MooseX::AttributeDocumented();
+use namespace::autoclean();
 use Moose::Exporter;
 
 Moose::Exporter->setup_import_methods(also => ['Moose']);
@@ -21,6 +22,7 @@ sub init_meta {
     Moose->init_meta(@_);
     MooseX::AttributeShortcuts->init_meta(for_class => $for_class);
     MooseX::AttributeDocumented->init_meta(for_class => $for_class);
+    namespace::autoclean->import(-cleanee => $for_class);
 }
 
 1;

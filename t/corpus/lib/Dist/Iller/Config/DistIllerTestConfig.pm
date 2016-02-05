@@ -8,14 +8,10 @@ our $VERSION = '0.0001';
 use Moose;
 use namespace::autoclean;
 use Types::Standard qw/Str Bool/;
-use Types::Path::Tiny qw/Path/;
+use Path::Tiny;
 
-has filepath => (
-    is => 'ro',
-    isa => Path,
-    default => 't/corpus/03-config-config.yaml',
-    coerce => 1,
-);
+sub filepath { path('t/corpus/03-config-config.yaml') }
+
 has no_manifest_skip => (
     is => 'ro',
     isa => Bool,
@@ -32,9 +28,7 @@ has is_task => (
     default => 0,
 );
 
-with 'Dist::Iller::Role::Config';
-
-sub package { __PACKAGE__ }
+with 'Dist::Iller::Config';
 
 __PACKAGE__->meta->make_immutable;
 

@@ -7,6 +7,93 @@ package Dist::Iller;
 # VERSION
 # ABSTRACT: A Dist::Zilla & Pod::Weaver preprocessor
 
+use Dist::Iller::Elk;
+use Types::Standard qw/Map Str ConsumerOf/;
+use Types::Path::Tiny qw/Path/;
+use String::CamelCase qw/camelize/;
+use Try::Tiny;
+use Carp qw/croak/;
+use Module::Load qw/load/;
+use Safe::Isa qw/$_does/;
+use YAML::Tiny;
+use Dist::Iller::Prereq;
+
+has docs => (
+    is => 'ro',
+    isa => Map[Str, ConsumerOf['Dist::Iller::DocType'] ],
+    default => sub { +{ } },
+    traits => ['Hash'],
+    handles => {
+        set_doc => 'set',
+        get_doc => 'get',
+        doc_keys => 'keys',
+        doc_kv => 'kv',
+    },
+);
+has filepath => (
+    is => 'ro',
+    isa => Path,
+    default => 'iller.yaml',
+    coerce => 1,
+);
+
+sub parse {
+    my $self = shift;
+
+    my $yaml = YAML::Tiny->read($self->filepath->stringify);
+
+    for my $document (sort { $a->{'doctype'} cmp $b->{'doctype'} } @{ $yaml }) {
+        my $doctype_class = sprintf 'Dist::Iller::DocType::%s', camelize($document->{'doctype'});
+        try {
+            load $doctype_class;
+        }
+        catch {
+            croak "Can't load $doctype_class: $_";
+        };
+
+        $self->set_doc($document->{'doctype'}, $doctype_class->new->parse($document));
+    }
+    if($self->get_doc('dist')) {
+        $self->get_doc('dist')->add_prereq(Dist::Iller::Prereq->new(
+            module => __PACKAGE__,
+            version => __PACKAGE__->VERSION,
+            phase => 'develop',
+            relation => 'requires',
+        ));
+
+        DOC:
+        for my $doc ($self->doc_kv) {
+            if($doc->[1]->$_does('Dist::Iller::Role::HasPlugins')) {
+                $self->get_doc('dist')->add_plugins_as_prereqs($doc->[1]->packages_for_plugin, $doc->[1]->all_plugins);
+            }
+
+            for my $included_config ($doc->[1]->all_included_configs) {
+                $self->get_doc('dist')->add_prereq(Dist::Iller::Prereq->new(
+                    module => $included_config->[0],
+                    version => $included_config->[1],
+                    phase => 'develop',
+                    relation => 'requires',
+                ));
+            }
+
+            next DOC if $doc->[0] eq 'dist';
+            if($doc->[1]->$_does('Dist::Iller::Role::HasPrereqs')) {
+                $self->get_doc('dist')->merge_prereqs($doc->[1]->all_prereqs);
+            }
+        }
+    }
+}
+
+sub generate_files {
+    my $self = shift;
+
+    for my $doc ($self->doc_kv) {
+        $doc->[1]->generate_file;
+    }
+}
+
+__PACKAGE__->meta->make_immutable;
+
 1;
 
 __END__
@@ -32,7 +119,9 @@ It is mostly here to document how I build my distributions. It is perfectly fine
 =head1 DESCRIPTION
 
 Dist::Iller is a L<Dist::Zilla> and L<Pod::Weaver> preprocessor. It comes with a command line tool (C<iller>) which is a C<dzil> wrapper: When run, it first generates
-C<dist.ini> and/or C<weaver.ini> from C<iller.yaml> in the current directory and then executes C<dzil> automatically. (Since C<iller> requires that an C<iller.yaml> is present, C<iller new ...> does not work.)
+files specified in C<iller.yaml> in the current directory and then executes C<dzil> automatically. (Since C<iller> requires that an C<iller.yaml> is present, C<iller new ...> does not work.)
+
+The C<doctype> key in a document in C<iller.yaml> matches a camelized class in the C<Dist::Iller::DocType> namespace; so C<doctype: dist> is parsed by L<Dist::Iller::DocType::Dist>.
 
 =head2 iller.yaml
 

@@ -2,11 +2,11 @@
 
 Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 
-![Requires Perl 5.10.1+](https://img.shields.io/badge/perl-5.10.1+-brightgreen.svg) [![Travis status](https://api.travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master)](https://travis-ci.org/Csson/p5-Dist-Iller) ![coverage 80.9%](https://img.shields.io/badge/coverage-80.9%-orange.svg)
+![Requires Perl 5.10.1+](https://img.shields.io/badge/perl-5.10.1+-brightgreen.svg) [![Travis status](https://api.travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master)](https://travis-ci.org/Csson/p5-Dist-Iller) ![coverage 84.4%](https://img.shields.io/badge/coverage-84.4%-orange.svg)
 
 # VERSION
 
-Version 0.1302, released 2016-02-03.
+Version 0.1303, released 2016-02-05.
 
 # SYNOPSIS
 
@@ -27,7 +27,9 @@ It is mostly here to document how I build my distributions. It is perfectly fine
 # DESCRIPTION
 
 Dist::Iller is a [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver) preprocessor. It comes with a command line tool (`iller`) which is a `dzil` wrapper: When run, it first generates
-`dist.ini` and/or `weaver.ini` from `iller.yaml` in the current directory and then executes `dzil` automatically. (Since `iller` requires that an `iller.yaml` is present, `iller new ...` does not work.)
+files specified in `iller.yaml` in the current directory and then executes `dzil` automatically. (Since `iller` requires that an `iller.yaml` is present, `iller new ...` does not work.)
+
+The `doctype` key in a document in `iller.yaml` matches a camelized class in the `Dist::Iller::DocType` namespace; so `doctype: dist` is parsed by [Dist::Iller::DocType::Dist](https://metacpan.org/pod/Dist::Iller::DocType::Dist).
 
 ## iller.yaml
 

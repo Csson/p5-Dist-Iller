@@ -175,7 +175,6 @@ sub add_plugins_as_prereqs {
     }
 }
 
-# to_string is meant to be called last, and will translate prereqs into [Prereqs / *Phase*Requires] plugins
 sub to_string {
     my $self = shift;
 

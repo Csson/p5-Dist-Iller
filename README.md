@@ -27,7 +27,9 @@ It is mostly here to document how I build my distributions. It is perfectly fine
 # DESCRIPTION
 
 Dist::Iller is a [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and [Pod::Weaver](https://metacpan.org/pod/Pod::Weaver) preprocessor. It comes with a command line tool (`iller`) which is a `dzil` wrapper: When run, it first generates
-`dist.ini` and/or `weaver.ini` from `iller.yaml` in the current directory and then executes `dzil` automatically. (Since `iller` requires that an `iller.yaml` is present, `iller new ...` does not work.)
+files specified in `iller.yaml` in the current directory and then executes `dzil` automatically. (Since `iller` requires that an `iller.yaml` is present, `iller new ...` does not work.)
+
+The `doctype` key in a document in `iller.yaml` matches a camelized class in the `Dist::Iller::DocType` namespace; so `doctype: dist` is parsed by [Dist::Iller::DocType::Dist](https://metacpan.org/pod/Dist::Iller::DocType::Dist).
 
 ## iller.yaml
 

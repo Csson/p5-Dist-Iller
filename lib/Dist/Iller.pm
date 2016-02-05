@@ -119,7 +119,9 @@ It is mostly here to document how I build my distributions. It is perfectly fine
 =head1 DESCRIPTION
 
 Dist::Iller is a L<Dist::Zilla> and L<Pod::Weaver> preprocessor. It comes with a command line tool (C<iller>) which is a C<dzil> wrapper: When run, it first generates
-C<dist.ini> and/or C<weaver.ini> from C<iller.yaml> in the current directory and then executes C<dzil> automatically. (Since C<iller> requires that an C<iller.yaml> is present, C<iller new ...> does not work.)
+files specified in C<iller.yaml> in the current directory and then executes C<dzil> automatically. (Since C<iller> requires that an C<iller.yaml> is present, C<iller new ...> does not work.)
+
+The C<doctype> key in a document in C<iller.yaml> matches a camelized class in the C<Dist::Iller::DocType> namespace; so C<doctype: dist> is parsed by L<Dist::Iller::DocType::Dist>.
 
 =head2 iller.yaml
 

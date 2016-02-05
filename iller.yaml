@@ -33,6 +33,7 @@ prereqs:
       - Module::Load
       - Carp
       - Try::Tiny
+      - File::chdir
 
   test:
     requires:

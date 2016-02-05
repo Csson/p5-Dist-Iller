@@ -3,12 +3,22 @@ use Test::More;
 use Test::Differences;
 use Dist::Iller;
 use syntax 'qs';
+use Path::Tiny;
+use File::chdir;
 
 my $iller = Dist::Iller->new(filepath => 't/corpus/02-builder.yaml');
 $iller->parse;
 
-eq_or_diff clean($iller->get_doc('dist')->to_string), clean(dist()), 'Correct dist.ini';
-eq_or_diff clean($iller->get_doc('weaver')->to_string), clean(weaver()), 'Correct weaver.ini';
+my $tempdir = Path::Tiny->tempdir();
+
+my $current_dir = path('.')->realpath;
+{
+    local $CWD = $tempdir->stringify;
+    $iller->generate_files;
+}
+
+eq_or_diff clean($tempdir->child('dist.ini')->slurp_utf8), clean(dist()), 'Correct dist.ini';
+eq_or_diff clean($tempdir->child('weaver.ini')->slurp_utf8), clean(weaver()), 'Correct weaver.ini';
 
 done_testing;
 
@@ -20,7 +30,7 @@ sub clean {
 }
 
 sub dist {
-    return qs{
+    return qqs{
         ; This file was auto-generated from iller.yaml on
 
         author = Erik Carlsson
@@ -54,6 +64,7 @@ sub dist {
         [UploadToCPAN]
 
         [Prereqs / DevelopRequires]
+        Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
         Dist::Zilla::Plugin::ConfirmRelease = 0
         Dist::Zilla::Plugin::ExecDir = 0
         Dist::Zilla::Plugin::ExtraTests = 0
@@ -82,6 +93,7 @@ sub dist {
         [Prereqs / RuntimeRequires]
         Moose = 0
 
+        ; authordep Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
         ; authordep Dist::Zilla::Plugin::ConfirmRelease = 0
         ; authordep Dist::Zilla::Plugin::ExecDir = 0
         ; authordep Dist::Zilla::Plugin::ExtraTests = 0

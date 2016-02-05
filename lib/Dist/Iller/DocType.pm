@@ -122,7 +122,33 @@ sub generate_file {
     my $self = shift;
     my $path = Path->check($self->filename) ? $self->filename : Path->coerce($self->filename);
 
-    $path->spew_utf8($self->to_string);
+    my $new_document = $self->prepare_for_compare($self->to_string);
+    my $previous_document = $self->prepare_for_compare($path->exists ? $path->slurp_utf8 : undef);
+
+    if(!defined $previous_document) {
+        say "[Iller] Creates $path";
+        $path->spew_utf8($self->to_string);
+    }
+    elsif($new_document ne $previous_document) {
+        say "[Iller] Generates $path";
+        $path->spew_utf8($self->to_string);
+    }
+    else {
+        say "[Iller] No changes for $path";
+    }
+}
+
+sub prepare_for_compare {
+    my $self = shift;
+    my $contents = shift;
+
+    return if !defined $contents;
+
+    my $comment_start = $self->comment_start;
+    $contents =~ s{^$comment_start .*(?=\v)}{}xg;
+    $contents =~ s{\v+}{\n}g;
+
+    return $contents;
 }
 
 1;

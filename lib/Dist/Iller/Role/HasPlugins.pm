@@ -211,10 +211,10 @@ sub insert_plugin {
             $self->plugins(\@all_plugins);
 
             if($replace) {
-                say "[DI] Replaced [$plugin_name]";
+                say sprintf "[Iller] Replaced [%s] with [%s]", $current_plugin->plugin_name, $new_plugin->plugin_name;
             }
             else {
-                say sprintf "[DI] Inserted [%s] %s [%s]", $new_plugin->plugin_name, ($after ? 'after' : 'before'), $current_plugin->plugin_name;
+                say sprintf "[Iller] Inserted [%s] %s [%s]", $new_plugin->plugin_name, ($after ? 'after' : 'before'), $current_plugin->plugin_name;
             }
             last;
         }
@@ -233,7 +233,8 @@ sub extend_plugin {
                                                : [ $remove ]
             :                                    []
             ;
-    say sprintf '[DI] From %s remove %s', $plugin_name, join ', ' => @$remove if scalar @$remove;
+    say sprintf '[Iller] From %s remove %s', $plugin_name, join ', ' => @$remove if scalar @$remove;
+    say sprintf '[Iller] Extended [%s]', $plugin_name;
 
     foreach my $index (0 .. $self->count_plugins - 1) {
         my $current_plugin = $self->get_plugin($index);
@@ -259,7 +260,7 @@ sub remove_plugin {
             my @all_plugins = $self->all_plugins;
             splice @all_plugins, $index, 1;
             $self->plugins(\@all_plugins);
-            say "[DI] Removed [$remove_name]";
+            say "[Iller] Removed [$remove_name]";
             last;
         }
     }

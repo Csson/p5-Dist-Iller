@@ -16,6 +16,7 @@ use Carp qw/croak/;
 use Module::Load qw/load/;
 use Safe::Isa qw/$_does/;
 use YAML::Tiny;
+use Dist::Iller::Prereq;
 
 has docs => (
     is => 'ro',
@@ -41,7 +42,7 @@ sub parse {
 
     my $yaml = YAML::Tiny->read($self->filepath->stringify);
 
-    foreach my $document (@$yaml) {
+    for my $document (sort { $a->{'doctype'} cmp $b->{'doctype'} } @{ $yaml }) {
         my $doctype_class = sprintf 'Dist::Iller::DocType::%s', camelize($document->{'doctype'});
         try {
             load $doctype_class;
@@ -53,12 +54,28 @@ sub parse {
         $self->set_doc($document->{'doctype'}, $doctype_class->new->parse($document));
     }
     if($self->get_doc('dist')) {
+        $self->get_doc('dist')->add_prereq(Dist::Iller::Prereq->new(
+            module => __PACKAGE__,
+            version => __PACKAGE__->VERSION,
+            phase => 'develop',
+            relation => 'requires',
+        ));
+
         DOC:
         for my $doc ($self->doc_kv) {
             if($doc->[1]->$_does('Dist::Iller::Role::HasPlugins')) {
                 $self->get_doc('dist')->add_plugins_as_prereqs($doc->[1]->packages_for_plugin, $doc->[1]->all_plugins);
-                my $pl = [$doc->[1]->map_plugins(sub { $_->plugin_name })];
             }
+
+            for my $included_config ($doc->[1]->all_included_configs) {
+                $self->get_doc('dist')->add_prereq(Dist::Iller::Prereq->new(
+                    module => $included_config->[0],
+                    version => $included_config->[1],
+                    phase => 'develop',
+                    relation => 'requires',
+                ));
+            }
+
             next DOC if $doc->[0] eq 'dist';
             if($doc->[1]->$_does('Dist::Iller::Role::HasPrereqs')) {
                 $self->get_doc('dist')->merge_prereqs($doc->[1]->all_prereqs);

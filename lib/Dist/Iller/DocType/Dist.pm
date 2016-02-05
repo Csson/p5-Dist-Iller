@@ -62,11 +62,9 @@ sub comment_start { ';' }
 sub parse {
     my $self = shift;
     my $yaml = shift;
-
     $self->parse_header($yaml->{'header'});
     $self->parse_prereqs($yaml->{'prereqs'});
     $self->parse_plugins($yaml->{'plugins'});
-
     return $self;
 }
 
@@ -167,7 +165,6 @@ sub add_plugins_as_prereqs {
         my $packages = $packages_for_plugin->($plugin);
 
         for my $package (@{ $packages }) {
-
             $self->add_prereq(Dist::Iller::Prereq->new(
                 module => $package->{'package'},
                 phase => 'develop',
@@ -186,10 +183,14 @@ sub to_string {
         RELATION:
         for my $relation (qw/requires recommends suggests conflicts/) {
 
+            my $plugin_name = sprintf '%s%s', ucfirst $phase, ucfirst $relation;
+
+            # in case to_string is called twice, don't add this again
+            next RELATION if $self->find_plugin(sub { $_->plugin_name eq $plugin_name });
+
             my @prereqs = $self->filter_prereqs(sub { $_->phase eq $phase && $_->relation eq $relation });
             next RELATION if !scalar @prereqs;
 
-            my $plugin_name = sprintf '%s%s', ucfirst $phase, ucfirst $relation;
             $self->add_plugin({
                 plugin_name => $plugin_name,
                 base => 'Prereqs',

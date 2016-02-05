@@ -56,6 +56,7 @@ my %WriteMakefileArgs = (
   "TEST_REQUIRES" => {
     "ExtUtils::MakeMaker" => 0,
     "File::Spec" => 0,
+    "File::chdir" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
     "Syntax::Feature::Qs" => 0,

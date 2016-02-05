@@ -39,9 +39,15 @@ has plugins => (
 around add_plugin => sub {
     my $next = shift;
     my $self = shift;
-    my $plugin = shift;
+    my $plugin_data = shift;
+    my $plugin = (InstanceOf['Dist::Iller::Plugin'])->check($plugin_data) ? $plugin_data : Dist::Iller::Plugin->new($plugin_data);
 
-    $self->$next( ref $plugin eq 'HASH' ? Dist::Iller::Plugin->new($plugin) : $plugin );
+    if($self->find_plugin(sub { $_->plugin_name eq $plugin->plugin_name })) {
+        say "[Iller] ! Duplicate plugin found - skips [@{[ $plugin->plugin_name ]}]";
+        return;
+    }
+
+    $self->$next($plugin);
 };
 
 sub parse_plugins {

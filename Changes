@@ -2,17 +2,12 @@ Revision history for Dist-Iller
 
 {{$NEXT}}
  [API Changes]
-  - Configs should now do the Dist::Iller::Config role instead of Dist::Iller::Role::Config.
 
  [Bug Fixes]
 
  [Documentation]
 
  [Enhancements]
-  - Heavily refactored.
-  - Ensure plugins are only added once.
-  - Files are always generated in the same order.
-  - Dist::Iller (and any used configs) are automatically added as develop prereqs (and requires the version used).
 
  [New Features]
 
@@ -21,7 +16,22 @@ Revision history for Dist-Iller
  [Requirements]
 
  [Testing]
-  - Tests now generates files in a tempdir (instead of just to_string-ing them)
+
+0.1400 2016-02-05T20:25:34Z UTC
+ [API Changes]
+ - Configs should now do the Dist::Iller::Config role instead of
+   Dist::Iller::Role::Config.
+
+ [Enhancements]
+ - Heavily refactored.
+ - Ensure plugins are only added once.
+ - Files are always generated in the same order.
+ - Dist::Iller (and any used configs) are automatically added as develop
+   prereqs (and requires the version used).
+
+ [Testing]
+ - Tests now generates files in a tempdir (instead of just to_string-ing
+   them)
 
 0.1302 2016-02-03T17:18:44Z UTC
  [Enhancements]

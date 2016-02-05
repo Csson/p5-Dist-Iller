@@ -25,7 +25,7 @@ has relation => (
     required => 1,
 );
 has version => (
-    is => 'ro',
+    is => 'rw',
     isa => Str,
     default => '0',
 );

@@ -4,6 +4,7 @@ Revision history for Dist-Iller
  [API Changes]
 
  [Bug Fixes]
+  - The version of a prereq should be updatable.
 
  [Documentation]
 

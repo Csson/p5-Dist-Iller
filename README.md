@@ -6,7 +6,7 @@ Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 
 # VERSION
 
-Version 0.1400, released 2016-02-05.
+Version 0.1401, released 2016-02-05.
 
 # SYNOPSIS
 

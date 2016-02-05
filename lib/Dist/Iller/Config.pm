@@ -8,11 +8,13 @@ package Dist::Iller::Config;
 
 use Moose::Role;
 use MooseX::AttributeShortcuts;
+use namespace::autoclean;
 use Module::Load qw/load/;
 use Types::Standard qw/Str/;
 use YAML::Tiny;
 use Path::Tiny;
 use Try::Tiny;
+use Carp qw/croak/;
 use File::ShareDir 'dist_dir';
 use String::CamelCase qw/camelize/;
 
@@ -21,14 +23,23 @@ requires qw/filepath/;
 has main_module => (
     is => 'ro',
     isa => Str,
-    predicate => 1,
+    lazy => 1,
+    traits => ['Documented'],
+    default => sub { shift->meta->name },
     documentation => q{Override this attribute when there's more than one config in a distribution. It uses the main_module's sharedir location for the config files.},
+    documentation_default => 'The package name',
+);
+has distribution_name => (
+    is => 'ro',
+    isa => Str,
+    predicate => 1,
 );
 
 sub config_location {
     my $self = shift;
-    my $package = $self->has_main_module ? $self->main_module : $self->meta->name;
+    my $package = $self->main_module;
     $package =~ s{::}{-}g;
+
     my $dir = path('.');
 
     try {
@@ -53,23 +64,10 @@ sub get_yaml_for {
         load $doctype_class;
     }
     catch {
-        die "Can't load $doctype_class: $_";
+        croak "Can't load $doctype_class: $_";
     };
     return $doctype_class->new(config_obj => $self)->parse($yaml)->to_yaml;
 
-}
-
-#sub get_yaml_for_dist {
-#    my $self = shift;
-#
-#    my $yaml = YAML::Tiny->read($self->configlocation->absolute->stringify);
-#
-#    return (grep { $_->{'doctype'} eq 'dist'} @$yaml)[0];
-#}
-
-sub parse {
-    my $self = shift;
-    my $parse_only = shift;
 }
 
 1;

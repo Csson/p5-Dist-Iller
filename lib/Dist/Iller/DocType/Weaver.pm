@@ -54,8 +54,8 @@ sub packages_for_plugin {
                 my $base = $plugin->base;
                 $base =~ s{^[^a-zA-Z]}{};
 
-                push @{ $packages } => { version => $plugin->version, package => join '::' => 'Pod::Elemental', $base, $plugin->plugin_name };
-                push @{ $packages } => { version => 0, package => join '::' => 'Pod::Weaver::Plugin', $base };
+                push @{ $packages } => { version => $plugin->version, package => sprintf 'Pod::Elemental::%s::%s', $base, $plugin->plugin_name };
+                push @{ $packages } => { version => 0, package => "Pod::Weaver::Plugin::$base" };
                 return $packages;
             }
         }
@@ -66,14 +66,16 @@ sub packages_for_plugin {
         my $clean_name = $name;
         $clean_name =~ s{^[-%=@]}{};
 
-        push @{ $packages } => $first eq '-' ? { version => $plugin->version, package => sprintf '%s::%s::%s' => 'Pod::Weaver', 'Plugin', $clean_name }
-                            :  $first eq '@' ? { version => $plugin->version, package => sprintf '%s::%s::%s' => 'Pod::Weaver', 'PluginBundle', $clean_name }
+        push @{ $packages } => $first eq '-' ? { version => $plugin->version, package => sprintf 'Pod::Weaver::Plugin::%s', $clean_name }
+                            :  $first eq '@' ? { version => $plugin->version, package => sprintf 'Pod::Weaver::PluginBundle::%s', $clean_name }
                             :  $first eq '=' ? { version => $plugin->version, package => sprintf $clean_name }
-                            :                  { version => $plugin->version, package => sprintf '%s::%s::%s' => 'Pod::Weaver', 'Section', $clean_name }
+                            :                  { version => $plugin->version, package => sprintf 'Pod::Weaver::Section::%s', $clean_name }
                             ;
         return $packages;
     };
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

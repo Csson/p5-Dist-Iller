@@ -8,13 +8,18 @@ package Dist::Iller::DocType;
 
 use Moose::Role;
 use MooseX::AttributeShortcuts;
+use namespace::autoclean;
 use Try::Tiny;
-use Types::Standard -types;
+use Types::Standard qw/ConsumerOf Str HashRef/;
 use Module::Load qw/load/;
 use String::CamelCase qw/decamelize/;
 use YAML::Tiny;
 use Carp qw/croak/;
 use DateTime;
+use Path::Tiny;
+use Safe::Isa qw/$_can/;
+use Types::Path::Tiny qw/Path/;
+use PerlX::Maybe qw/maybe/;
 
 requires qw/
     filename
@@ -78,7 +83,7 @@ sub parse_config {
             croak "Can't find $config_class ($_)";
         };
 
-        my $configobj = $config_class->new(%{ $yaml }); # ? -> maybe distribution_name => $set->name);
+        my $configobj = $config_class->new(%{ $yaml }, maybe distribution_name => ($self->$_can('name') ? $self->name : undef));
         my $configdoc = $configobj->get_yaml_for($self->doctype);
         return if !defined $configdoc;
 
@@ -94,6 +99,8 @@ around to_string => sub {
     my $self = shift;
 
     my $string = $self->$next(@_);
+    return $string if !defined $self->comment_start;
+
     my $now = DateTime->now;
 
     my @intro = ();
@@ -110,6 +117,13 @@ around to_string => sub {
     return join ("\n", @intro) . $string;
 
 };
+
+sub generate_file {
+    my $self = shift;
+    my $path = Path->check($self->filename) ? $self->filename : Path->coerce($self->filename);
+
+    $path->spew_utf8($self->to_string);
+}
 
 1;
 

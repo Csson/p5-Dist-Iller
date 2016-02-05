@@ -7,7 +7,6 @@ package Dist::Iller::Plugin;
 # VERSION
 
 use Dist::Iller::Elk;
-use namespace::autoclean;
 use Types::Standard qw/Str Enum HashRef/;
 use List::MoreUtils qw/uniq/;
 use MooseX::StrictConstructor;

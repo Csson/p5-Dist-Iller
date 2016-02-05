@@ -8,19 +8,13 @@ package Dist::Iller;
 # ABSTRACT: A Dist::Zilla & Pod::Weaver preprocessor
 
 use Dist::Iller::Elk;
-use namespace::autoclean;
-use Types::Standard -types;
+use Types::Standard qw/Map Str ConsumerOf/;
 use Types::Path::Tiny qw/Path/;
 use String::CamelCase qw/camelize/;
 use Try::Tiny;
-
-
-use Carp;
+use Carp qw/croak/;
 use Module::Load qw/load/;
-use Safe::Isa qw/$_can $_does/;
-use PerlX::Maybe;
-use DateTime;
-use Path::Tiny;
+use Safe::Isa qw/$_does/;
 use YAML::Tiny;
 
 has docs => (
@@ -53,7 +47,7 @@ sub parse {
             load $doctype_class;
         }
         catch {
-            die "Can't load $doctype_class: $_";
+            croak "Can't load $doctype_class: $_";
         };
 
         $self->set_doc($document->{'doctype'}, $doctype_class->new->parse($document));
@@ -80,6 +74,8 @@ sub generate_files {
         $doc->[1]->generate_file;
     }
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

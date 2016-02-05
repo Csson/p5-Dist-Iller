@@ -52,6 +52,8 @@ plugins:
   - +extend_plugin: ExecDir
     dir: script
 
+  - +plugin: Test::CleanNamespaces
+
 ---
 doctype: weaver
 

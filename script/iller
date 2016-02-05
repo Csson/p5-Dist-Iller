@@ -8,7 +8,9 @@ use Dist::Iller;
 # VERSION
 # PODNAME: iller
 
-Dist::Iller->new->parse->generate_files;
+my $iller = Dist::Iller->new;
+$iller->parse;
+$iller->generate_files;
 
 system('dzil', @ARGV);
 

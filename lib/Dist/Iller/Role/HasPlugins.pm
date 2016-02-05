@@ -7,6 +7,7 @@ package Dist::Iller::Role::HasPlugins;
 # VERSION
 
 use Moose::Role;
+use namespace::autoclean;
 use Types::Standard qw/ArrayRef InstanceOf/;
 use PerlX::Maybe qw/maybe provided/;
 use Safe::Isa qw/$_can/;

@@ -149,10 +149,10 @@ sub packages_for_plugin {
         $clean_name =~ s{^[-%=@]}{};
 
         my $packages = [];
-        push @{ $packages } => $first eq '%' ? { version => $plugin->version, package => sprintf '%s::%s::%s' => 'Dist::Zilla', 'Stash', $clean_name }
-                            :  $first eq '@' ? { version => $plugin->version, package => sprintf '%s::%s::%s' => 'Dist::Zilla', 'PluginBundle', $clean_name }
+        push @{ $packages } => $first eq '%' ? { version => $plugin->version, package => sprintf 'Dist::Zilla::Stash::%s', $clean_name }
+                            :  $first eq '@' ? { version => $plugin->version, package => sprintf 'Dist::Zilla::PluginBundle::%s', $clean_name }
                             :  $first eq '=' ? { version => $plugin->version, package => sprintf $clean_name }
-                            :                  { version => $plugin->version, package => sprintf '%s::%s::%s' => 'Dist::Zilla', 'Plugin', $clean_name }
+                            :                  { version => $plugin->version, package => sprintf 'Dist::Zilla::Plugin::%s', $clean_name }
                             ;
         return $packages;
     };
@@ -230,6 +230,8 @@ sub to_string {
     return join "\n" => @strings;
 
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

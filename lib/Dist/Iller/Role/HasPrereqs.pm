@@ -7,6 +7,7 @@ package Dist::Iller::Role::HasPrereqs;
 # VERSION
 
 use Moose::Role;
+use namespace::autoclean;
 use version;
 use Types::Standard qw/ArrayRef InstanceOf/;
 use Dist::Iller::Prereq;

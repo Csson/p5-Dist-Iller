@@ -151,51 +151,51 @@
    "provides" : {
       "Dist::Iller" : {
          "file" : "lib/Dist/Iller.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       },
       "Dist::Iller::Config" : {
          "file" : "lib/Dist/Iller/Config.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       },
       "Dist::Iller::DocType" : {
          "file" : "lib/Dist/Iller/DocType.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       },
       "Dist::Iller::DocType::Dist" : {
          "file" : "lib/Dist/Iller/DocType/Dist.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       },
       "Dist::Iller::DocType::Weaver" : {
          "file" : "lib/Dist/Iller/DocType/Weaver.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       },
       "Dist::Iller::Elk" : {
          "file" : "lib/Dist/Iller/Elk.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       },
       "Dist::Iller::Plugin" : {
          "file" : "lib/Dist/Iller/Plugin.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       },
       "Dist::Iller::Prereq" : {
          "file" : "lib/Dist/Iller/Prereq.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       },
       "Dist::Iller::Role::HasPlugins" : {
          "file" : "lib/Dist/Iller/Role/HasPlugins.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       },
       "Dist::Iller::Role::HasPrereqs" : {
          "file" : "lib/Dist/Iller/Role/HasPrereqs.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       },
       "Dist::Zilla::MintingProfile::DistIller::Basic" : {
          "file" : "lib/Dist/Zilla/MintingProfile/DistIller/Basic.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       },
       "Dist::Zilla::Plugin::DistIller::MetaGeneratedBy" : {
          "file" : "lib/Dist/Zilla/Plugin/DistIller/MetaGeneratedBy.pm",
-         "version" : "0.1401"
+         "version" : "0.1402"
       }
    },
    "release_status" : "stable",
@@ -210,6 +210,6 @@
          "web" : "https://github.com/Csson/p5-Dist-Iller"
       }
    },
-   "version" : "0.1401"
+   "version" : "0.1402"
 }
 

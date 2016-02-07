@@ -4,7 +4,7 @@ use warnings;
 
 package Dist::Iller::Role::HasPlugins;
 
-our $VERSION = '0.1401';
+our $VERSION = '0.1403';
 
 use Moose::Role;
 use namespace::autoclean;

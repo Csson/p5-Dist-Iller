@@ -79,6 +79,7 @@ sub parse_plugin {
           maybe base => delete $plugin->{'+base'},
           maybe in => delete $plugin->{'+in'},
           maybe version => delete $plugin->{'+version'},
+          maybe documentation => delete $plugin->{'+documentation'},
                 parameters => $self->set_values_from_config($plugin),
     });
 }
@@ -97,6 +98,7 @@ sub parse_replace {
           maybe base => delete $replacer->{'+base'},
           maybe in => delete $replacer->{'+in'},
           maybe version => delete $replacer->{'+version'},
+          maybe documentation => delete $replacer->{'+documentation'},
                 parameters => $self->set_values_from_config($replacer),
     );
 
@@ -132,6 +134,7 @@ sub parse_add {
           maybe base => delete $adder->{'+base'},
           maybe in => delete $adder->{'+in'},
           maybe version => delete $adder->{'+version'},
+          maybe documentation => delete $adder->{'+documentation'},
                 parameters => $self->set_values_from_config($adder),
     );
 
@@ -324,6 +327,7 @@ sub plugins_to_hash {
                 provided $_->has_base, '+base' => $plugin->base,
                                        '+in' => $plugin->in,
                                        '+version' => $plugin->version,
+                                 maybe '+documentation' => $plugin->documentation,
                                        %{ $parameters },
             }
         })

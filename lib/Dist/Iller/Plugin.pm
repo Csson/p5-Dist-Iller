@@ -30,6 +30,11 @@ has version => (
     isa => Str,
     default => '0',
 );
+has documentation => (
+    is => 'ro',
+    isa => Str,
+    predicate => 1,
+);
 has parameters => (
     is => 'ro',
     isa => HashRef,
@@ -71,6 +76,8 @@ sub merge_with {
 
 sub to_string {
     my $self = shift;
+    my %options = @_;
+
     my @strings = $self->has_base ? (sprintf '[%s / %s]' => $self->base, $self->plugin_name)
                 :                   (sprintf '[%s]' => $self->plugin_name)
                 ;

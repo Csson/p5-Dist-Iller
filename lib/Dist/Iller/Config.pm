@@ -10,7 +10,7 @@ use Moose::Role;
 use MooseX::AttributeShortcuts;
 use namespace::autoclean;
 use Module::Load qw/load/;
-use Types::Standard qw/Str/;
+use Types::Standard qw/Bool Str/;
 use YAML::Tiny;
 use Path::Tiny;
 use Try::Tiny;

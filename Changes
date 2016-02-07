@@ -10,10 +10,12 @@ Revision history for Dist-Iller
  [Enhancements]
 
  [New Features]
+  - Add +documentation parameter for plugins in configs (planned to be used in a future Pod::Weaver plugin).
 
  [Other Changes]
 
  [Requirements]
+  - Removed some no longer used dependencies.
 
  [Testing]
 

@@ -120,18 +120,20 @@ around to_string => sub {
 
 sub generate_file {
     my $self = shift;
+
     my $path = Path->check($self->filename) ? $self->filename : Path->coerce($self->filename);
 
-    my $new_document = $self->prepare_for_compare($self->to_string);
+    my $output = $self->to_string;
+    my $new_document = $self->prepare_for_compare($output);
     my $previous_document = $self->prepare_for_compare($path->exists ? $path->slurp_utf8 : undef);
 
     if(!defined $previous_document) {
         say "[Iller] Creates $path";
-        $path->spew_utf8($self->to_string);
+        $path->spew_utf8($output);
     }
     elsif($new_document ne $previous_document) {
         say "[Iller] Generates $path";
-        $path->spew_utf8($self->to_string);
+        $path->spew_utf8($output);
     }
     else {
         say "[Iller] No changes for $path";

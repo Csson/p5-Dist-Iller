@@ -13,11 +13,9 @@ prereqs:
       - Dist::Zilla: 5.000
       - Safe::Isa
       - File::chdir
-      - Git::Wrapper
       - MooseX::AttributeDocumented
       - MooseX::AttributeShortcuts
       - MooseX::StrictConstructor
-      - Type::Library: 1.000000
       - Types::Standard: 1.000000
       - Types::Path::Tiny
       - DateTime
@@ -28,7 +26,6 @@ prereqs:
       - List::Util
       - List::MoreUtils
       - Path::Tiny
-      - Pod::Weaver::Config::Assembler
       - PerlX::Maybe
       - Module::Load
       - Carp

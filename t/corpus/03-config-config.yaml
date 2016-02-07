@@ -10,6 +10,9 @@ prereqs:
 
 plugins:
  - +plugin: GatherDir
+   +documentation: |
+     Gathers all files
+     in the directory
 
  - +plugin: PruneCruft
 

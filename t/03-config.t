@@ -38,6 +38,7 @@ sub dist {
         ; The follow configs were used:
         ; * Dist::Iller::Config::DistIllerTestConfig: 0.0001
 
+        name = My-Own-Dist
         author = Erik Carlsson
         author = Ex Ample
 
@@ -48,6 +49,10 @@ sub dist {
         [ManifestSkip]
 
         [TaskWeaver]
+
+        [GithubMeta]
+        homepage = https://metacpan.org/release/My-Own-Dist
+        issues = 1
 
         [MetaYAML]
 
@@ -93,6 +98,7 @@ sub dist {
         Dist::Zilla::Plugin::ExecDir = 0
         Dist::Zilla::Plugin::ExtraTests = 0
         Dist::Zilla::Plugin::GatherDir = 0
+        Dist::Zilla::Plugin::GithubMeta = 0
         Dist::Zilla::Plugin::LastPlugin = 0.02
         Dist::Zilla::Plugin::LicenseImproved = 0
         Dist::Zilla::Plugin::MakeMaker = 0
@@ -128,6 +134,7 @@ sub dist {
         ; authordep Dist::Zilla::Plugin::ExecDir = 0
         ; authordep Dist::Zilla::Plugin::ExtraTests = 0
         ; authordep Dist::Zilla::Plugin::GatherDir = 0
+        ; authordep Dist::Zilla::Plugin::GithubMeta = 0
         ; authordep Dist::Zilla::Plugin::LastPlugin = 0.02
         ; authordep Dist::Zilla::Plugin::LicenseImproved = 0
         ; authordep Dist::Zilla::Plugin::MakeMaker = 0

@@ -27,6 +27,15 @@ has is_task => (
     isa => Bool,
     default => 0,
 );
+has homepage => (
+    is => 'rw',
+    isa => Str,
+    lazy => 1,
+    default => sub {
+        my $self = shift;
+        $self->has_distribution_name ? sprintf 'https://metacpan.org/release/%s', $self->distribution_name : undef;
+    },
+);
 
 with 'Dist::Iller::Config';
 

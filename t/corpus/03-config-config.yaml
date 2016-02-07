@@ -22,6 +22,10 @@ plugins:
  - +plugin: TaskWeaver
    +add_if: $self.is_task
 
+ - +plugin: GithubMeta
+   homepage: $self.homepage
+   issues: 1
+
  - +plugin: MetaYAML
 
  - +plugin: License

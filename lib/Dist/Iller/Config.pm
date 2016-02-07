@@ -4,7 +4,7 @@ use warnings;
 
 package Dist::Iller::Config;
 
-# VERSION
+our $VERSION = '0.1401';
 
 use Moose::Role;
 use MooseX::AttributeShortcuts;

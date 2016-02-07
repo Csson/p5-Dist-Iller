@@ -4,7 +4,7 @@ use warnings;
 
 package Dist::Iller::DocType::Dist;
 
-# VERSION
+our $VERSION = '0.1401';
 
 use Dist::Iller::Elk;
 with qw/

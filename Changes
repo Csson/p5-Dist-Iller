@@ -4,7 +4,6 @@ Revision history for Dist-Iller
  [API Changes]
 
  [Bug Fixes]
-  - The version of a prereq should be updatable.
 
  [Documentation]
 
@@ -17,6 +16,10 @@ Revision history for Dist-Iller
  [Requirements]
 
  [Testing]
+
+0.1401 2016-02-05T22:38:01Z UTC
+ [Bug Fixes]
+ - The version of a prereq should be updatable.
 
 0.1400 2016-02-05T20:25:34Z UTC
  [API Changes]

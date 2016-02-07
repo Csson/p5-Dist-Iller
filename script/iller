@@ -5,8 +5,8 @@ use warnings;
 
 use Dist::Iller;
 
-# VERSION
 # PODNAME: iller
+our $VERSION = '0.1401';
 
 my $iller = Dist::Iller->new;
 $iller->parse;

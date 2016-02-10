@@ -30,11 +30,13 @@ prereqs:
       - Module::Load
       - Carp
       - Try::Tiny
+      - Text::Diff: 1.43
 
   test:
     requires:
      - Test::Differences
      - syntax
+     - Syntax::Feature::Qi
      - Syntax::Feature::Qs
      - File::chdir
 
@@ -58,3 +60,6 @@ doctype: weaver
 plugins:
   - +config: Author::CSSON
     splint: 0
+
+---
+doctype: cpanfile

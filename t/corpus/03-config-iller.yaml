@@ -8,6 +8,9 @@ header:
    - Ex Ample
 
 prereqs:
+  runtime:
+    requires:
+      - Moose: 2.1400
   develop:
     requires:
       - Another::Thing
@@ -48,3 +51,6 @@ doctype: weaver
 
 plugins:
  - +config: DistIllerTestConfig
+
+---
+doctype: cpanfile

@@ -82,6 +82,9 @@ sub parse {
             }
         }
     }
+    if($self->get_doc('cpanfile') && $self->get_doc('dist')) {
+        $self->get_doc('cpanfile')->merge_prereqs($self->get_doc('dist')->all_prereqs);
+    }
 }
 
 sub generate_files {

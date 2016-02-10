@@ -1,6 +1,8 @@
 Revision history for Dist-Iller
 
 {{$NEXT}}
+ [New Features]
+  - Added basic support for generating cpanfile.
 
 0.1402  2016-02-07 15:12:47 UTC
  [New Features]

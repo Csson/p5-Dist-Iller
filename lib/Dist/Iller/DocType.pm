@@ -10,6 +10,7 @@ use Moose::Role;
 use MooseX::AttributeShortcuts;
 use namespace::autoclean;
 use Try::Tiny;
+use Text::Diff;
 use Types::Standard qw/ConsumerOf Str HashRef/;
 use Module::Load qw/load/;
 use String::CamelCase qw/decamelize/;
@@ -123,17 +124,34 @@ sub generate_file {
 
     my $path = Path->check($self->filename) ? $self->filename : Path->coerce($self->filename);
 
-    my $output = $self->to_string;
-    my $new_document = $self->prepare_for_compare($output);
-    my $previous_document = $self->prepare_for_compare($path->exists ? $path->slurp_utf8 : undef);
+    my $new_document = $self->to_string;
+    my $previous_document = $path->exists ? $path->slurp_utf8 : undef;
 
     if(!defined $previous_document) {
         say "[Iller] Creates $path";
-        $path->spew_utf8($output);
+        $path->spew_utf8($new_document);
+        return;
     }
-    elsif($new_document ne $previous_document) {
+
+    my $comment_start = $self->comment_start;
+    my $diff = diff \$previous_document, \$new_document, { STYLE => 'Unified' };
+    my $diff_count = 0;
+    my $skip_first = 1;
+    for my $row (split m{\r?\n}, $diff) {
+        next if $skip_first-- == 1;
+        next if $row =~ m{^ };
+        if($row =~ m{; authordep }) {
+            ++$diff_count;
+            next;
+        }
+        next if $row =~ m{^[-+]\s*?$comment_start};
+        next if $row =~ m{^[-+]\s*$};
+        ++$diff_count;
+    }
+
+    if($diff_count) {
         say "[Iller] Generates $path";
-        $path->spew_utf8($output);
+        $path->spew_utf8($new_document);
     }
     else {
         say "[Iller] No changes for $path";
@@ -147,9 +165,17 @@ sub prepare_for_compare {
     return if !defined $contents;
 
     my $comment_start = $self->comment_start;
-    $contents =~ s{^$comment_start .*(?=\v)}{}xg;
+    $contents =~ s{^$comment_start .*?(?=\r?\n)}{}xg;
+    $contents =~ s{$comment_start}{}xg;
     $contents =~ s{\v+}{\n}g;
-
+warn $comment_start;
+if($contents =~ m{^$comment_start}) {
+    warn 'IT DOES';
+}
+else {
+    warn 'IT DOES NOT';
+}
+warn $contents;
     return $contents;
 }
 

@@ -4,7 +4,7 @@ use Test::Differences;
 use Path::Tiny;
 use File::chdir;
 use Dist::Iller;
-use syntax 'qs';
+use syntax 'qi';
 
 use lib 't/corpus/lib';
 use Dist::Iller::Config::DistIllerTestConfig;
@@ -20,11 +20,22 @@ my $current_dir = path('.')->realpath;
     $iller->generate_files;
 }
 
-eq_or_diff clean($tempdir->child('dist.ini')->slurp_utf8), clean(dist()), 'Correct dist.ini';
-eq_or_diff clean($tempdir->child('weaver.ini')->slurp_utf8), clean(weaver()), 'Correct weaver.ini';
+eq_or_diff clean_ini($tempdir->child('dist.ini')->slurp_utf8), clean_ini(dist()), 'Correct dist.ini';
+eq_or_diff clean_ini($tempdir->child('weaver.ini')->slurp_utf8), clean_ini(weaver()), 'Correct weaver.ini';
+eq_or_diff clean_cpanfile($tempdir->child('cpanfile')->slurp_utf8), clean_cpanfile(cpanfile()), 'Correct cpanfile';
 
 done_testing;
 
+sub clean_ini {
+    my $string = shift;
+    $string =~ s{^(\s*?;.* on).*}{$1...};
+    return clean($string);
+}
+sub clean_cpanfile {
+    my $string = shift;
+    $string =~ s{^(\s*?#.* on).*}{$1...};
+    return clean($string);
+}
 sub clean {
     my $string = shift;
     $string =~ s{^\v}{};
@@ -33,7 +44,7 @@ sub clean {
 }
 
 sub dist {
-    return qqs{
+    return qqi{
         ; This file was auto-generated from iller.yaml on...
         ; The follow configs were used:
         ; * Dist::Iller::Config::DistIllerTestConfig: 0.0001
@@ -127,6 +138,9 @@ sub dist {
         Pod::Weaver::Section::Version = 0
         This::Thing = 0
 
+        [Prereqs / RuntimeRequires]
+        Moose = 2.1400
+
         ; authordep Another::Thing = 0
         ; authordep Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
         ; authordep Dist::Iller::Config::DistIllerTestConfig = @{[ 'Dist::Iller::Config::DistIllerTestConfig'->VERSION ]}
@@ -162,11 +176,11 @@ sub dist {
         ; authordep Pod::Weaver::Section::Region = 0
         ; authordep Pod::Weaver::Section::Version = 0
         ; authordep This::Thing = 0
-    };
+        };
 }
 
 sub weaver {
-    return qs{
+    return qi{
         ; This file was auto-generated from iller.yaml on...
         ; The follow configs were used:
         ; * Dist::Iller::Config::DistIllerTestConfig: 0.0001
@@ -209,5 +223,52 @@ sub weaver {
 
         [-Transformer / List]
         transformer = List
-    };
+        };
+}
+
+sub cpanfile {
+    return qi{
+        # This file was auto-generated from iller.yaml on...
+
+        on runtime => sub {
+            requires 'Moose' => '2.1400';
+        };
+        on develop => sub {
+            requires 'Another::Thing' => '0';
+            requires 'Dist::Iller' => '0.1403';
+            requires 'Dist::Iller::Config::DistIllerTestConfig' => '0.0001';
+            requires 'Dist::Zilla::Plugin::ConfirmRelease' => '0';
+            requires 'Dist::Zilla::Plugin::ExecDir' => '0';
+            requires 'Dist::Zilla::Plugin::ExtraTests' => '0';
+            requires 'Dist::Zilla::Plugin::GatherDir' => '0';
+            requires 'Dist::Zilla::Plugin::GithubMeta' => '0';
+            requires 'Dist::Zilla::Plugin::LastPlugin' => '0.02';
+            requires 'Dist::Zilla::Plugin::LicenseImproved' => '0';
+            requires 'Dist::Zilla::Plugin::MakeMaker' => '0';
+            requires 'Dist::Zilla::Plugin::Manifest' => '0';
+            requires 'Dist::Zilla::Plugin::ManifestSkip' => '0';
+            requires 'Dist::Zilla::Plugin::MetaYAML' => '0';
+            requires 'Dist::Zilla::Plugin::PlacedAfter::ExecDir' => '0';
+            requires 'Dist::Zilla::Plugin::PlacedBeforeExtraTests' => '0';
+            requires 'Dist::Zilla::Plugin::PruneCruft' => '0';
+            requires 'Dist::Zilla::Plugin::Readme' => '0.01';
+            requires 'Dist::Zilla::Plugin::ShareDir' => '0';
+            requires 'Dist::Zilla::Plugin::TaskWeaver' => '0';
+            requires 'Dist::Zilla::Plugin::TestRelease' => '0';
+            requires 'Dist::Zilla::Plugin::UploadToCPAN' => '0';
+            requires 'Pod::Elemental::Transformer::List' => '0.03';
+            requires 'Pod::Weaver::Plugin::SingleEncoding' => '0';
+            requires 'Pod::Weaver::Plugin::Transformer' => '0';
+            requires 'Pod::Weaver::PluginBundle::CorePrep' => '0';
+            requires 'Pod::Weaver::Section::Authors' => '0';
+            requires 'Pod::Weaver::Section::Collect' => '0';
+            requires 'Pod::Weaver::Section::Generic' => '0';
+            requires 'Pod::Weaver::Section::Leftovers' => '0';
+            requires 'Pod::Weaver::Section::Legal' => '0';
+            requires 'Pod::Weaver::Section::Name' => '0';
+            requires 'Pod::Weaver::Section::Region' => '0';
+            requires 'Pod::Weaver::Section::Version' => '0';
+            requires 'This::Thing' => '0';
+        };
+        };
 }

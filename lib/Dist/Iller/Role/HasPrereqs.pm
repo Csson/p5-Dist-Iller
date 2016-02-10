@@ -16,6 +16,7 @@ has prereqs => (
     is => 'ro',
     isa => ArrayRef[InstanceOf['Dist::Iller::Prereq']],
     traits => ['Array'],
+    default => sub { [] },
     handles => {
         add_prereq => 'push',
         filter_prereqs => 'grep',

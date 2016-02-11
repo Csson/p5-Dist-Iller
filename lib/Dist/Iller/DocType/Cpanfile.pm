@@ -4,7 +4,7 @@ use warnings;
 
 package Dist::Iller::DocType::Cpanfile;
 
-our $VERSION = '0.1404';
+our $VERSION = '0.1405';
 
 use Dist::Iller::Elk;
 use JSON::MaybeXS qw/decode_json/;

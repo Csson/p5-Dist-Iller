@@ -10,8 +10,10 @@ our $VERSION = '0.1404';
 
 my $iller = Dist::Iller->new;
 $iller->parse;
-$iller->generate_files;
+$iller->generate_files('before');
 
 system('dzil', @ARGV);
+
+$iller->generate_files('after');
 
 __END__

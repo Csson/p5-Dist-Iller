@@ -14,7 +14,8 @@ my $tempdir = Path::Tiny->tempdir();
 my $current_dir = path('.')->realpath;
 {
     local $CWD = $tempdir->stringify;
-    $iller->generate_files;
+    $iller->generate_files('before');
+    $iller->generate_files('after');
 }
 
 eq_or_diff clean($tempdir->child('dist.ini')->slurp_utf8), clean(dist()), 'Correct dist.ini';
@@ -31,7 +32,7 @@ sub clean {
 
 sub dist {
     return qqs{
-        ; This file was auto-generated from iller.yaml on
+        ; This file was auto-generated from iller.yaml by Dist::Iller on
 
         author = Erik Carlsson
 
@@ -123,7 +124,7 @@ sub dist {
 
 sub weaver {
     return qs{
-        ; This file was auto-generated from iller.yaml on
+        ; This file was auto-generated from iller.yaml by Dist::Iller on
 
         [@CorePrep]
 

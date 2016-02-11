@@ -11,18 +11,42 @@ use Dist::Iller::Config::DistIllerTestConfig;
 
 my $iller = Dist::Iller->new(filepath => 't/corpus/03-config-iller.yaml');
 $iller->parse;
+$iller->parse;
 
 my $tempdir = Path::Tiny->tempdir();
 
 my $current_dir = path('.')->realpath;
 {
     local $CWD = $tempdir->stringify;
-    $iller->generate_files;
+    $iller->generate_files('before');
+    $iller->generate_files('after');
 }
 
-eq_or_diff clean_ini($tempdir->child('dist.ini')->slurp_utf8), clean_ini(dist()), 'Correct dist.ini';
-eq_or_diff clean_ini($tempdir->child('weaver.ini')->slurp_utf8), clean_ini(weaver()), 'Correct weaver.ini';
-eq_or_diff clean_cpanfile($tempdir->child('cpanfile')->slurp_utf8), clean_cpanfile(cpanfile()), 'Correct cpanfile';
+my $generated_dist_ini = $tempdir->child('dist.ini')->slurp_utf8;
+my $generated_weaver_ini = $tempdir->child('weaver.ini')->slurp_utf8;
+my $generated_cpanfile = $tempdir->child('cpanfile')->slurp_utf8;
+
+my $spaces = qr/[\s\n\r]*/;
+my $equals = qr/$spaces = $spaces/x;
+
+like $generated_dist_ini, qr/PlacedBeforeExtraTests\]$spaces\[ExtraTests/x, '[PlacedBeforeExtraTests] inserted correctly';
+like $generated_dist_ini, qr/ExecDir\]$spaces dir $equals bin/x, '[ExecDir]/bin changed and [PlacedAfter::ExecDir] inserted correctly';
+unlike $generated_dist_ini, qr/\[License\]/, 'License removed';
+like $generated_dist_ini, qr/\[LicenseImproved\] $spaces license $equals perl_5 $spaces \[Readme\]/x, '[LicenseImproved] inserted correctly';
+like $generated_dist_ini, qr/\[Readme\] $spaces
+                              headings $equals head1 $spaces
+                              headings $equals head2 $spaces
+                              more_root $equals no $spaces
+                              suffix $equals md $spaces \[/x, '[Readme] changed correctly';
+like $generated_dist_ini, qr/\[ExecDir\]$spaces dir $equals bin $spaces \[PlacedAfter::ExecDir\]/x, '[PlacedAfter::ExecDir] inserted correctly';
+like $generated_dist_ini, qr/\[LastPlugin\] $spaces \[Prereqs /x, '[LastPlugin] is the last plugin';
+
+eq_or_diff clean_ini($generated_weaver_ini), clean_ini(weaver()), 'Correct weaver.ini';
+
+like $generated_cpanfile, qr/This::Thing/, 'cpanfile, prereq from config';
+like $generated_cpanfile, qr/Another::Thing/, 'cpanfile, prereq from local iller.yaml';
+like $generated_cpanfile, qr/ExtUtils::MakeMaker/, 'cpanfile, configure requires';
+like $generated_cpanfile, qr/Dist::Iller/, 'cpanfile, Dist::Iller required';
 
 done_testing;
 
@@ -45,7 +69,7 @@ sub clean {
 
 sub dist {
     return qqi{
-        ; This file was auto-generated from iller.yaml on...
+        ; This file was auto-generated from iller.yaml by Dist::Iller on...
         ; The follow configs were used:
         ; * Dist::Iller::Config::DistIllerTestConfig: 0.0001
 
@@ -181,7 +205,7 @@ sub dist {
 
 sub weaver {
     return qi{
-        ; This file was auto-generated from iller.yaml on...
+        ; This file was auto-generated from iller.yaml by Dist::Iller on...
         ; The follow configs were used:
         ; * Dist::Iller::Config::DistIllerTestConfig: 0.0001
 
@@ -227,15 +251,15 @@ sub weaver {
 }
 
 sub cpanfile {
-    return qi{
-        # This file was auto-generated from iller.yaml on...
+    return qqi{
+        # This file was auto-generated from iller.yaml by Dist::Iller on...
 
         on runtime => sub {
             requires 'Moose' => '2.1400';
         };
         on develop => sub {
             requires 'Another::Thing' => '0';
-            requires 'Dist::Iller' => '0.1403';
+            requires 'Dist::Iller' => '@{[ "Dist::Iller"->VERSION ]}';
             requires 'Dist::Iller::Config::DistIllerTestConfig' => '0.0001';
             requires 'Dist::Zilla::Plugin::ConfirmRelease' => '0';
             requires 'Dist::Zilla::Plugin::ExecDir' => '0';

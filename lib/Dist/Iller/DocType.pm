@@ -11,7 +11,7 @@ use MooseX::AttributeShortcuts;
 use namespace::autoclean;
 use Try::Tiny;
 use Text::Diff;
-use Types::Standard qw/ConsumerOf Str HashRef/;
+use Types::Standard qw/ConsumerOf Str HashRef InstanceOf/;
 use Module::Load qw/load/;
 use String::CamelCase qw/decamelize/;
 use YAML::Tiny;
@@ -25,6 +25,7 @@ use PerlX::Maybe qw/maybe/;
 requires qw/
     filename
     parse
+    phase
     to_hash
     to_string
     comment_start
@@ -55,11 +56,15 @@ has included_configs => (
     },
 );
 
-before parse => sub {
+around parse => sub {
+    my $next = shift;
     my $self = shift;
     my $yaml = shift;
 
     $self->parse_config($yaml->{'configs'});
+    $self->$next($yaml);
+
+    return $self;
 };
 sub parse_config {
     my $self = shift;
@@ -105,7 +110,7 @@ around to_string => sub {
     my $now = DateTime->now;
 
     my @intro = ();
-    push @intro => $self->comment_start . sprintf (' This file was auto-generated from iller.yaml on %s %s %s.', $now->ymd, $now->hms, $now->time_zone->name);
+    push @intro => $self->comment_start . sprintf (' This file was auto-generated from iller.yaml by Dist::Iller on %s %s %s.', $now->ymd, $now->hms, $now->time_zone->name);
     if($self->has_included_configs) {
         push @intro => $self->comment_start . ' The follow configs were used:';
 
@@ -128,8 +133,12 @@ sub generate_file {
     my $previous_document = $path->exists ? $path->slurp_utf8 : undef;
 
     if(!defined $previous_document) {
-        say "[Iller] Creates $path";
+        my @message = ("[Iller] Creates $path");
+        if((InstanceOf['Dist::Iller::DocType::Cpanfile'])->check($self)) {
+            push @message => '- rerun build!';
+        }
         $path->spew_utf8($new_document);
+        say join ' ' => @message;
         return;
     }
 
@@ -150,33 +159,16 @@ sub generate_file {
     }
 
     if($diff_count) {
-        say "[Iller] Generates $path";
+        my @message = ("[Iller] Generates $path");
+        if((InstanceOf['Dist::Iller::DocType::Cpanfile'])->check($self)) {
+            push @message => '- rerun build!';
+        }
         $path->spew_utf8($new_document);
+        say join ' ' => @message;
     }
     else {
         say "[Iller] No changes for $path";
     }
-}
-
-sub prepare_for_compare {
-    my $self = shift;
-    my $contents = shift;
-
-    return if !defined $contents;
-
-    my $comment_start = $self->comment_start;
-    $contents =~ s{^$comment_start .*?(?=\r?\n)}{}xg;
-    $contents =~ s{$comment_start}{}xg;
-    $contents =~ s{\v+}{\n}g;
-warn $comment_start;
-if($contents =~ m{^$comment_start}) {
-    warn 'IT DOES';
-}
-else {
-    warn 'IT DOES NOT';
-}
-warn $contents;
-    return $contents;
 }
 
 1;

@@ -77,6 +77,7 @@ sub parse {
             }
 
             next DOC if $doc->[0] eq 'dist';
+            next DOC if $doc->[0] eq 'cpanfile';
             if($doc->[1]->$_does('Dist::Iller::Role::HasPrereqs')) {
                 $self->get_doc('dist')->merge_prereqs($doc->[1]->all_prereqs);
             }
@@ -89,8 +90,12 @@ sub parse {
 
 sub generate_files {
     my $self = shift;
+    my $phase = shift;
+
+    croak q{'phase' must be either 'before' or 'after'} if !defined $phase || $phase ne 'before' && $phase ne 'after';
 
     for my $doc ($self->doc_kv) {
+        next if $doc->[1]->phase ne $phase;
         $doc->[1]->generate_file;
     }
 }

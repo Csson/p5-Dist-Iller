@@ -14,14 +14,14 @@ with qw/
 
 sub filename { 'weaver.ini' }
 
+sub phase { 'before' }
+
 sub comment_start { ';' }
 
 sub parse {
     my $self = shift;
     my $yaml = shift;
     $self->parse_plugins($yaml->{'plugins'});
-
-    return $self;
 }
 
 sub to_hash {

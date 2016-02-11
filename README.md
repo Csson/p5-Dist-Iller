@@ -2,11 +2,11 @@
 
 Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 
-![Requires Perl 5.10.1+](https://img.shields.io/badge/perl-5.10.1+-brightgreen.svg) [![Travis status](https://api.travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master)](https://travis-ci.org/Csson/p5-Dist-Iller) ![coverage 82.0%](https://img.shields.io/badge/coverage-82.0%-orange.svg)
+![Requires Perl 5.10.1+](https://img.shields.io/badge/perl-5.10.1+-brightgreen.svg) [![Travis status](https://api.travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master)](https://travis-ci.org/Csson/p5-Dist-Iller) ![coverage 83.8%](https://img.shields.io/badge/coverage-83.8%-orange.svg)
 
 # VERSION
 
-Version 0.1403, released 2016-02-10.
+Version 0.1404, released 2016-02-11.
 
 # SYNOPSIS
 

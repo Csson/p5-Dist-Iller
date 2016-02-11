@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml on 2016-02-10 22:36:20 UTC.
+# This file was auto-generated from iller.yaml on 2016-02-11 23:13:01 UTC.
 
 on runtime => sub {
     requires 'Carp' => '0';
@@ -6,6 +6,7 @@ on runtime => sub {
     requires 'Dist::Zilla' => '5.000';
     requires 'File::ShareDir' => '0';
     requires 'File::chdir' => '0';
+    requires 'JSON::MaybeXS' => '0';
     requires 'List::MoreUtils' => '0';
     requires 'List::Util' => '0';
     requires 'Module::Load' => '0';
@@ -27,15 +28,26 @@ on runtime => sub {
     requires 'version' => '0';
 };
 on test => sub {
+    requires 'ExtUtils::MakeMaker' => '0';
+    requires 'File::Spec' => '0';
     requires 'File::chdir' => '0';
+    requires 'IO::Handle' => '0';
+    requires 'IPC::Open3' => '0';
     requires 'Syntax::Feature::Qi' => '0';
     requires 'Syntax::Feature::Qs' => '0';
     requires 'Test::Differences' => '0';
     requires 'Test::More' => '0.96';
     requires 'syntax' => '0';
 };
+on test => sub {
+    recommends 'CPAN::Meta' => '2.120900';
+};
+on configure => sub {
+    requires 'ExtUtils::MakeMaker' => '0';
+    requires 'File::ShareDir::Install' => '0.06';
+};
 on develop => sub {
-    requires 'Dist::Iller' => '0.1403';
+    requires 'Dist::Iller' => '0.1404';
     requires 'Dist::Iller::Config::Author::CSSON' => '0.0303';
     requires 'Dist::Zilla::Plugin::BumpVersionAfterRelease::Transitional' => '0';
     requires 'Dist::Zilla::Plugin::CheckChangesHasContent' => '0';
@@ -65,6 +77,7 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::PodSyntaxTests' => '0';
     requires 'Dist::Zilla::Plugin::PodWeaver' => '0';
     requires 'Dist::Zilla::Plugin::PodnameFromClassname' => '0';
+    requires 'Dist::Zilla::Plugin::Prereqs' => '0';
     requires 'Dist::Zilla::Plugin::Prereqs::Plugins' => '0';
     requires 'Dist::Zilla::Plugin::Readme' => '0';
     requires 'Dist::Zilla::Plugin::ReadmeAnyFromPod' => '0';
@@ -96,6 +109,10 @@ on develop => sub {
     requires 'Pod::Weaver::Section::Region' => '0';
     requires 'Pod::Weaver::Section::Source::DefaultGitHub' => '0';
     requires 'Pod::Weaver::Section::Version' => '0';
+    requires 'Test::CleanNamespaces' => '0.15';
+    requires 'Test::EOL' => '0';
+    requires 'Test::More' => '0.88';
     requires 'Test::NoTabs' => '0';
+    requires 'Test::Pod' => '1.41';
     requires 'Test::Warnings' => '0';
 };

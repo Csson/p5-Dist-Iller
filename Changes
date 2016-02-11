@@ -8,6 +8,7 @@ Revision history for Dist-Iller
  [Documentation]
 
  [Enhancements]
+  - ::DocType::Cpanfile now reads META.json after dzil has run, and then the cpanfile is created to ensure that it contains all prereqs.
 
  [New Features]
 

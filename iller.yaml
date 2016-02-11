@@ -18,6 +18,7 @@ prereqs:
       - MooseX::StrictConstructor
       - Types::Standard: 1.000000
       - Types::Path::Tiny
+      - JSON::MaybeXS
       - DateTime
       - String::CamelCase: 0.02
       - version
@@ -53,6 +54,11 @@ plugins:
     dir: script
 
   - +plugin: Test::CleanNamespaces
+
+ # - +add_plugin: ChangeStats::Dependencies::Git
+ #   +before: NextRelease::Grouped
+ #   auto_previoius_tag: 1
+ #   group: Dependency Changes
 
 ---
 doctype: weaver

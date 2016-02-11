@@ -7,6 +7,10 @@ package Dist::Iller::DocType::Cpanfile;
 our $VERSION = '0.1404';
 
 use Dist::Iller::Elk;
+use JSON::MaybeXS qw/decode_json/;
+use Path::Tiny;
+use Carp qw/croak/;
+use Dist::Iller::Prereq;
 with qw/
     Dist::Iller::DocType
     Dist::Iller::Role::HasPrereqs
@@ -16,6 +20,8 @@ sub comment_start { '#' }
 
 sub filename { 'cpanfile' }
 
+sub phase { 'after' }
+
 sub to_hash {
     my $self = shift;
     return { prereqs => $self->prereqs };
@@ -23,29 +29,32 @@ sub to_hash {
 
 sub parse {
     my $self = shift;
-    my $yaml = (shift)->{'prereqs'};
 
-    foreach my $phase (qw/build configure develop runtime test/) {
+    my $metapath = path('META.json');
+    if(!$metapath->exists) {
+        croak 'META.json does not exist';
+    }
 
-        foreach my $relation (qw/requires recommends suggests conflicts/) {
+    my $meta = decode_json($metapath->slurp)->{'prereqs'};
 
-            MODULE:
-            foreach my $module (@{ $yaml->{ $phase }{ $relation } }) {
-                my $module_name = ref $module eq 'HASH' ? (keys %$module)[0] : $module;
-                my $version     = ref $module eq 'HASH' ? (values %$module)[0] : 0;
+    for my $phase (keys %{ $meta }) {
+        my $phasedata = $meta->{ $phase };
 
+        for my $relation (keys %{ $phasedata }) {
+            my $relationdata = $phasedata->{ $relation };
+
+            for my $module (sort keys %{ $relationdata }) {
+                my $prereq = $meta->{ $phase }{ $relation };
                 $self->add_prereq(Dist::Iller::Prereq->new(
-                    module => $module_name,
+                    module => $module,
+                    version => $meta->{ $phase }{ $relation }{ $module },
                     phase => $phase,
                     relation => $relation,
-                    version => $version,
                 ));
             }
         }
     }
-    return $self;
 }
-
 
 sub to_string {
     my $self = shift;

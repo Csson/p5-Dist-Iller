@@ -4,7 +4,7 @@
       "Erik Carlsson <info@code301.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.043, Dist::Iller version 0.1403, CPAN::Meta::Converter version 2.143240",
+   "generated_by" : "Dist::Zilla version 5.043, Dist::Iller version 0.1404, CPAN::Meta::Converter version 2.143240",
    "license" : [
       "perl_5"
    ],
@@ -32,7 +32,7 @@
       },
       "develop" : {
          "requires" : {
-            "Dist::Iller" : "0.1403",
+            "Dist::Iller" : "0.1404",
             "Dist::Iller::Config::Author::CSSON" : "0.0303",
             "Dist::Zilla::Plugin::BumpVersionAfterRelease::Transitional" : "0",
             "Dist::Zilla::Plugin::CheckChangesHasContent" : "0",
@@ -109,6 +109,7 @@
             "Dist::Zilla" : "5.000",
             "File::ShareDir" : "0",
             "File::chdir" : "0",
+            "JSON::MaybeXS" : "0",
             "List::MoreUtils" : "0",
             "List::Util" : "0",
             "Module::Load" : "0",
@@ -151,55 +152,55 @@
    "provides" : {
       "Dist::Iller" : {
          "file" : "lib/Dist/Iller.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Iller::Config" : {
          "file" : "lib/Dist/Iller/Config.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Iller::DocType" : {
          "file" : "lib/Dist/Iller/DocType.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Iller::DocType::Cpanfile" : {
          "file" : "lib/Dist/Iller/DocType/Cpanfile.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Iller::DocType::Dist" : {
          "file" : "lib/Dist/Iller/DocType/Dist.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Iller::DocType::Weaver" : {
          "file" : "lib/Dist/Iller/DocType/Weaver.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Iller::Elk" : {
          "file" : "lib/Dist/Iller/Elk.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Iller::Plugin" : {
          "file" : "lib/Dist/Iller/Plugin.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Iller::Prereq" : {
          "file" : "lib/Dist/Iller/Prereq.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Iller::Role::HasPlugins" : {
          "file" : "lib/Dist/Iller/Role/HasPlugins.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Iller::Role::HasPrereqs" : {
          "file" : "lib/Dist/Iller/Role/HasPrereqs.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Zilla::MintingProfile::DistIller::Basic" : {
          "file" : "lib/Dist/Zilla/MintingProfile/DistIller/Basic.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       },
       "Dist::Zilla::Plugin::DistIller::MetaGeneratedBy" : {
          "file" : "lib/Dist/Zilla/Plugin/DistIller/MetaGeneratedBy.pm",
-         "version" : "0.1403"
+         "version" : "0.1404"
       }
    },
    "release_status" : "stable",
@@ -214,6 +215,6 @@
          "web" : "https://github.com/Csson/p5-Dist-Iller"
       }
    },
-   "version" : "0.1403"
+   "version" : "0.1404"
 }
 

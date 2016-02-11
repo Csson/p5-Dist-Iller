@@ -57,6 +57,8 @@ has copyright_year => (
 
 sub filename { 'dist.ini' }
 
+sub phase { 'before' }
+
 sub comment_start { ';' }
 
 sub parse {
@@ -65,7 +67,6 @@ sub parse {
     $self->parse_header($yaml->{'header'});
     $self->parse_prereqs($yaml->{'prereqs'});
     $self->parse_plugins($yaml->{'plugins'});
-    return $self;
 }
 
 around qw/parse_header parse_prereqs/ => sub {

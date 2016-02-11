@@ -4,7 +4,7 @@ use warnings;
 
 package Dist::Zilla::Plugin::DistIller::MetaGeneratedBy;
 
-our $VERSION = '0.1403';
+our $VERSION = '0.1404';
 
 use Moose;
 use namespace::autoclean;

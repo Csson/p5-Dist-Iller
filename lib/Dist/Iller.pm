@@ -5,7 +5,7 @@ use warnings;
 package Dist::Iller;
 
 # ABSTRACT: A Dist::Zilla & Pod::Weaver preprocessor
-our $VERSION = '0.1403';
+our $VERSION = '0.1404';
 
 use Dist::Iller::Elk;
 use Types::Standard qw/Map Str ConsumerOf/;

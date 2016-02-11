@@ -1,10 +1,27 @@
 Revision history for Dist-Iller
 
 {{$NEXT}}
- [New Features]
-  - Added basic support for generating cpanfile.
+ [API Changes]
 
-0.1402  2016-02-07 15:12:47 UTC
+ [Bug Fixes]
+
+ [Documentation]
+
+ [Enhancements]
+
+ [New Features]
+
+ [Other Changes]
+
+ [Requirements]
+
+ [Testing]
+
+0.1403 2016-02-10T23:01:50Z UTC
+ [New Features]
+ - Added basic support for generating cpanfile.
+
+0.1402 2016-02-07T15:12:47Z UTC
  [New Features]
  - Add +documentation parameter for plugins in configs (planned to be used
    in a future Pod::Weaver plugin).

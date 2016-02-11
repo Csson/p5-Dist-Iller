@@ -4,7 +4,7 @@ use warnings;
 
 package Dist::Iller::DocType;
 
-our $VERSION = '0.1403';
+our $VERSION = '0.1404';
 
 use Moose::Role;
 use MooseX::AttributeShortcuts;

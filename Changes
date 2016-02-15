@@ -4,6 +4,7 @@ Revision history for Dist-Iller
  [API Changes]
 
  [Bug Fixes]
+ - Now ::DocType::Cpanfile reads META.json after dzil has run, the previous release didn't quite get there.
 
  [Documentation]
 
@@ -12,6 +13,7 @@ Revision history for Dist-Iller
  [New Features]
 
  [Other Changes]
+  - Authority added to all packages.
 
  [Requirements]
 

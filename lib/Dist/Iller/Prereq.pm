@@ -1,9 +1,10 @@
-use 5.10.1;
+use 5.10.0;
 use strict;
 use warnings;
 
 package Dist::Iller::Prereq;
 
+# AUTHORITY
 our $VERSION = '0.1405';
 
 use Dist::Iller::Elk;

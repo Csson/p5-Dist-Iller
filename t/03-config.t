@@ -10,8 +10,7 @@ use lib 't/corpus/lib';
 use Dist::Iller::Config::DistIllerTestConfig;
 
 my $iller = Dist::Iller->new(filepath => 't/corpus/03-config-iller.yaml');
-$iller->parse;
-$iller->parse;
+$iller->parse('before');
 
 my $tempdir = Path::Tiny->tempdir();
 
@@ -19,6 +18,10 @@ my $current_dir = path('.')->realpath;
 {
     local $CWD = $tempdir->stringify;
     $iller->generate_files('before');
+}
+$iller->parse('after');
+{
+    local $CWD = $tempdir->stringify;
     $iller->generate_files('after');
 }
 
@@ -70,7 +73,7 @@ sub clean {
 sub dist {
     return qqi{
         ; This file was auto-generated from iller.yaml by Dist::Iller on...
-        ; The follow configs were used:
+        ; The following configs were used:
         ; * Dist::Iller::Config::DistIllerTestConfig: 0.0001
 
         name = My-Own-Dist
@@ -206,7 +209,7 @@ sub dist {
 sub weaver {
     return qi{
         ; This file was auto-generated from iller.yaml by Dist::Iller on...
-        ; The follow configs were used:
+        ; The following configs were used:
         ; * Dist::Iller::Config::DistIllerTestConfig: 0.0001
 
         [@CorePrep]

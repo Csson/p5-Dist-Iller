@@ -5,7 +5,7 @@ use warnings;
 package Dist::Iller::Plugin;
 
 # AUTHORITY
-our $VERSION = '0.1405';
+our $VERSION = '0.1406';
 
 use Dist::Iller::Elk;
 use Types::Standard qw/Str Enum HashRef/;

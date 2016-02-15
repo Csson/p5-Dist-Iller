@@ -4,7 +4,6 @@ Revision history for Dist-Iller
  [API Changes]
 
  [Bug Fixes]
- - Now ::DocType::Cpanfile reads META.json after dzil has run, the previous release didn't quite get there.
 
  [Documentation]
 
@@ -13,11 +12,32 @@ Revision history for Dist-Iller
  [New Features]
 
  [Other Changes]
-  - Authority added to all packages.
 
  [Requirements]
 
+ [Stats & Dependency Changes]
+
  [Testing]
+
+0.1405 2016-02-15T16:22:28Z UTC
+ [Bug Fixes]
+ - Now ::DocType::Cpanfile reads META.json after dzil has run, the previous
+   release didn't quite get there.
+
+ [Other Changes]
+ - Authority added to all packages.
+
+ [Stats & Dependency Changes]
+ - 17 files changed, 64 insertions(+), 47 deletions(-)
+ - (run req) ~ perl 5.010001 --> 5.010000
+ - (dev req) + Dist::Zilla::Plugin::Authority 1.009
+ - (dev req) + Dist::Zilla::Plugin::ChangeStats::Dependencies::Git (any)
+ - (dev req) + Dist::Zilla::Plugin::Git::CheckFor::CorrectBranch 0.013
+ - (dev req) + Dist::Zilla::Plugin::Git::Commit (any)
+ - (dev req) ~ Dist::Iller 0.1404 --> 0.1405
+ - (dev req) ~ Dist::Iller::Config::Author::CSSON 0.0303 --> 0.0304
+ - (dev req) ~ Dist::Zilla::Plugin::RewriteVersion::Transitional (any) -->
+   0.007
 
 0.1404 2016-02-11T23:27:47Z UTC
  [Enhancements]

@@ -7,7 +7,7 @@ use Path::Tiny;
 use File::chdir;
 
 my $iller = Dist::Iller->new(filepath => 't/corpus/02-builder.yaml');
-$iller->parse;
+$iller->parse('before');
 
 my $tempdir = Path::Tiny->tempdir();
 
@@ -15,8 +15,13 @@ my $current_dir = path('.')->realpath;
 {
     local $CWD = $tempdir->stringify;
     $iller->generate_files('before');
+}
+$iller->parse('after');
+{
+    local $CWD = $tempdir->stringify;
     $iller->generate_files('after');
 }
+
 
 eq_or_diff clean($tempdir->child('dist.ini')->slurp_utf8), clean(dist()), 'Correct dist.ini';
 eq_or_diff clean($tempdir->child('weaver.ini')->slurp_utf8), clean(weaver()), 'Correct weaver.ini';

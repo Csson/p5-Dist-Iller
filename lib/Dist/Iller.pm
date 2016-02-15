@@ -1,10 +1,11 @@
-use 5.10.1;
+use 5.10.0;
 use strict;
 use warnings;
 
 package Dist::Iller;
 
 # ABSTRACT: A Dist::Zilla & Pod::Weaver preprocessor
+# AUTHORITY
 our $VERSION = '0.1405';
 
 use Dist::Iller::Elk;
@@ -39,9 +40,11 @@ has filepath => (
 
 sub parse {
     my $self = shift;
+    my $phase = shift;
 
     my $yaml = YAML::Tiny->read($self->filepath->stringify);
 
+    DOCTYPE:
     for my $document (sort { $a->{'doctype'} cmp $b->{'doctype'} } @{ $yaml }) {
         my $doctype_class = sprintf 'Dist::Iller::DocType::%s', camelize($document->{'doctype'});
         try {
@@ -50,7 +53,7 @@ sub parse {
         catch {
             croak "Can't load $doctype_class: $_";
         };
-
+        next DOCTYPE if $doctype_class->phase ne $phase;
         $self->set_doc($document->{'doctype'}, $doctype_class->new->parse($document));
     }
     if($self->get_doc('dist')) {

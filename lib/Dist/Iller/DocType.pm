@@ -1,9 +1,10 @@
-use 5.10.1;
+use 5.10.0;
 use strict;
 use warnings;
 
 package Dist::Iller::DocType;
 
+# AUTHORITY
 our $VERSION = '0.1405';
 
 use Moose::Role;
@@ -112,7 +113,7 @@ around to_string => sub {
     my @intro = ();
     push @intro => $self->comment_start . sprintf (' This file was auto-generated from iller.yaml by Dist::Iller on %s %s %s.', $now->ymd, $now->hms, $now->time_zone->name);
     if($self->has_included_configs) {
-        push @intro => $self->comment_start . ' The follow configs were used:';
+        push @intro => $self->comment_start . ' The following configs were used:';
 
         for my $config (sort { $a->[0] cmp $b->[0] } $self->all_included_configs) {
             push @intro => $self->comment_start . qq{ * $config->[0]: $config->[1]};
@@ -133,12 +134,8 @@ sub generate_file {
     my $previous_document = $path->exists ? $path->slurp_utf8 : undef;
 
     if(!defined $previous_document) {
-        my @message = ("[Iller] Creates $path");
-        if((InstanceOf['Dist::Iller::DocType::Cpanfile'])->check($self)) {
-            push @message => '- rerun build!';
-        }
         $path->spew_utf8($new_document);
-        say join ' ' => @message;
+        say "[Iller] Creates $path";
         return;
     }
 
@@ -159,12 +156,8 @@ sub generate_file {
     }
 
     if($diff_count) {
-        my @message = ("[Iller] Generates $path");
-        if((InstanceOf['Dist::Iller::DocType::Cpanfile'])->check($self)) {
-            push @message => '- rerun build!';
-        }
         $path->spew_utf8($new_document);
-        say join ' ' => @message;
+        say "[Iller] Generates $path";
     }
     else {
         say "[Iller] No changes for $path";

@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml on 2016-02-11 23:13:01 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-15 13:23:20 UTC.
 
 on runtime => sub {
     requires 'Carp' => '0';
@@ -24,7 +24,7 @@ on runtime => sub {
     requires 'Types::Standard' => '1.000000';
     requires 'YAML::Tiny' => '0';
     requires 'namespace::autoclean' => '0.18';
-    requires 'perl' => '5.010001';
+    requires 'perl' => '5.010000';
     requires 'version' => '0';
 };
 on test => sub {
@@ -47,9 +47,11 @@ on configure => sub {
     requires 'File::ShareDir::Install' => '0.06';
 };
 on develop => sub {
-    requires 'Dist::Iller' => '0.1404';
-    requires 'Dist::Iller::Config::Author::CSSON' => '0.0303';
+    requires 'Dist::Iller' => '0.1405';
+    requires 'Dist::Iller::Config::Author::CSSON' => '0.0304';
+    requires 'Dist::Zilla::Plugin::Authority' => '1.009';
     requires 'Dist::Zilla::Plugin::BumpVersionAfterRelease::Transitional' => '0';
+    requires 'Dist::Zilla::Plugin::ChangeStats::Dependencies::Git' => '0';
     requires 'Dist::Zilla::Plugin::CheckChangesHasContent' => '0';
     requires 'Dist::Zilla::Plugin::Clean' => '0';
     requires 'Dist::Zilla::Plugin::ConfirmRelease' => '0';
@@ -57,6 +59,8 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::DistIller::MetaGeneratedBy' => '0';
     requires 'Dist::Zilla::Plugin::ExecDir' => '0';
     requires 'Dist::Zilla::Plugin::Git::Check' => '0';
+    requires 'Dist::Zilla::Plugin::Git::CheckFor::CorrectBranch' => '0.013';
+    requires 'Dist::Zilla::Plugin::Git::Commit' => '0';
     requires 'Dist::Zilla::Plugin::Git::Contributors' => '0';
     requires 'Dist::Zilla::Plugin::Git::GatherDir' => '0';
     requires 'Dist::Zilla::Plugin::Git::Push' => '0';
@@ -81,7 +85,7 @@ on develop => sub {
     requires 'Dist::Zilla::Plugin::Prereqs::Plugins' => '0';
     requires 'Dist::Zilla::Plugin::Readme' => '0';
     requires 'Dist::Zilla::Plugin::ReadmeAnyFromPod' => '0';
-    requires 'Dist::Zilla::Plugin::RewriteVersion::Transitional' => '0';
+    requires 'Dist::Zilla::Plugin::RewriteVersion::Transitional' => '0.007';
     requires 'Dist::Zilla::Plugin::RunExtraTests' => '0';
     requires 'Dist::Zilla::Plugin::Test::CleanNamespaces' => '0';
     requires 'Dist::Zilla::Plugin::Test::Compile' => '0';

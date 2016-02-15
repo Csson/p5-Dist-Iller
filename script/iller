@@ -1,19 +1,21 @@
 #!perl
-use 5.10.1;
+use 5.10.0;
 use strict;
 use warnings;
 
 use Dist::Iller;
 
+# AUTHORITY
 # PODNAME: iller
 our $VERSION = '0.1405';
 
 my $iller = Dist::Iller->new;
-$iller->parse;
+$iller->parse('before');
 $iller->generate_files('before');
 
 system('dzil', @ARGV);
 
+$iller->parse('after');
 $iller->generate_files('after');
 
 __END__

@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-17 22:58:00 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-17 23:33:31 UTC.
 
 on runtime => sub {
     requires 'Carp' => '0';
@@ -107,7 +107,7 @@ on develop => sub {
     requires 'Pod::Weaver::Plugin::Transformer' => '0';
     requires 'Pod::Weaver::PluginBundle::CorePrep' => '0';
     requires 'Pod::Weaver::Section::Authors' => '0';
-    requires 'Pod::Weaver::Section::Badges' => '0';
+    requires 'Pod::Weaver::Section::Badges' => '0.0401';
     requires 'Pod::Weaver::Section::Collect' => '0';
     requires 'Pod::Weaver::Section::Generic' => '0';
     requires 'Pod::Weaver::Section::Homepage::DefaultCPAN' => '0';

@@ -39,7 +39,7 @@
             "Badge::Depot::Plugin::Perl" : "0",
             "Badge::Depot::Plugin::Travis" : "0",
             "Dist::Zilla::Plugin::Authority" : "1.009",
-            "Dist::Zilla::Plugin::BumpVersionAfterRelease::Transitional" : "0",
+            "Dist::Zilla::Plugin::BumpVersionAfterRelease::Transitional" : "0.007",
             "Dist::Zilla::Plugin::ChangeStats::Dependencies::Git" : "0",
             "Dist::Zilla::Plugin::CheckChangesHasContent" : "0",
             "Dist::Zilla::Plugin::Clean" : "0",

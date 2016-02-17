@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-17 21:37:20 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-17 22:58:00 UTC.
 
 on runtime => sub {
     requires 'Carp' => '0';
@@ -54,7 +54,7 @@ on develop => sub {
     requires 'Badge::Depot::Plugin::Perl' => '0';
     requires 'Badge::Depot::Plugin::Travis' => '0';
     requires 'Dist::Zilla::Plugin::Authority' => '1.009';
-    requires 'Dist::Zilla::Plugin::BumpVersionAfterRelease::Transitional' => '0';
+    requires 'Dist::Zilla::Plugin::BumpVersionAfterRelease::Transitional' => '0.007';
     requires 'Dist::Zilla::Plugin::ChangeStats::Dependencies::Git' => '0';
     requires 'Dist::Zilla::Plugin::CheckChangesHasContent' => '0';
     requires 'Dist::Zilla::Plugin::Clean' => '0';

@@ -89,11 +89,11 @@ sub to_string {
 
         if(ref $value eq 'ARRAY') {
             foreach my $val (@$value) {
-                push @strings => sprintf '%s =%s%s', $parameter, defined $val ? ' ' : '', $val;
+                push @strings => sprintf '%s =%s%s', $parameter, defined $val ? ' ' : '', defined $val ? $val : '';
             }
         }
         else {
-            push @strings => sprintf '%s =%s%s', $parameter, defined $value ? ' ' : '', $value // '';
+            push @strings => sprintf '%s =%s%s', $parameter, defined $value ? ' ' : '', defined $value ? $value : '';
         }
     }
 

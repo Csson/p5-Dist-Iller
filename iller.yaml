@@ -55,11 +55,6 @@ plugins:
 
   - +plugin: Test::CleanNamespaces
 
- # - +add_plugin: ChangeStats::Dependencies::Git
- #   +before: NextRelease::Grouped
- #   auto_previoius_tag: 1
- #   group: Dependency Changes
-
 ---
 doctype: weaver
 

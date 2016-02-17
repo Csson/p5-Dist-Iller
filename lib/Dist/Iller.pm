@@ -61,7 +61,7 @@ sub parse {
             module => __PACKAGE__,
             version => __PACKAGE__->VERSION,
             phase => 'develop',
-            relation => 'requires',
+            relation => 'suggests',
         ));
 
         DOC:
@@ -75,7 +75,7 @@ sub parse {
                     module => $included_config->[0],
                     version => $included_config->[1],
                     phase => 'develop',
-                    relation => 'requires',
+                    relation => 'suggests',
                 ));
             }
 

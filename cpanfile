@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-15 13:23:20 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-17 16:45:47 UTC.
 
 on runtime => sub {
     requires 'Carp' => '0';
@@ -47,8 +47,6 @@ on configure => sub {
     requires 'File::ShareDir::Install' => '0.06';
 };
 on develop => sub {
-    requires 'Dist::Iller' => '0.1405';
-    requires 'Dist::Iller::Config::Author::CSSON' => '0.0304';
     requires 'Dist::Zilla::Plugin::Authority' => '1.009';
     requires 'Dist::Zilla::Plugin::BumpVersionAfterRelease::Transitional' => '0';
     requires 'Dist::Zilla::Plugin::ChangeStats::Dependencies::Git' => '0';
@@ -119,4 +117,8 @@ on develop => sub {
     requires 'Test::NoTabs' => '0';
     requires 'Test::Pod' => '1.41';
     requires 'Test::Warnings' => '0';
+};
+on develop => sub {
+    suggests 'Dist::Iller' => '0.1406';
+    suggests 'Dist::Iller::Config::Author::CSSON' => '0.0307';
 };

@@ -43,13 +43,13 @@ like $generated_dist_ini, qr/\[Readme\] $spaces
                               suffix $equals md $spaces \[/x, '[Readme] changed correctly';
 like $generated_dist_ini, qr/\[ExecDir\]$spaces dir $equals bin $spaces \[PlacedAfter::ExecDir\]/x, '[PlacedAfter::ExecDir] inserted correctly';
 like $generated_dist_ini, qr/\[LastPlugin\] $spaces \[Prereqs /x, '[LastPlugin] is the last plugin';
+like $generated_dist_ini, qr{\[Prereqs / DevelopSuggests\][\n\r\s]*Dist::Iller}, 'Dist::Iller only suggested';
 
 eq_or_diff clean_ini($generated_weaver_ini), clean_ini(weaver()), 'Correct weaver.ini';
 
 like $generated_cpanfile, qr/This::Thing/, 'cpanfile, prereq from config';
 like $generated_cpanfile, qr/Another::Thing/, 'cpanfile, prereq from local iller.yaml';
 like $generated_cpanfile, qr/ExtUtils::MakeMaker/, 'cpanfile, configure requires';
-like $generated_cpanfile, qr/Dist::Iller/, 'cpanfile, Dist::Iller required';
 
 done_testing;
 
@@ -165,12 +165,14 @@ sub dist {
         Pod::Weaver::Section::Version = 0
         This::Thing = 0
 
+        [Prereqs / DevelopSuggests]
+        Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
+        Dist::Iller::Config::DistIllerTestConfig = @{[ 'Dist::Iller::Config::DistIllerTestConfig'->VERSION ]}
+
         [Prereqs / RuntimeRequires]
         Moose = 2.1400
 
         ; authordep Another::Thing = 0
-        ; authordep Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
-        ; authordep Dist::Iller::Config::DistIllerTestConfig = @{[ 'Dist::Iller::Config::DistIllerTestConfig'->VERSION ]}
         ; authordep Dist::Zilla::Plugin::ConfirmRelease = 0
         ; authordep Dist::Zilla::Plugin::ExecDir = 0
         ; authordep Dist::Zilla::Plugin::ExtraTests = 0

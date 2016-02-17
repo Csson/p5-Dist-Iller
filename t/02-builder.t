@@ -70,7 +70,6 @@ sub dist {
         [UploadToCPAN]
 
         [Prereqs / DevelopRequires]
-        Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
         Dist::Zilla::Plugin::ConfirmRelease = 0
         Dist::Zilla::Plugin::ExecDir = 0
         Dist::Zilla::Plugin::ExtraTests = 0
@@ -96,10 +95,12 @@ sub dist {
         Pod::Weaver::Section::Region = 0
         Pod::Weaver::Section::Version = 0
 
+        [Prereqs / DevelopSuggests]
+        Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
+
         [Prereqs / RuntimeRequires]
         Moose = 0
 
-        ; authordep Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
         ; authordep Dist::Zilla::Plugin::ConfirmRelease = 0
         ; authordep Dist::Zilla::Plugin::ExecDir = 0
         ; authordep Dist::Zilla::Plugin::ExtraTests = 0

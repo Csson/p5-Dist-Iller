@@ -164,6 +164,9 @@ sub add_plugins_as_prereqs {
     my @plugins = @_;
 
     for my $plugin (@plugins) {
+        if($plugin->has_prereqs) {
+            $self->add_prereq($_) for $plugin->all_prereqs;
+        }
         my $packages = $packages_for_plugin->($plugin);
 
         for my $package (@{ $packages }) {

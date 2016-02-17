@@ -32,6 +32,12 @@
       },
       "develop" : {
          "requires" : {
+            "Badge::Depot" : "0",
+            "Badge::Depot::Plugin::Coverage" : "0",
+            "Badge::Depot::Plugin::Cpantesters" : "0",
+            "Badge::Depot::Plugin::Kwalitee" : "0",
+            "Badge::Depot::Plugin::Perl" : "0",
+            "Badge::Depot::Plugin::Travis" : "0",
             "Dist::Zilla::Plugin::Authority" : "1.009",
             "Dist::Zilla::Plugin::BumpVersionAfterRelease::Transitional" : "0",
             "Dist::Zilla::Plugin::ChangeStats::Dependencies::Git" : "0",

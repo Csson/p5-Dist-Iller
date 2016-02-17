@@ -15,6 +15,9 @@ plugins:
      in the directory
 
  - +plugin: PruneCruft
+   +prereqs:
+    - test_suggests: Another::Crufter 1.2
+    - runtime_requires: Cruft::Pruner
 
  - +plugin: ManifestSkip
    +remove_if: $self.no_manifest_skip

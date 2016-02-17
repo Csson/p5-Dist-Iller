@@ -81,6 +81,7 @@ sub parse_plugin {
           maybe in => delete $plugin->{'+in'},
           maybe version => delete $plugin->{'+version'},
           maybe documentation => delete $plugin->{'+documentation'},
+          maybe prereqs => delete $plugin->{'+prereqs'},
                 parameters => $self->set_values_from_config($plugin),
     });
 }
@@ -328,6 +329,7 @@ sub plugins_to_hash {
                 provided $_->has_base, '+base' => $plugin->base,
                                        '+in' => $plugin->in,
                                        '+version' => $plugin->version,
+             provided $_->has_prereqs, '+prereqs' => $plugin->prereqs_to_array,
                                  maybe '+documentation' => $plugin->documentation,
                                        %{ $parameters },
             }

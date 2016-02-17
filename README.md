@@ -2,7 +2,7 @@
 
 Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 
-![Requires Perl 5.10+](https://img.shields.io/badge/perl-5.10+-blue.svg) [![Travis status](https://api.travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master)](https://travis-ci.org/Csson/p5-Dist-Iller) 
+![Requires Perl 5.10+](https://img.shields.io/badge/perl-5.10+-blue.svg) [![Travis status](https://api.travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master)](https://travis-ci.org/Csson/p5-Dist-Iller) [![Distribution kwalitee](https://badgedepot.code301.com/badge/kwalitee/Dist-Iller/0.1406)](http://cpants.cpanauthors.org/dist/Dist-Iller-0.1406) [![CPAN Testers result](https://badgedepot.code301.com/badge/cpantesters/Dist-Iller/0.1406)](http://matrix.cpantesters.org/?dist=Dist-Iller%200.1406) ![coverage 84.4%](https://img.shields.io/badge/coverage-84.4%-orange.svg)
 
 # VERSION
 

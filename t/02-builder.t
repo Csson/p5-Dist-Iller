@@ -99,6 +99,7 @@ sub dist {
         Dist::Iller = @{[ 'Dist::Iller'->VERSION ]}
 
         [Prereqs / RuntimeRequires]
+        CPAN::Uploader = 0
         Moose = 0
 
         ; authordep Dist::Zilla::Plugin::ConfirmRelease = 0

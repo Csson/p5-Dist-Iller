@@ -24,6 +24,7 @@ has prereqs => (
         find_prereq => 'first',
         get_prereq => 'get',
         all_prereqs => 'elements',
+        has_prereqs => 'count',
     },
 );
 
@@ -67,6 +68,18 @@ sub merge_prereqs {
             $self->add_prereq($prereq);
         }
     }
+}
+
+sub prereqs_to_array {
+    my $self = shift;
+
+    my $array = [];
+    for my $prereq ($self->all_prereqs) {
+        my $phase_relation = sprintf '%s_%s', $prereq->phase, $prereq->relation;
+        push @{ $array } => { $phase_relation => sprintf '%s %s', $prereq->module, $prereq->version };
+    }
+
+    return $array;
 }
 
 sub prereqs_to_hash {

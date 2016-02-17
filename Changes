@@ -11,6 +11,7 @@ Revision history for Dist-Iller
   - Dist::Iller (and any used configs) are now added to prereqs as develop suggests (instead of required).
 
  [New Features]
+  - Plugins can now add additional prereqs.
 
  [Other Changes]
 

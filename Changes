@@ -10,8 +10,6 @@ Revision history for Dist-Iller
  [Enhancements]
 
  [New Features]
-  - Configs can now add a list of default prereq versions. If no version is given in iller.yaml, the default version is used. Only already added prereqs are checked for default versions.
-  - Add Gitignore doctype.
 
  [Other Changes]
 
@@ -20,6 +18,71 @@ Revision history for Dist-Iller
  [Stats & Dependency Changes]
 
  [Testing]
+
+0.1407 2016-02-18T19:06:10Z UTC
+ [New Features]
+ - Configs can now add a list of default prereq versions. If no version is
+   given in iller.yaml, the default version is used. Only already added
+   prereqs are checked for default versions.
+ - Add Gitignore doctype.
+
+ [Stats & Dependency Changes]
+ - 20 files changed, 186 insertions(+), 22 deletions(-)
+ - (run req) ~ Carp (any) --> 1.38
+ - (run req) ~ DateTime (any) --> 1.05
+ - (run req) ~ File::ShareDir (any) --> 1.102
+ - (run req) ~ File::chdir (any) --> 0.1010
+ - (run req) ~ JSON::MaybeXS (any) --> 1.003003
+ - (run req) ~ List::MoreUtils (any) --> 0.408
+ - (run req) ~ List::Util (any) --> 1.42
+ - (run req) ~ Module::Load (any) --> 0.26
+ - (run req) ~ MooseX::AttributeDocumented (any) --> 0.1003
+ - (run req) ~ MooseX::AttributeShortcuts (any) --> 0.028
+ - (run req) ~ MooseX::StrictConstructor (any) --> 0.19
+ - (run req) ~ Path::Tiny (any) --> 0.072
+ - (run req) ~ PerlX::Maybe (any) --> 1.001
+ - (run req) ~ Safe::Isa (any) --> 1.000005
+ - (run req) ~ Try::Tiny (any) --> 0.24
+ - (run req) ~ Types::Path::Tiny (any) --> 0.005
+ - (run req) ~ YAML::Tiny (any) --> 1.67
+ - (run req) ~ version (any) --> 0.9913
+ - (test req) ~ File::chdir (any) --> 0.1010
+ - (dev req) + Dist::Zilla 5.000
+ - (dev req) + Dist::Zilla::Plugin::Git 2.036
+ - (dev req) + Test::EOF (any)
+ - (dev req) + Test::Version 1
+ - (dev req) ~ Badge::Depot (any) --> 0.0103
+ - (dev req) ~ Dist::Zilla::Plugin::ChangeStats::Dependencies::Git (any)
+   --> 0.0100
+ - (dev req) ~ Dist::Zilla::Plugin::CheckChangesHasContent (any) --> 0.008
+ - (dev req) ~ Dist::Zilla::Plugin::Clean (any) --> 0.07
+ - (dev req) ~ Dist::Zilla::Plugin::CopyFilesFromBuild (any) --> 0.151680
+ - (dev req) ~ Dist::Zilla::Plugin::Git::Contributors (any) --> 0.017
+ - (dev req) ~ Dist::Zilla::Plugin::GithubMeta (any) --> 0.54
+ - (dev req) ~ Dist::Zilla::Plugin::InstallRelease (any) --> 0.008
+ - (dev req) ~ Dist::Zilla::Plugin::MetaProvides::Package (any) -->
+   2.003001
+ - (dev req) ~ Dist::Zilla::Plugin::NextRelease::Grouped (any) --> 0.0200
+ - (dev req) ~ Dist::Zilla::Plugin::PodWeaver (any) --> 4.006
+ - (dev req) ~ Dist::Zilla::Plugin::ReadmeAnyFromPod (any) --> 0.150250
+ - (dev req) ~ Dist::Zilla::Plugin::RunExtraTests (any) --> 0.028
+ - (dev req) ~ Dist::Zilla::Plugin::Test::Compile (any) --> 2.054
+ - (dev req) ~ Dist::Zilla::Plugin::Test::EOF (any) --> 0.0501
+ - (dev req) ~ Dist::Zilla::Plugin::Test::EOL (any) --> 0.18
+ - (dev req) ~ Dist::Zilla::Plugin::Test::Kwalitee::Extra (any) --> v0.2.1
+ - (dev req) ~ Dist::Zilla::Plugin::Test::NoTabs (any) --> 0.15
+ - (dev req) ~ Dist::Zilla::Plugin::Test::ReportPrereqs (any) --> 0.021
+ - (dev req) ~ Dist::Zilla::Plugin::Test::Version (any) --> 1.05
+ - (dev req) ~ Dist::Zilla::Plugin::TravisYML (any) --> 1.15
+ - (dev req) ~ Pod::Weaver::Section::Homepage::DefaultCPAN (any) --> 0.05
+ - (dev req) ~ Pod::Weaver::Section::Source::DefaultGitHub (any) --> 0.07
+ - (dev req) ~ Test::NoTabs (any) --> 1.4
+ - (dev req) ~ Test::Warnings (any) --> 0.026
+ - (dev req) - Dist::Zilla::Plugin::MetaProvides::Class
+ - (dev req) - Dist::Zilla::Plugin::PodnameFromClassname
+ - (dev req) - Dist::Zilla::Plugin::Prereqs::Plugins
+ - (dev sug) ~ Dist::Iller 0.1406 --> 0.1407
+ - (dev sug) ~ Dist::Iller::Config::Author::CSSON 0.0307 --> 0.0308
 
 0.1406 2016-02-18T00:20:14Z UTC
  [Enhancements]

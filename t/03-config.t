@@ -45,11 +45,16 @@ like $generated_dist_ini, qr/\[ExecDir\]$spaces dir $equals bin $spaces \[Placed
 like $generated_dist_ini, qr/\[LastPlugin\] $spaces \[Prereqs /x, '[LastPlugin] is the last plugin';
 like $generated_dist_ini, qr{\[Prereqs / DevelopSuggests\][\n\r\s]*Dist::Iller}, 'Dist::Iller only suggested';
 
+like $generated_dist_ini, qr{Cruft::Pruner = 0}, 'Added prereq from plugin';
+like $generated_dist_ini, qr/Another::Crufter = 1.2/, 'Added suggests prereq from plugin';
+
+
 eq_or_diff clean_ini($generated_weaver_ini), clean_ini(weaver()), 'Correct weaver.ini';
 
 like $generated_cpanfile, qr/This::Thing/, 'cpanfile, prereq from config';
 like $generated_cpanfile, qr/Another::Thing/, 'cpanfile, prereq from local iller.yaml';
 like $generated_cpanfile, qr/ExtUtils::MakeMaker/, 'cpanfile, configure requires';
+like $generated_cpanfile, qr/suggests 'Another::Crufter' => '1.2'/, 'cpanfile, added prereq from plugin';
 
 done_testing;
 

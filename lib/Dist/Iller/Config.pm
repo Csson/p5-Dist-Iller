@@ -67,6 +67,7 @@ sub get_yaml_for {
     catch {
         croak "Can't load $doctype_class: $_";
     };
+
     return $doctype_class->new(config_obj => $self)->parse($yaml)->to_yaml;
 
 }

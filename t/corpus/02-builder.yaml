@@ -36,6 +36,8 @@ plugins:
  - +plugin: ConfirmRelease
 
  - +plugin: UploadToCPAN
+   +prereqs:
+    - runtime_requires: CPAN::Uploader
 
 ---
 

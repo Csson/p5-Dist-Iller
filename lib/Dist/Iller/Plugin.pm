@@ -11,6 +11,11 @@ use Dist::Iller::Elk;
 use Types::Standard qw/Str Enum HashRef/;
 use List::MoreUtils qw/uniq/;
 use MooseX::StrictConstructor;
+use Dist::Iller::Prereq;
+
+with qw/
+    Dist::Iller::Role::HasPrereqs
+/;
 
 has plugin_name => (
     is => 'ro',
@@ -48,6 +53,32 @@ has parameters => (
         parameters_kv => 'kv',
     },
 );
+
+around BUILDARGS => sub {
+    my $next = shift;
+    my $self = shift;
+    my $args = ref $_[0] eq 'HASH' ? shift : { @_ };
+
+    if(exists $args->{'prereqs'}) {
+        my $prereqs = [];
+
+        for my $prereq (@{ $args->{'prereqs'} }) {
+            my($phase, $relation) = split /_/ => (keys %{ $prereq })[0];
+            my($module, $version) = split / / => (values %{ $prereq })[0];
+            $version ||= 0;
+
+            push @{ $prereqs } => Dist::Iller::Prereq->new(
+                phase => $phase,
+                relation => $relation,
+                module => $module,
+                version => $version,
+            );
+        }
+        $args->{'prereqs'} = $prereqs;
+    }
+
+    $self->$next($args);
+};
 
 sub merge_with {
     my $self = shift;

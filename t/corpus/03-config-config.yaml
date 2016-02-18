@@ -124,3 +124,9 @@ plugins:
    +in: Elemental
    +version: 0.03
    transformer: List
+
+---
+doctype: gitignore
+
+always:
+ - ThisFile

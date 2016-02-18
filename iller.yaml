@@ -64,3 +64,11 @@ plugins:
 
 ---
 doctype: cpanfile
+
+---
+doctype: gitignore
+
+config: Author::CSSON
+
+always:
+ - /Dist-Iller-*

@@ -43,18 +43,22 @@ sub phase { 'after' }
 
 sub to_hash {
     my $self = shift;
-    return { prereqs => $self->prereqs };
+    return { always => $self->always, onexist => $self->onexist };
 }
 
 sub parse {
     my $self = shift;
     my $yaml = shift;
 
+    if(exists $yaml->{'config'}) {
+        # ugly hack..
+        $self->parse_config({ '+config' => $yaml->{'config'} });
+    }
     if(exists $yaml->{'always'}) {
         $self->add_always($_) for @{ $yaml->{'always'} };
     }
     if(exists $yaml->{'onexist'}) {
-        $self->add_onexists($_) grep { path($_)->exists } for @{ $yaml->{'onexist'} };
+        $self->add_onexists($_) for grep { path($_)->exists } @{ $yaml->{'onexist'} };
     }
 }
 

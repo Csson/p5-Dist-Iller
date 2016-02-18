@@ -54,3 +54,13 @@ plugins:
 
 ---
 doctype: cpanfile
+---
+doctype: gitignore
+
+config: DistIllerTestConfig
+
+always:
+ - MYMETA.*
+
+onexist:
+ - inc

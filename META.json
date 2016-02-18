@@ -183,6 +183,10 @@
          "file" : "lib/Dist/Iller/DocType/Dist.pm",
          "version" : "0.1407"
       },
+      "Dist::Iller::DocType::Gitignore" : {
+         "file" : "lib/Dist/Iller/DocType/Gitignore.pm",
+         "version" : "0.1407"
+      },
       "Dist::Iller::DocType::Weaver" : {
          "file" : "lib/Dist/Iller/DocType/Weaver.pm",
          "version" : "0.1407"

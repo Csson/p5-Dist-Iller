@@ -28,6 +28,7 @@ $iller->parse('after');
 my $generated_dist_ini = $tempdir->child('dist.ini')->slurp_utf8;
 my $generated_weaver_ini = $tempdir->child('weaver.ini')->slurp_utf8;
 my $generated_cpanfile = $tempdir->child('cpanfile')->slurp_utf8;
+my $generated_gitignore = $tempdir->child('.gitignore')->slurp;
 
 my $spaces = qr/[\s\n\r]*/;
 my $equals = qr/$spaces = $spaces/x;
@@ -57,6 +58,10 @@ like $generated_cpanfile, qr/This::Thing/, 'cpanfile, prereq from config';
 like $generated_cpanfile, qr/Another::Thing/, 'cpanfile, prereq from local iller.yaml';
 like $generated_cpanfile, qr/ExtUtils::MakeMaker/, 'cpanfile, configure requires';
 like $generated_cpanfile, qr/suggests 'Another::Crufter' => '1.2'/, 'cpanfile, added prereq from plugin';
+
+like $generated_gitignore, qr/MYMETA/, 'gitignore: MYMETA.* is ignored';
+like $generated_gitignore, qr/ThisFile/, 'gitignore: Ignores file added in config';
+unlike $generated_gitignore, qr/inc/, 'gitignore: inc is not ignored, since it does not exist';
 
 done_testing;
 

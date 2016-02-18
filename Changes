@@ -8,10 +8,8 @@ Revision history for Dist-Iller
  [Documentation]
 
  [Enhancements]
-  - Dist::Iller (and any used configs) are now added to prereqs as develop suggests (instead of required).
 
  [New Features]
-  - Plugins can now add additional prereqs.
 
  [Other Changes]
 
@@ -20,6 +18,30 @@ Revision history for Dist-Iller
  [Stats & Dependency Changes]
 
  [Testing]
+
+0.1406 2016-02-18T00:20:14Z UTC
+ [Enhancements]
+ - Dist::Iller (and any used configs) are now added to prereqs as develop
+   suggests (instead of required).
+
+ [New Features]
+ - Plugins can now add additional prereqs.
+
+ [Stats & Dependency Changes]
+ - 19 files changed, 87 insertions(+), 28 deletions(-)
+ - (dev req) + Badge::Depot (any)
+ - (dev req) + Badge::Depot::Plugin::Coverage (any)
+ - (dev req) + Badge::Depot::Plugin::Cpantesters (any)
+ - (dev req) + Badge::Depot::Plugin::Kwalitee (any)
+ - (dev req) + Badge::Depot::Plugin::Perl (any)
+ - (dev req) + Badge::Depot::Plugin::Travis (any)
+ - (dev req) ~ Dist::Zilla::Plugin::BumpVersionAfterRelease::Transitional
+   (any) --> 0.007
+ - (dev req) ~ Pod::Weaver::Section::Badges (any) --> 0.0401
+ - (dev req) - Dist::Iller
+ - (dev req) - Dist::Iller::Config::Author::CSSON
+ - (dev sug) + Dist::Iller 0.1406
+ - (dev sug) + Dist::Iller::Config::Author::CSSON 0.0307
 
 0.1405 2016-02-15T16:22:28Z UTC
  [Bug Fixes]

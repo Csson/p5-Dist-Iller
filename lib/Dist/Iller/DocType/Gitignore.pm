@@ -5,7 +5,7 @@ use warnings;
 package Dist::Iller::DocType::Gitignore;
 
 # AUTHORITY
-our $VERSION = '0.1407';
+our $VERSION = '0.1408';
 
 use Dist::Iller::Elk;
 use Path::Tiny;

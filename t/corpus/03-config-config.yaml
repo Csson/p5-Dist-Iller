@@ -3,6 +3,11 @@ doctype: dist
 header:
   author: Erik Carlsson
 
+default_prereq_versions:
+ - Moose: 2.1405
+ - Moo: 2.000000
+ - Pod::Weaver::Section::Authors: 0.001
+
 prereqs:
   develop:
     requires:

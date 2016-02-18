@@ -47,7 +47,9 @@ like $generated_dist_ini, qr{\[Prereqs / DevelopSuggests\][\n\r\s]*Dist::Iller},
 
 like $generated_dist_ini, qr{Cruft::Pruner = 0}, 'Added prereq from plugin';
 like $generated_dist_ini, qr/Another::Crufter = 1.2/, 'Added suggests prereq from plugin';
-
+like $generated_dist_ini, qr/authordep Pod::Weaver::Section::Authors = 0\.001/, 'Used default prereq version';
+like $generated_dist_ini, qr/Moose = 2.1400/, 'Wants correct Moose';
+unlike $generated_dist_ini, qr/Moo = 2/, 'Moo not added';
 
 eq_or_diff clean_ini($generated_weaver_ini), clean_ini(weaver()), 'Correct weaver.ini';
 

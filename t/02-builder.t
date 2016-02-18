@@ -79,6 +79,7 @@ sub dist {
         Dist::Zilla::Plugin::Manifest = 0
         Dist::Zilla::Plugin::ManifestSkip = 0
         Dist::Zilla::Plugin::MetaYAML = 0
+        Dist::Zilla::Plugin::Prereqs = 0
         Dist::Zilla::Plugin::PruneCruft = 0
         Dist::Zilla::Plugin::Readme = 0
         Dist::Zilla::Plugin::ShareDir = 0
@@ -111,6 +112,7 @@ sub dist {
         ; authordep Dist::Zilla::Plugin::Manifest = 0
         ; authordep Dist::Zilla::Plugin::ManifestSkip = 0
         ; authordep Dist::Zilla::Plugin::MetaYAML = 0
+        ; authordep Dist::Zilla::Plugin::Prereqs = 0
         ; authordep Dist::Zilla::Plugin::PruneCruft = 0
         ; authordep Dist::Zilla::Plugin::Readme = 0
         ; authordep Dist::Zilla::Plugin::ShareDir = 0

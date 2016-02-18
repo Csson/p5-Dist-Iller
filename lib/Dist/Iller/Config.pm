@@ -34,6 +34,8 @@ has distribution_name => (
     is => 'ro',
     isa => Str,
     predicate => 1,
+    traits => ['Documented'],
+    documentation_order => 0,
 );
 
 sub config_location {

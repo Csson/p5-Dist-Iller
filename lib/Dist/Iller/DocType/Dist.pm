@@ -66,11 +66,12 @@ sub parse {
     my $self = shift;
     my $yaml = shift;
     $self->parse_header($yaml->{'header'});
+    $self->parse_default_prereq_versions($yaml->{'default_prereq_versions'});
     $self->parse_prereqs($yaml->{'prereqs'});
     $self->parse_plugins($yaml->{'plugins'});
 }
 
-around qw/parse_header parse_prereqs/ => sub {
+around qw/parse_header  parse_prereqs  parse_default_prereq_versions/ => sub {
     my $next = shift;
     my $self = shift;
     my $yaml = shift;
@@ -93,12 +94,28 @@ sub parse_header {
     }
 }
 
+sub parse_default_prereq_versions {
+    my $self = shift;
+    my $yaml = shift;
+
+    # prereqs added from this point forward checks defaults
+    foreach my $default (@{ $yaml }) {
+        $self->set_default_prereq_version((keys %$default)[0], (values %$default)[0]);
+    }
+    # check prereqs already added
+    foreach my $prereq ($self->all_prereqs) {
+        my $default_version = $self->get_default_prereq_version($prereq->module);
+        if($default_version && !$prereq->version) {
+            $prereq->version($default_version);
+        }
+    }
+}
+
 sub parse_prereqs {
     my $self = shift;
     my $yaml = shift;
 
     foreach my $phase (qw/build configure develop runtime test/) {
-
         foreach my $relation (qw/requires recommends suggests conflicts/) {
 
             MODULE:
@@ -132,8 +149,10 @@ sub to_hash {
     my $hash = {
         header => $header,
         prereqs => $self->prereqs_to_hash,
+        default_prereq_versions => [ map { +{ $_->[0] => $_->[1] } } $self->all_default_prereq_versions ],
         plugins => $self->plugins_to_hash,
     };
+
     return $hash;
 }
 
@@ -178,6 +197,12 @@ sub add_plugins_as_prereqs {
             ));
         }
     }
+    $self->add_prereq(Dist::Iller::Prereq->new(
+        module => 'Dist::Zilla::Plugin::Prereqs',
+        phase => 'develop',
+        relation => 'requires',
+        version => '0',
+    ));
 }
 
 sub to_string {

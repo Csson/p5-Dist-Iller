@@ -10,6 +10,7 @@ Revision history for Dist-Iller
  [Enhancements]
 
  [New Features]
+  - Configs can now add a list of default prereq versions. If no version is given in iller.yaml, the default version is used. Only already added prereqs are checked for default versions.
 
  [Other Changes]
 

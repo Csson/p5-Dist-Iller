@@ -164,9 +164,11 @@ This is the general syntax of an C<iller.yaml> file:
     plugins:
       # Includes all plugins specified in Dist::Iller::Config::My::Config
       - +config: My::Config
+
       - +plugin: DistIller::MetaGeneratedBy
       - +plugin: AutoVersion
       - +plugin: GatherDir
+
       # 'dir' is a parameter for ShareDir
       - +plugin: ShareDir
         dir: myshare
@@ -181,7 +183,7 @@ This is the general syntax of an C<iller.yaml> file:
       # Same Dist::Iller::Config as in the 'dist' document
       - +config: My::Config
 
-      # Use PluginBundles, but they need ''.
+      # Use PluginBundles
       - +plugin: '@CorePrep'
 
       - +plugin: -SingleEncoding
@@ -207,7 +209,7 @@ PluginBundles for both L<Dist::Zilla> and L<Pod::Weaver> have a few downsides:
 
 =for :list
 * Mixes code and configuration.
-* Not straightforward to remove specific plugins for a certain distribution
+* Not straightforward to remove or replace specific plugins for a certain distribution
 * Difficult to insert a plugin before another plugin for a certain distribution.
 * PluginBundles can change after a distribution has been released.
 * Difficult for others to understand/know which plugins actually were in effect when the distribution was built.
@@ -215,7 +217,7 @@ PluginBundles for both L<Dist::Zilla> and L<Pod::Weaver> have a few downsides:
 C<Dist::Iller> tries to solve this:
 
 =for :list
-* Dist::Iller configs (similar to PluginBundles) has their own C<iller.yaml> (normally in C<share/>) where plugins are specified. See tests and L<Dist::Iller::Config::Author::CSSON>).
+* Dist::Iller configs (similar to PluginBundles) has their own C<iller.yaml> (normally in C<share/>) where plugins are specified. See tests and L<Dist::Iller::Config::Author::CSSON>.
 * Since C<dist.ini> and C<weaver.ini> are generated each time C<iller> is run, the plugins listed in them are those that were used to build the distribution.
 * Remove a plugin:
 

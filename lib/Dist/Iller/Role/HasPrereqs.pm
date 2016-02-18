@@ -10,7 +10,7 @@ our $VERSION = '0.1407';
 use Moose::Role;
 use namespace::autoclean;
 use version;
-use Types::Standard qw/ArrayRef InstanceOf/;
+use Types::Standard qw/ArrayRef HashRef InstanceOf/;
 use Dist::Iller::Prereq;
 
 has prereqs => (
@@ -27,6 +27,19 @@ has prereqs => (
         has_prereqs => 'count',
     },
 );
+has default_prereq_versions => (
+    is => 'ro',
+    isa => HashRef,
+    traits => ['Hash'],
+    default => sub { +{ } },
+    handles => {
+        set_default_prereq_version => 'set',
+        get_default_prereq_version => 'get',
+        all_default_prereq_versions => 'kv',
+    },
+);
+
+
 
 # Ensure that we require the highest wanted version
 around add_prereq => sub {
@@ -34,8 +47,17 @@ around add_prereq => sub {
     my $self = shift;
     my $prereq = shift;
 
-    my $already_existing = $self->find_prereq(sub {$_->module eq $prereq->module && $_->phase eq $prereq->phase });
 
+    my $default_version = $self->get_default_prereq_version($prereq->module);
+    if($default_version && !$prereq->version) {
+        my $parsed_default_version = version->parse($default_version);
+
+        if($parsed_default_version > version->parse($prereq->version)) {
+            $prereq->version($default_version);
+        }
+    }
+
+    my $already_existing = $self->find_prereq(sub {$_->module eq $prereq->module && $_->phase eq $prereq->phase });
     if($already_existing) {
         my $old_version = version->parse($already_existing->version);
         my $new_version = version->parse($prereq->version);

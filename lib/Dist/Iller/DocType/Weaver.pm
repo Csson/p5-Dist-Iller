@@ -5,7 +5,7 @@ use warnings;
 package Dist::Iller::DocType::Weaver;
 
 # AUTHORITY
-our $VERSION = '0.1406';
+our $VERSION = '0.1407';
 
 use Dist::Iller::Elk;
 with qw/

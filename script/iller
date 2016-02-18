@@ -7,7 +7,7 @@ use Dist::Iller;
 
 # AUTHORITY
 # PODNAME: iller
-our $VERSION = '0.1406';
+our $VERSION = '0.1407';
 
 my $iller = Dist::Iller->new;
 $iller->parse('before');

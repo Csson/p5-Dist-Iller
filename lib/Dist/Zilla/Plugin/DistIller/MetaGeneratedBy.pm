@@ -5,7 +5,7 @@ use warnings;
 package Dist::Zilla::Plugin::DistIller::MetaGeneratedBy;
 
 # AUTHORITY
-our $VERSION = '0.1406';
+our $VERSION = '0.1407';
 
 use Moose;
 use namespace::autoclean;

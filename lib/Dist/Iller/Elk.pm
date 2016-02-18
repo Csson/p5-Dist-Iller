@@ -5,7 +5,7 @@ use warnings;
 package Dist::Iller::Elk;
 
 # AUTHORITY
-our $VERSION = '0.1406';
+our $VERSION = '0.1407';
 
 use Moose();
 use MooseX::AttributeShortcuts();

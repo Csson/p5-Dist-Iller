@@ -8,6 +8,7 @@ Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
     <a href="https://travis-ci.org/Csson/p5-Dist-Iller"><img src="https://api.travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master" alt="Travis status" /></a>
     <a href="http://cpants.cpanauthors.org/dist/Dist-Iller-0.1408"><img src="https://badgedepot.code301.com/badge/kwalitee/Dist-Iller/0.1408" alt="Distribution kwalitee" /></a>
     <a href="http://matrix.cpantesters.org/?dist=Dist-Iller%200.1408"><img src="https://badgedepot.code301.com/badge/cpantesters/Dist-Iller/0.1408" alt="CPAN Testers result" /></a>
+    <img src="https://img.shields.io/badge/coverage-84.6%-orange.svg" alt="coverage 84.6%" />
     </p>
 </div>
 

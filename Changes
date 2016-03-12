@@ -10,7 +10,6 @@ Revision history for Dist-Iller
  [Enhancements]
 
  [New Features]
-  - Can add all prereqs as authordeps (add_prereqs_as_authordeps)
 
  [Other Changes]
 
@@ -19,6 +18,18 @@ Revision history for Dist-Iller
  [Stats & Dependency Changes]
 
  [Testing]
+
+0.1408 2016-03-12T20:16:19Z UTC
+ [New Features]
+ - Can add all prereqs as authordeps (add_prereqs_as_authordeps)
+
+ [Stats & Dependency Changes]
+ - 17 files changed, 37 insertions(+), 17 deletions(-)
+ - (dev req) + Pod::Weaver::Section::GenerateSection 1.01
+ - (dev req) - Pod::Weaver::Section::Homepage::DefaultCPAN
+ - (dev req) - Pod::Weaver::Section::Source::DefaultGitHub
+ - (dev sug) ~ Dist::Iller 0.1407 --> 0.1408
+ - (dev sug) ~ Dist::Iller::Config::Author::CSSON 0.0308 --> 0.0309
 
 0.1407 2016-02-18T19:06:10Z UTC
  [New Features]

@@ -6,15 +6,14 @@ Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
     <p>
     <img src="https://img.shields.io/badge/perl-5.10+-blue.svg" alt="Requires Perl 5.10+" />
     <a href="https://travis-ci.org/Csson/p5-Dist-Iller"><img src="https://api.travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master" alt="Travis status" /></a>
-    <a href="http://cpants.cpanauthors.org/dist/Dist-Iller-0.1407"><img src="https://badgedepot.code301.com/badge/kwalitee/Dist-Iller/0.1407" alt="Distribution kwalitee" /></a>
-    <a href="http://matrix.cpantesters.org/?dist=Dist-Iller%200.1407"><img src="https://badgedepot.code301.com/badge/cpantesters/Dist-Iller/0.1407" alt="CPAN Testers result" /></a>
-    <img src="https://img.shields.io/badge/coverage-84.5%-orange.svg" alt="coverage 84.5%" />
+    <a href="http://cpants.cpanauthors.org/dist/Dist-Iller-0.1408"><img src="https://badgedepot.code301.com/badge/kwalitee/Dist-Iller/0.1408" alt="Distribution kwalitee" /></a>
+    <a href="http://matrix.cpantesters.org/?dist=Dist-Iller%200.1408"><img src="https://badgedepot.code301.com/badge/cpantesters/Dist-Iller/0.1408" alt="CPAN Testers result" /></a>
     </p>
 </div>
 
 # VERSION
 
-Version 0.1407, released 2016-02-18.
+Version 0.1408, released 2016-03-12.
 
 # SYNOPSIS
 
@@ -150,7 +149,7 @@ PluginBundles for both [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and [
 
 # SOURCE
 
-Source repository is at [https://github.com/Csson/p5-Dist-Iller](https://github.com/Csson/p5-Dist-Iller).
+[https://github.com/Csson/p5-Dist-Iller](https://github.com/Csson/p5-Dist-Iller)
 
 # HOMEPAGE
 

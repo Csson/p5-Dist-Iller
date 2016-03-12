@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-02-18 16:11:38 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-03-12 20:05:07 UTC.
 
 on runtime => sub {
     requires 'Carp' => '1.38';
@@ -108,13 +108,12 @@ on develop => sub {
     requires 'Pod::Weaver::Section::Authors' => '0';
     requires 'Pod::Weaver::Section::Badges' => '0.0401';
     requires 'Pod::Weaver::Section::Collect' => '0';
+    requires 'Pod::Weaver::Section::GenerateSection' => '1.01';
     requires 'Pod::Weaver::Section::Generic' => '0';
-    requires 'Pod::Weaver::Section::Homepage::DefaultCPAN' => '0.05';
     requires 'Pod::Weaver::Section::Leftovers' => '0';
     requires 'Pod::Weaver::Section::Legal' => '0';
     requires 'Pod::Weaver::Section::Name' => '0';
     requires 'Pod::Weaver::Section::Region' => '0';
-    requires 'Pod::Weaver::Section::Source::DefaultGitHub' => '0.07';
     requires 'Pod::Weaver::Section::Version' => '0';
     requires 'Test::CleanNamespaces' => '0.15';
     requires 'Test::EOF' => '0';
@@ -126,6 +125,6 @@ on develop => sub {
     requires 'Test::Warnings' => '0.026';
 };
 on develop => sub {
-    suggests 'Dist::Iller' => '0.1407';
-    suggests 'Dist::Iller::Config::Author::CSSON' => '0.0308';
+    suggests 'Dist::Iller' => '0.1408';
+    suggests 'Dist::Iller::Config::Author::CSSON' => '0.0309';
 };

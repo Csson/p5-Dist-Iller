@@ -4,7 +4,7 @@
       "Erik Carlsson <info@code301.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.043, Dist::Iller version 0.1407, CPAN::Meta::Converter version 2.143240",
+   "generated_by" : "Dist::Zilla version 5.043, Dist::Iller version 0.1408, CPAN::Meta::Converter version 2.143240",
    "license" : [
       "perl_5"
    ],
@@ -93,13 +93,12 @@
             "Pod::Weaver::Section::Authors" : "0",
             "Pod::Weaver::Section::Badges" : "0.0401",
             "Pod::Weaver::Section::Collect" : "0",
+            "Pod::Weaver::Section::GenerateSection" : "1.01",
             "Pod::Weaver::Section::Generic" : "0",
-            "Pod::Weaver::Section::Homepage::DefaultCPAN" : "0.05",
             "Pod::Weaver::Section::Leftovers" : "0",
             "Pod::Weaver::Section::Legal" : "0",
             "Pod::Weaver::Section::Name" : "0",
             "Pod::Weaver::Section::Region" : "0",
-            "Pod::Weaver::Section::Source::DefaultGitHub" : "0.07",
             "Pod::Weaver::Section::Version" : "0",
             "Test::CleanNamespaces" : "0.15",
             "Test::EOF" : "0",
@@ -111,8 +110,8 @@
             "Test::Warnings" : "0.026"
          },
          "suggests" : {
-            "Dist::Iller" : "0.1407",
-            "Dist::Iller::Config::Author::CSSON" : "0.0308"
+            "Dist::Iller" : "0.1408",
+            "Dist::Iller::Config::Author::CSSON" : "0.0309"
          }
       },
       "runtime" : {
@@ -165,59 +164,59 @@
    "provides" : {
       "Dist::Iller" : {
          "file" : "lib/Dist/Iller.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Iller::Config" : {
          "file" : "lib/Dist/Iller/Config.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Iller::DocType" : {
          "file" : "lib/Dist/Iller/DocType.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Iller::DocType::Cpanfile" : {
          "file" : "lib/Dist/Iller/DocType/Cpanfile.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Iller::DocType::Dist" : {
          "file" : "lib/Dist/Iller/DocType/Dist.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Iller::DocType::Gitignore" : {
          "file" : "lib/Dist/Iller/DocType/Gitignore.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Iller::DocType::Weaver" : {
          "file" : "lib/Dist/Iller/DocType/Weaver.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Iller::Elk" : {
          "file" : "lib/Dist/Iller/Elk.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Iller::Plugin" : {
          "file" : "lib/Dist/Iller/Plugin.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Iller::Prereq" : {
          "file" : "lib/Dist/Iller/Prereq.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Iller::Role::HasPlugins" : {
          "file" : "lib/Dist/Iller/Role/HasPlugins.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Iller::Role::HasPrereqs" : {
          "file" : "lib/Dist/Iller/Role/HasPrereqs.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Zilla::MintingProfile::DistIller::Basic" : {
          "file" : "lib/Dist/Zilla/MintingProfile/DistIller/Basic.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       },
       "Dist::Zilla::Plugin::DistIller::MetaGeneratedBy" : {
          "file" : "lib/Dist/Zilla/Plugin/DistIller/MetaGeneratedBy.pm",
-         "version" : "0.1407"
+         "version" : "0.1408"
       }
    },
    "release_status" : "stable",
@@ -232,7 +231,7 @@
          "web" : "https://github.com/Csson/p5-Dist-Iller"
       }
    },
-   "version" : "0.1407",
+   "version" : "0.1408",
    "x_authority" : "cpan:CSSON"
 }
 

@@ -5,7 +5,7 @@ use warnings;
 package Dist::Iller::Prereq;
 
 # AUTHORITY
-our $VERSION = '0.1408';
+our $VERSION = '0.1409';
 
 use Dist::Iller::Elk;
 use Types::Standard qw/Str Enum/;

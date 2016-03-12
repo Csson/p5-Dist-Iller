@@ -5,7 +5,7 @@ use warnings;
 package Dist::Zilla::MintingProfile::DistIller::Basic;
 
 # AUTHORITY
-our $VERSION = '0.1408';
+our $VERSION = '0.1409';
 
 use Moose;
 use namespace::autoclean;

@@ -5,7 +5,7 @@ use warnings;
 package Dist::Iller::Role::HasPrereqs;
 
 # AUTHORITY
-our $VERSION = '0.1408';
+our $VERSION = '0.1409';
 
 use Moose::Role;
 use namespace::autoclean;

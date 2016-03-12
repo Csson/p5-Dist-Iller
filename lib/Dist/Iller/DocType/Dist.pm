@@ -14,8 +14,9 @@ with qw/
     Dist::Iller::Role::HasPlugins
 /;
 
-use Types::Standard qw/HashRef ArrayRef Str Int/;
+use Types::Standard qw/HashRef ArrayRef Str Int Bool/;
 use PerlX::Maybe qw/maybe provided/;
+use List::Util qw/any/;
 
 has name => (
     is => 'rw',
@@ -55,6 +56,12 @@ has copyright_year => (
     predicate => 1,
     init_arg => undef,
 );
+has add_prereqs_as_authordeps => (
+    is => 'rw',
+    isa => Bool,
+    default => 0,
+);
+
 
 sub filename { 'dist.ini' }
 
@@ -65,6 +72,9 @@ sub comment_start { ';' }
 sub parse {
     my $self = shift;
     my $yaml = shift;
+    if(exists $yaml->{'add_prereqs_as_authordeps'}) {
+        $self->add_prereqs_as_authordeps(delete $yaml->{'add_prereqs_as_authordeps'});
+    }
     $self->parse_header($yaml->{'header'});
     $self->parse_default_prereq_versions($yaml->{'default_prereq_versions'});
     $self->parse_prereqs($yaml->{'prereqs'});
@@ -247,8 +257,14 @@ sub to_string {
         my $has_author_deps = 0;
         my $previous_module = '';
 
+        my @phases = ('develop', $self->add_prereqs_as_authordeps ? (qw/runtime test/) : ());
+        my @filtered_prereqs = $self->filter_prereqs(sub {
+            my $prereq = $_;
+            $prereq->relation eq 'requires' && $prereq->module ne 'perl' && (any { $prereq->phase eq $_ } @phases);
+        });
+
         AUTHORDEP:
-        foreach my $authordep (sort { $a->module cmp $b->module } $self->filter_prereqs(sub { $_->relation eq 'requires' && $_->module ne 'perl' && $_->phase eq 'develop' })) {
+        foreach my $authordep (sort { $a->module cmp $b->module } @filtered_prereqs) {
             next AUTHORDEP if $authordep->module eq $previous_module;
             push @strings => sprintf '; authordep %s = %s', $authordep->module, $authordep->version;
             $has_author_deps = 1;

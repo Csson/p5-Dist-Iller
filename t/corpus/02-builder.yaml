@@ -8,6 +8,8 @@ prereqs:
     requires:
       - Moose
 
+add_prereqs_as_authordeps: 1
+
 plugins:
  - +plugin: GatherDir
 

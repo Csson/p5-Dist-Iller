@@ -103,6 +103,7 @@ sub dist {
         CPAN::Uploader = 0
         Moose = 0
 
+        ; authordep CPAN::Uploader = 0
         ; authordep Dist::Zilla::Plugin::ConfirmRelease = 0
         ; authordep Dist::Zilla::Plugin::ExecDir = 0
         ; authordep Dist::Zilla::Plugin::ExtraTests = 0
@@ -118,6 +119,7 @@ sub dist {
         ; authordep Dist::Zilla::Plugin::ShareDir = 0
         ; authordep Dist::Zilla::Plugin::TestRelease = 0
         ; authordep Dist::Zilla::Plugin::UploadToCPAN = 0
+        ; authordep Moose = 0
         ; authordep Pod::Weaver::Plugin::SingleEncoding = 0
         ; authordep Pod::Weaver::PluginBundle::CorePrep = 0
         ; authordep Pod::Weaver::Section::Authors = 0

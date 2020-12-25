@@ -5,6 +5,7 @@ use warnings;
 package Dist::Iller::Role::HasPlugins;
 
 # AUTHORITY
+# ABSTRACT: A role for DocTypes that contains plugins (like dist/weaver)
 our $VERSION = '0.1409';
 
 use Moose::Role;

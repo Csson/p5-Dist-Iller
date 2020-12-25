@@ -5,6 +5,7 @@ use warnings;
 package Dist::Iller::Prereq;
 
 # AUTHORITY
+# ABSTRACT: Handle a prerequisite
 our $VERSION = '0.1409';
 
 use Dist::Iller::Elk;

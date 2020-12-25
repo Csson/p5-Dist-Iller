@@ -5,6 +5,7 @@ use warnings;
 package Dist::Iller::DocType::Dist;
 
 # AUTHORITY
+# ABSTRACT: Turn the Dist::Iller config into a dist.ini file
 our $VERSION = '0.1409';
 
 use Dist::Iller::Elk;

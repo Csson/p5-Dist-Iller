@@ -5,6 +5,7 @@ use warnings;
 package Dist::Zilla::MintingProfile::DistIller::Basic;
 
 # AUTHORITY
+# ABSTRACT: A basic minting profile for Dist::Iller
 our $VERSION = '0.1409';
 
 use Moose;

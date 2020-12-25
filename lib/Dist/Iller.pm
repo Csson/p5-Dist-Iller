@@ -139,7 +139,7 @@ The C<doctype> key in a document in C<iller.yaml> matches a camelized class in t
 This is the general syntax of an C<iller.yaml> file:
 
     ---
-    # This specifies that this yaml document will generate C<dist.ini>.
+    # This specifies that this yaml document will generate dist.ini.
     doctype: dist
 
     # This generates the top part of C<dist.ini>. C<author> can be a list or string.
@@ -176,7 +176,7 @@ This is the general syntax of an C<iller.yaml> file:
     [...]
 
     ---
-    # Here starts the C<weaver.ini> configuration.
+    # Here starts the weaver.ini configuration.
     doctype: weaver
 
     plugins:
@@ -201,7 +201,23 @@ This is the general syntax of an C<iller.yaml> file:
         +in: Elemental
         transformer: List
 
-     [...]
+    [...]
+     
+    ---
+    # Here starts the .gitignore configuration
+    doctype: gitignore
+
+    always:
+      - /.build
+      - /_build*
+      - /Build
+      - MYMETA.*
+      - '!META.json'
+      - /.prove
+    ---
+    # No configuration for .cpanfile, but by having a YAML document for it, it gets generated from
+    # the prereqs listed in the 'dist' document
+    doctype: cpanfile
 
 =head2 Rationale
 

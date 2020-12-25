@@ -5,6 +5,7 @@ use warnings;
 package Dist::Iller::Plugin;
 
 # AUTHORITY
+# ABSTRACT: Handle a Dist::Zilla/Pod::Weaver plugin
 our $VERSION = '0.1409';
 
 use Dist::Iller::Elk;

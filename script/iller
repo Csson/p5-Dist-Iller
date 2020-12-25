@@ -6,7 +6,7 @@ use warnings;
 use Dist::Iller;
 
 # AUTHORITY
-# PODNAME: iller
+# PODNAME: iller, a dzil wrapper
 our $VERSION = '0.1409';
 
 my $iller = Dist::Iller->new;

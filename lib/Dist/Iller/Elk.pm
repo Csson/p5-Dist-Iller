@@ -5,6 +5,7 @@ use warnings;
 package Dist::Iller::Elk;
 
 # AUTHORITY
+# ABSTRACT: A slightly extended Moose
 our $VERSION = '0.1409';
 
 use Moose();

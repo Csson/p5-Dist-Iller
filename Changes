@@ -10,6 +10,9 @@ Revision history for Dist-Iller
  [Enhancements]
 
  [New Features]
+ - Added new DocType: Global, used for settings common to multiple DocTypes (so far only distribution_name)
+ - The global document (if it exists in iller.yaml) will be passed to Config objects
+ - in DocType/Gitignore, it is now possible to use $self.distribution_name in 'always' and 'onexist', so that distribution build directories are automatically ignored.
 
  [Other Changes]
 

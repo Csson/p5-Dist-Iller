@@ -5,16 +5,15 @@ Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 <div>
     <p>
     <img src="https://img.shields.io/badge/perl-5.10+-blue.svg" alt="Requires Perl 5.10+" />
-    <a href="https://travis-ci.org/Csson/p5-Dist-Iller"><img src="https://api.travis-ci.org/Csson/p5-Dist-Iller.svg?branch=master" alt="Travis status" /></a>
-    <a href="http://cpants.cpanauthors.org/dist/Dist-Iller-0.1408"><img src="https://badgedepot.code301.com/badge/kwalitee/Dist-Iller/0.1408" alt="Distribution kwalitee" /></a>
-    <a href="http://matrix.cpantesters.org/?dist=Dist-Iller%200.1408"><img src="https://badgedepot.code301.com/badge/cpantesters/Dist-Iller/0.1408" alt="CPAN Testers result" /></a>
-    <img src="https://img.shields.io/badge/coverage-84.6%-orange.svg" alt="coverage 84.6%" />
+    <a href="http://cpants.cpanauthors.org/release/CSSON/Dist-Iller-0.1409"><img src="http://badgedepot.code301.com/badge/kwalitee/CSSON/Dist-Iller/0.1409" alt="Distribution kwalitee" /></a>
+    <a href="http://matrix.cpantesters.org/?dist=Dist-Iller%200.1409"><img src="http://badgedepot.code301.com/badge/cpantesters/Dist-Iller/0.1409" alt="CPAN Testers result" /></a>
+    <img src="https://img.shields.io/badge/coverage-84.3%25-orange.svg" alt="coverage 84.3%" />
     </p>
 </div>
 
 # VERSION
 
-Version 0.1408, released 2016-03-12.
+Version 0.1409, released 2020-12-27.
 
 # SYNOPSIS
 
@@ -44,7 +43,7 @@ The `doctype` key in a document in `iller.yaml` matches a camelized class in the
 This is the general syntax of an `iller.yaml` file:
 
     ---
-    # This specifies that this yaml document will generate C<dist.ini>.
+    # This specifies that this yaml document will generate dist.ini.
     doctype: dist
 
     # This generates the top part of C<dist.ini>. C<author> can be a list or string.
@@ -81,7 +80,7 @@ This is the general syntax of an `iller.yaml` file:
     [...]
 
     ---
-    # Here starts the C<weaver.ini> configuration.
+    # Here starts the weaver.ini configuration.
     doctype: weaver
 
     plugins:
@@ -106,7 +105,23 @@ This is the general syntax of an `iller.yaml` file:
         +in: Elemental
         transformer: List
 
-     [...]
+    [...]
+
+    ---
+    # Here starts the .gitignore configuration
+    doctype: gitignore
+
+    always:
+      - /.build
+      - /_build*
+      - /Build
+      - MYMETA.*
+      - '!META.json'
+      - /.prove
+    ---
+    # No configuration for .cpanfile, but by having a YAML document for it, it gets generated from
+    # the prereqs listed in the 'dist' document
+    doctype: cpanfile
 
 ## Rationale
 

@@ -54,7 +54,7 @@ sub parse {
             croak "Can't load $doctype_class: $_";
         };
         next DOCTYPE if $doctype_class->phase ne $phase;
-        $self->set_doc($document->{'doctype'}, $doctype_class->new->parse($document));
+        $self->set_doc($document->{'doctype'}, $doctype_class->new(global => $self->get_doc('global'))->parse($document));
     }
     if($self->get_doc('dist')) {
         $self->get_doc('dist')->add_prereq(Dist::Iller::Prereq->new(
@@ -202,7 +202,7 @@ This is the general syntax of an C<iller.yaml> file:
         transformer: List
 
     [...]
-     
+
     ---
     # Here starts the .gitignore configuration
     doctype: gitignore

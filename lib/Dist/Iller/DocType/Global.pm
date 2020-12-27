@@ -6,7 +6,7 @@ package Dist::Iller::DocType::Global;
 
 # AUTHORITY
 # ABSTRACT: Settings used in multiple other DocTypes
-our $VERSION = '0.1409';
+our $VERSION = '0.1410';
 
 use Dist::Iller::Elk;
 use Path::Tiny;

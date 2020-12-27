@@ -6,7 +6,7 @@ package Dist::Iller::Elk;
 
 # AUTHORITY
 # ABSTRACT: A slightly extended Moose
-our $VERSION = '0.1409';
+our $VERSION = '0.1410';
 
 use Moose();
 use MooseX::AttributeShortcuts();

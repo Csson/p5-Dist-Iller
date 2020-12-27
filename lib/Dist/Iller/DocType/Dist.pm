@@ -6,7 +6,7 @@ package Dist::Iller::DocType::Dist;
 
 # AUTHORITY
 # ABSTRACT: Turn the Dist::Iller config into a dist.ini file
-our $VERSION = '0.1409';
+our $VERSION = '0.1410';
 
 use Dist::Iller::Elk;
 with qw/

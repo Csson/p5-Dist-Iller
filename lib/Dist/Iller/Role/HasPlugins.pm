@@ -6,7 +6,7 @@ package Dist::Iller::Role::HasPlugins;
 
 # AUTHORITY
 # ABSTRACT: A role for DocTypes that contains plugins (like dist/weaver)
-our $VERSION = '0.1409';
+our $VERSION = '0.1410';
 
 use Moose::Role;
 use namespace::autoclean;

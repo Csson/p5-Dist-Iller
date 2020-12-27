@@ -6,7 +6,7 @@ package Dist::Iller;
 
 # ABSTRACT: A Dist::Zilla & Pod::Weaver preprocessor
 # AUTHORITY
-our $VERSION = '0.1409';
+our $VERSION = '0.1410';
 
 use Dist::Iller::Elk;
 use Types::Standard qw/Map Str ConsumerOf/;

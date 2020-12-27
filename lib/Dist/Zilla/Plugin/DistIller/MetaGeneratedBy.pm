@@ -6,7 +6,7 @@ package Dist::Zilla::Plugin::DistIller::MetaGeneratedBy;
 
 # AUTHORITY
 # ABSTRACT: Add Dist::Iller version to meta_data.generated_by
-our $VERSION = '0.1409';
+our $VERSION = '0.1410';
 
 use Moose;
 use namespace::autoclean;

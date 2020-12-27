@@ -12,7 +12,7 @@ use Moose::Role;
 use MooseX::AttributeShortcuts;
 use namespace::autoclean;
 use Module::Load qw/load/;
-use Types::Standard qw/Bool Str/;
+use Types::Standard qw/Bool Str Maybe InstanceOf/;
 use YAML::Tiny;
 use Path::Tiny;
 use Try::Tiny;
@@ -34,10 +34,17 @@ has main_module => (
 has distribution_name => (
     is => 'ro',
     isa => Str,
+    lazy => 1,
     predicate => 1,
+    default => sub { undef },
     traits => ['Documented'],
     documentation_order => 0,
 );
+has global => (
+    is => 'ro',
+    isa => Maybe[InstanceOf['Dist::Iller::DocType::Global']],
+);
+
 
 sub config_location {
     my $self = shift;

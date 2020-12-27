@@ -96,7 +96,11 @@ sub parse_config {
             croak "Can't find $config_class ($_)";
         };
 
-        my $configobj = $config_class->new(%{ $yaml }, maybe distribution_name => ($self->$_can('name') ? $self->name : undef));
+        my $configobj = $config_class->new(
+            %{ $yaml },
+            maybe distribution_name => ($self->$_can('name') ? $self->name : undef),
+            maybe global => ($self->global ? $self->global : undef),
+        );
         my $configdoc = $configobj->get_yaml_for($self->doctype);
         return if !defined $configdoc;
 

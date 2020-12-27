@@ -10,6 +10,7 @@ use Dist::Iller;
 our $VERSION = '0.1409';
 
 my $iller = Dist::Iller->new;
+$iller->parse('first');
 $iller->parse('before');
 $iller->generate_files('before');
 

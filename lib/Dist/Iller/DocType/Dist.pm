@@ -18,7 +18,7 @@ with qw/
 use Types::Standard qw/HashRef ArrayRef Str Int Bool/;
 use PerlX::Maybe qw/maybe provided/;
 use List::Util qw/any/;
-
+use DateTime;
 
 has name => (
     is => 'rw',
@@ -58,6 +58,7 @@ has copyright_year => (
     isa => Int,
     predicate => 1,
     init_arg => undef,
+    default => sub { DateTime->now->year }
 );
 has add_prereqs_as_authordeps => (
     is => 'rw',

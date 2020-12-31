@@ -7,7 +7,7 @@ use Dist::Iller;
 
 # AUTHORITY
 # PODNAME: iller, a dzil wrapper
-our $VERSION = '0.1410';
+our $VERSION = '0.1411';
 
 my $iller = Dist::Iller->new;
 $iller->parse('first');

@@ -6,7 +6,7 @@ package Dist::Iller::DocType;
 
 # AUTHORITY
 # ABSTRACT: Role for document types that can be used in Dist::Iller configs
-our $VERSION = '0.1410';
+our $VERSION = '0.1411';
 
 use Moose::Role;
 use MooseX::AttributeShortcuts;

@@ -6,7 +6,7 @@ package Dist::Iller::DocType::Weaver;
 
 # AUTHORITY
 # ABSTRACT: Turn the Dist::Iller config into a weaver.ini file
-our $VERSION = '0.1410';
+our $VERSION = '0.1411';
 
 use Dist::Iller::Elk;
 with qw/

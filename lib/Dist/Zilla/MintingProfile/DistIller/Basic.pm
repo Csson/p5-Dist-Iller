@@ -6,7 +6,7 @@ package Dist::Zilla::MintingProfile::DistIller::Basic;
 
 # AUTHORITY
 # ABSTRACT: A basic minting profile for Dist::Iller
-our $VERSION = '0.1410';
+our $VERSION = '0.1411';
 
 use Moose;
 use namespace::autoclean;

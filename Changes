@@ -15,6 +15,7 @@ Revision history for Dist-Iller
  [Other Changes]
 
  [Requirements]
+ - Required Perl is 5.14, since that is what Dist::Zilla requires.
 
  [Stats & Dependency Changes]
 

@@ -8,6 +8,7 @@ Revision history for Dist-Iller
  [Documentation]
 
  [Enhancements]
+ - copyright_year in dist now defaults to the current year. Previously, the config needed to be updated each year.
 
  [New Features]
 

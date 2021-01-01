@@ -12,7 +12,7 @@ Dist::Iller - A Dist::Zilla & Pod::Weaver preprocessor
 
 # VERSION
 
-Version 0.1410, released 2020-12-31.
+Version 0.1411, released 2020-01-01.
 
 # SYNOPSIS
 
@@ -176,7 +176,7 @@ Erik Carlsson <info@code301.com>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2020 by Erik Carlsson.
+This software is copyright (c) 2021 by Erik Carlsson.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

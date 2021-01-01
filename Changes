@@ -3,7 +3,8 @@ Revision history for Dist-Iller
 {{$NEXT}}
  [API Changes]
 
- [Bug Fixes]
+ [Test Changes]
+ - Fix a test failure that started to appear this year, caused by yesterday's change regarding copyright_year. Fixes #5, thanks SREZIC!
 
  [Documentation]
 

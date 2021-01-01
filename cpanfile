@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2020-12-31 17:54:22 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2021-01-01 18:53:06 UTC.
 
 on runtime => sub {
     requires 'Carp' => '1.38';
@@ -124,6 +124,6 @@ on develop => sub {
     requires 'Test::Warnings' => '0.026';
 };
 on develop => sub {
-    suggests 'Dist::Iller' => '0.1409';
+    suggests 'Dist::Iller' => '0.1410';
     suggests 'Dist::Iller::Config::Author::CSSON' => '0.0328';
 };

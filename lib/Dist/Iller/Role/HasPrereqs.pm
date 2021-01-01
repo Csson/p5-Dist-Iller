@@ -6,7 +6,7 @@ package Dist::Iller::Role::HasPrereqs;
 
 # AUTHORITY
 # ABSTRACT: A role for DocTypes that contains prereqs (like dist/cpanfile)
-our $VERSION = '0.1411';
+our $VERSION = '0.1412';
 
 use Moose::Role;
 use namespace::autoclean;

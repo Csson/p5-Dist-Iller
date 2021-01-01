@@ -6,7 +6,7 @@ package Dist::Iller::DocType::Gitignore;
 
 # AUTHORITY
 # ABSTRACT: Turn the Dist::Iller config into a .gitignore file
-our $VERSION = '0.1411';
+our $VERSION = '0.1412';
 
 use Dist::Iller::Elk;
 use Path::Tiny;

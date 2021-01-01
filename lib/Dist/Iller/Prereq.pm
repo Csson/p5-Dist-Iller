@@ -6,7 +6,7 @@ package Dist::Iller::Prereq;
 
 # AUTHORITY
 # ABSTRACT: Handle a prerequisite
-our $VERSION = '0.1411';
+our $VERSION = '0.1412';
 
 use Dist::Iller::Elk;
 use Types::Standard qw/Str Enum/;

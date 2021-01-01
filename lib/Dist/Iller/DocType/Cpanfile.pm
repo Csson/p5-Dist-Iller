@@ -6,7 +6,7 @@ package Dist::Iller::DocType::Cpanfile;
 
 # AUTHORITY
 # ABSTRACT: Turn the Dist::Iller config into a .cpanfile file
-our $VERSION = '0.1411';
+our $VERSION = '0.1412';
 
 use Dist::Iller::Elk;
 use JSON::MaybeXS qw/decode_json/;

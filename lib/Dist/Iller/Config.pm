@@ -6,7 +6,7 @@ package Dist::Iller::Config;
 
 # AUTHORITY
 # ABSTRACT: Role for Dist::Iller configs
-our $VERSION = '0.1411';
+our $VERSION = '0.1412';
 
 use Moose::Role;
 use MooseX::AttributeShortcuts;

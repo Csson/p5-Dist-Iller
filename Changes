@@ -3,8 +3,7 @@ Revision history for Dist-Iller
 {{$NEXT}}
  [API Changes]
 
- [Test Changes]
- - Fix a test failure that started to appear this year, caused by yesterday's change regarding copyright_year. Fixes #5, thanks SREZIC!
+ [Bug Fixes]
 
  [Documentation]
 
@@ -19,6 +18,15 @@ Revision history for Dist-Iller
  [Stats & Dependency Changes]
 
  [Testing]
+
+0.1411 2021-01-01T19:00:59Z UTC
+ [Stats & Dependency Changes]
+ - 17 files changed, 18 insertions(+), 18 deletions(-)
+ - (dev sug) ~ Dist::Iller 0.1409 --> 0.1410
+
+ [Test Changes]
+ - Fix a test failure that started to appear this year, caused by
+   yesterday's change regarding copyright_year. Fixes #5, thanks SREZIC!
 
 0.1410 2020-12-31T17:59:13Z UTC
  [Enhancements]
